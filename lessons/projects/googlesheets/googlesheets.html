@@ -1,0 +1,766 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Google Sheets: хранение данных о температуре &mdash; документация Raspberry Pi Pico W Kit 0.1</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d39ee99e" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=2b7aed8e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/translations.js?v=5b699b7f"></script>
+      <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../../search.html" />
+    <link rel="next" title="FAQ" href="../../../faq/index.html" />
+    <link rel="prev" title="MPU6050: уведомление о вибрации/наклоне в Telegram" href="../mputelegram/mputelegram.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Raspberry Pi Pico W Kit
+              <img src="../../../_static/logo.png" class="logo" alt="Логотип"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/index.html">Учебный набор по MicroPython на базе Raspberry Pi Pico W</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id1">Вступление</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id2">Сильные стороны набора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id3">Для кого подходит этот набор</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id4">Компоненты набора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#raspberry-pi-pico-w-15">Итоговый учебный план на Raspberry Pi Pico W (15 уроков)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get-started/index.html">Знакомство с Raspberry Pi Pico W и MicroPython</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/picow.html">Знакомство с Pico W</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/micropython.html">Введение в MicroPython</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/micropython.html#id1">История начинается здесь</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/micropython.html#id2">Почему MicroPython?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/thonny.html">Установка Thonny IDE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/micropythoninstall.html">Установка MicroPython на ваш Pico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/uploadlibs.html">Загрузка библиотек на Pico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/thonnytutor.html">1.5 Краткое руководство по Thonny</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/thonnytutor.html#id1">Открытие и запуск кода напрямую</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Содержание курса по Raspberry Pi Pico W</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../sensors/index.html">Модуль датчиков и устройств</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/rgb/rgb.html">Управление RGB-светодиодом с общим катодом на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/ws2812/ws2812.html">Управление адресным светодиодным кольцом на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/light/light.html">Работа с датчиком освещенности на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/pir/pir.html">Обнаружение движения с помощью PIR датчика и Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/pot/pot.html">Управление потенциометром на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/relay/relay.html">Управление реле с помощью Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/servo/servo.html">Управление сервоприводом с помощью Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/bme280/bme280.html">Использование датчика BME280 с Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/mpu6050/mpu6050.html">Измерение ускорения и гироскопических данных с MPU6050 на Raspberry Pi Pico</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Проекты</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../wifi/wifi.html">Подключение к интернету с использованием Wi-Fi на Raspberry Pi Pico W</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webhello/webhello.html">Hello World: веб-сайт на Pico W</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../light/light.html">Считывание данных с датчика освещённости и отображение на веб-интерфейсе</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wifiscan/wifiscan.html">Управление RGB-светодиодом через веб-интерфейс</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wifioled/wifioled.html">Отображение информации о Wi-Fi на OLED-дисплее SSD1306</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../openwaethermap/owm.html">OpenWeatherMap: вывод данных о погоде на OLED-дисплей</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../owmws2812/owmws2812.html">Визуализация температуры из OpenWeatherMap на адресной ленте WS2812</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ws2812pir/ws2812pir.html">PIR-датчик: уведомление о движении с помощью WS2812</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../echobot/echobot.html">Телеграм-бот: введение</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../servotelegram/servotelegram.html">Управление сервоприводом через Telegram-бот</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../telegrambme/telegrambme.html">Получение данных о температуре (BME280) через Telegram-бот</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pirtelegram/pirtelegram.html">PIR-датчик: уведомление о движении в Telegram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mputelegram/mputelegram.html">MPU6050: уведомление о вибрации/наклоне в Telegram</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Google Sheets: хранение данных о температуре</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq/index.html">FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../faq/index.html#micropython">MicroPython</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../feedback/index.html">Обратная связь</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../feedback/index.html#id2">Контакты</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Raspberry Pi Pico W Kit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Содержание курса по Raspberry Pi Pico W</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Проекты</a></li>
+      <li class="breadcrumb-item active">Google Sheets: хранение данных о температуре</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Навигация по соседним страницам">
+        <a href="../mputelegram/mputelegram.html" class="btn btn-neutral float-left" title="MPU6050: уведомление о вибрации/наклоне в Telegram" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="../../../faq/index.html" class="btn btn-neutral float-right" title="FAQ" accesskey="n">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="google-sheets">
+<h1>Google Sheets: хранение данных о температуре<a class="headerlink" href="#google-sheets" title="Ссылка на этот заголовок"></a></h1>
+<section id="id1">
+<h2>Введение<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h2>
+<p>В этом уроке мы научимся отправлять данные с датчика температуры, влажности и давления BME280 в Google Sheets, используя Raspberry Pi Pico W. Такая система позволит вам удалённо мониторить и записывать показания окружающей среды в таблицу, которую можно просматривать из любой точки мира и анализировать данные с помощью встроенных инструментов Google Sheets.</p>
+<p>Сохранение данных в облачном хранилище имеет множество преимуществ по сравнению с локальным хранением:
+- Доступ к данным откуда угодно
+- Автоматическое резервное копирование
+- Возможность создания графиков и визуализаций
+- Совместный доступ с другими пользователями
+- Интеграция с другими сервисами Google</p>
+</section>
+<section id="id2">
+<h2>Необходимые компоненты<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
+<ul class="simple">
+<li><p>Raspberry Pi Pico W</p></li>
+<li><p>Датчик BME280</p></li>
+<li><p>Соединительные провода</p></li>
+<li><p>Доступ к Wi-Fi сети</p></li>
+<li><p>Аккаунт Google</p></li>
+<li><p>Модуль MicroGoogleSheet для MicroPython (будет объяснено ниже)</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>Схема подключения<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h2>
+<p>Подключение датчика BME280 к Raspberry Pi Pico W через I2C:</p>
+<ul class="simple">
+<li><p>VCC датчика BME280 к 3.3V Pico W</p></li>
+<li><p>GND датчика BME280 к GND Pico W</p></li>
+<li><p>SCL датчика BME280 к GP5 Pico W</p></li>
+<li><p>SDA датчика BME280 к GP4 Pico W</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Примечание</p>
+<p>В этом уроке мы используем пины GP4 и GP5 для I2C соединения, но вы можете использовать другие пины, поддерживающие I2C, изменив соответствующий код.</p>
+</div>
+</section>
+<section id="google-sheets-apps-script">
+<h2>Настройка Google Sheets и скрипта Apps Script<a class="headerlink" href="#google-sheets-apps-script" title="Ссылка на этот заголовок"></a></h2>
+<p>Перед началом программирования Pico W нам нужно настроить Google Sheets и создать скрипт для приема данных:</p>
+<ol class="arabic simple">
+<li><p><strong>Создание таблицы Google Sheets</strong>:
+- Откройте Google Drive и создайте новую таблицу (Sheets)
+- Назовите её, например, «BME280 Data Log»
+- В первой строке создайте заголовки: «Дата», «Время», «Температура (°C)», «Давление (hPa)», «Влажность (%)»</p></li>
+<li><p><strong>Настройка скрипта Google Apps Script</strong>:
+- В открытой таблице перейдите в меню «Расширения» &gt; «Apps Script»
+- Удалите весь код в редакторе и вставьте следующий:</p></li>
+</ol>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">doGet</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">ss</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">SpreadsheetApp</span><span class="p">.</span><span class="nx">getActiveSpreadsheet</span><span class="p">();</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">sheet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ss</span><span class="p">.</span><span class="nx">getActiveSheet</span><span class="p">();</span>
+
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{};</span>
+
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Получаем параметры</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">parameter</span><span class="p">.</span><span class="nx">row</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">e</span><span class="p">.</span><span class="nx">parameter</span><span class="p">.</span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">row</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">parameter</span><span class="p">.</span><span class="nx">row</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">parameter</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Записываем данные</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">var</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">data</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">sheet</span><span class="p">.</span><span class="nx">getRange</span><span class="p">(</span><span class="nx">row</span><span class="p">,</span><span class="w"> </span><span class="nx">i</span><span class="o">+</span><span class="mf">1</span><span class="p">).</span><span class="nx">setValue</span><span class="p">(</span><span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="nx">result</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;success&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">result</span><span class="p">.</span><span class="nx">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Data recorded successfully&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">parameter</span><span class="p">.</span><span class="nx">getrow</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Получаем значение ячейки</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">getrow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">parameter</span><span class="p">.</span><span class="nx">getrow</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">getcol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">parameter</span><span class="p">.</span><span class="nx">getcol</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">sheet</span><span class="p">.</span><span class="nx">getRange</span><span class="p">(</span><span class="nx">getrow</span><span class="p">,</span><span class="w"> </span><span class="nx">getcol</span><span class="p">).</span><span class="nx">getValue</span><span class="p">();</span>
+
+<span class="w">        </span><span class="nx">result</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;success&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">result</span><span class="p">.</span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">value</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">result</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;error&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">result</span><span class="p">.</span><span class="nx">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Missing required parameters&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">result</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;error&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">result</span><span class="p">.</span><span class="nx">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">error</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">ContentService</span><span class="p">.</span><span class="nx">createTextOutput</span><span class="p">(</span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">result</span><span class="p">))</span>
+<span class="w">    </span><span class="p">.</span><span class="nx">setMimeType</span><span class="p">(</span><span class="nx">ContentService</span><span class="p">.</span><span class="nx">MimeType</span><span class="p">.</span><span class="nb">JSON</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ol class="arabic" start="3">
+<li><p><strong>Сохранение и развертывание скрипта</strong>:
+- Сохраните скрипт (File &gt; Save)
+- Нажмите «Deploy» &gt; «New deployment»
+- Выберите тип «Web app»
+- Настройте:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Execute as: «Me»</p></li>
+<li><p>Who has access: «Anyone»</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Нажмите «Deploy»</p></li>
+<li><p>Скопируйте «Deployment ID» - он понадобится нам для программы</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="id4">
+<h2>Файловая структура проекта<a class="headerlink" href="#id4" title="Ссылка на этот заголовок"></a></h2>
+<p>Наш проект будет состоять из следующих файлов:
+- main.py - основной файл программы
+- config.py - конфигурационные параметры
+- bme280_float.py - библиотека для работы с датчиком BME280
+- ggsheet.py - библиотека для работы с Google Sheets</p>
+</section>
+<section id="id5">
+<h2>Код проекта и его объяснение<a class="headerlink" href="#id5" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p>Сначала создадим файл конфигурации (config.py):</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Конфигурационный файл для проекта BME280 с Google Sheets</span>
+
+<span class="c1"># Настройки Wi-Fi</span>
+<span class="n">wifi_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;ssid&#39;</span><span class="p">:</span> <span class="s1">&#39;Название_вашей_сети&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;password&#39;</span><span class="p">:</span> <span class="s1">&#39;Пароль_вашей_сети&#39;</span>
+<span class="p">}</span>
+
+<span class="c1"># Настройки Google Sheets</span>
+<span class="n">google_sheet_url</span> <span class="o">=</span> <span class="s2">&quot;https://docs.google.com/spreadsheets/d/ВАША_ТАБЛИЦА_ID/edit&quot;</span>
+<span class="n">google_sheet_name</span> <span class="o">=</span> <span class="s2">&quot;Sheet1&quot;</span>  <span class="c1"># Имя листа в таблице</span>
+<span class="n">google_app_deployment_id</span> <span class="o">=</span> <span class="s2">&quot;ВАШИЙ_DEPLOYMENT_ID&quot;</span>  <span class="c1"># ID развертывания скрипта</span>
+
+<span class="c1"># Параметры программы</span>
+<span class="n">send_interval</span> <span class="o">=</span> <span class="mi">300</span>  <span class="c1"># Интервал отправки данных в секундах (по умолчанию 5 минут)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Библиотека для работы с Google Sheets (ggsheet.py):</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">urequests</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">requests</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MicroGoogleSheet</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spreadsheetURL</span><span class="p">,</span> <span class="n">sheetName</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spreadsheetURL</span> <span class="o">=</span> <span class="n">spreadsheetURL</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sheetName</span> <span class="o">=</span> <span class="n">sheetName</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deploymentID</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_DeploymentID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deploymentID</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deploymentID</span> <span class="o">=</span> <span class="n">deploymentID</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_buildURL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="n">baseURL</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://script.google.com/macros/s/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">deploymentID</span><span class="si">}</span><span class="s2">/exec&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="s1">&#39;&amp;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">baseURL</span><span class="si">}</span><span class="s2">?</span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">appendRow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">deploymentID</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;DeploymentID not set. Use set_DeploymentID() method.&quot;</span><span class="p">)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;row&#39;</span><span class="p">:</span> <span class="n">row</span><span class="p">,</span>
+            <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_buildURL</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;success&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Unknown error&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error sending data: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">getCell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">deploymentID</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;DeploymentID not set. Use set_DeploymentID() method.&quot;</span><span class="p">)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;getrow&#39;</span><span class="p">:</span> <span class="n">row</span><span class="p">,</span>
+            <span class="s1">&#39;getcol&#39;</span><span class="p">:</span> <span class="n">col</span>
+        <span class="p">}</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_buildURL</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;success&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Unknown error&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error getting cell: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Основной код программы (main.py):</p></li>
+</ol>
+<p>Теперь разберем основной код по частям:</p>
+<p><strong>Импорт библиотек и настройка</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">machine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pin</span><span class="p">,</span> <span class="n">I2C</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">bme280_float</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">bme280</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ggsheet</span><span class="w"> </span><span class="kn">import</span> <span class="n">MicroGoogleSheet</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">config</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">network</span>
+</pre></div>
+</div>
+<p>В этом блоке мы импортируем все необходимые библиотеки:
+- <cite>time</cite> - для управления временем и паузами
+- <cite>machine.Pin</cite>, <cite>machine.I2C</cite> - для работы с GPIO и I2C интерфейсом
+- <cite>bme280_float</cite> - библиотека для работы с датчиком BME280
+- <cite>ggsheet.MicroGoogleSheet</cite> - наша библиотека для взаимодействия с Google Sheets
+- <cite>config</cite> - файл с конфигурационными параметрами
+- <cite>network</cite> - для управления Wi-Fi соединением</p>
+<p><strong>Функция подключения к Wi-Fi</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">connect_wifi</span><span class="p">():</span>
+    <span class="n">sta_if</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">WLAN</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">STA_IF</span><span class="p">)</span>
+    <span class="n">sta_if</span><span class="o">.</span><span class="n">active</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">sta_if</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Подключение к WiFi:&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">wifi_config</span><span class="p">[</span><span class="s1">&#39;ssid&#39;</span><span class="p">])</span>
+        <span class="n">sta_if</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">wifi_config</span><span class="p">[</span><span class="s1">&#39;ssid&#39;</span><span class="p">],</span> <span class="n">config</span><span class="o">.</span><span class="n">wifi_config</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">])</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">sta_if</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+            <span class="k">pass</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Подключение к WiFi успешно!&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;IP-адрес:&quot;</span><span class="p">,</span> <span class="n">sta_if</span><span class="o">.</span><span class="n">ifconfig</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Функция <cite>connect_wifi()</cite>:
+1. Создает объект WLAN в режиме клиента (STA_IF)
+2. Активирует Wi-Fi модуль
+3. Если еще не подключен, пытается подключиться с заданными SSID и паролем
+4. Ждет успешного подключения
+5. Выводит информацию о подключении, включая присвоенный IP-адрес</p>
+<p><strong>Инициализация аппаратной части</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Инициализация I2C с пинами 4 и 5</span>
+<span class="n">i2c</span> <span class="o">=</span> <span class="n">I2C</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sda</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">scl</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># Инициализация BME280 с правильным адресом</span>
+<span class="n">bme</span> <span class="o">=</span> <span class="n">bme280</span><span class="o">.</span><span class="n">BME280</span><span class="p">(</span><span class="n">i2c</span><span class="o">=</span><span class="n">i2c</span><span class="p">,</span> <span class="n">address</span><span class="o">=</span><span class="mh">0x76</span><span class="p">)</span>
+
+<span class="c1"># Google Sheets данные</span>
+<span class="n">GOOGLE_SHEET_URL</span> <span class="o">=</span> <span class="s2">&quot;https://docs.google.com/spreadsheets/d/1PhZPDGMI8yiTPmwPs6A185CWVtj03DB9CBn5alx4AZA/edit?gid=0#gid=0&quot;</span>
+<span class="n">GOOGLE_SHEET_NAME</span> <span class="o">=</span> <span class="s2">&quot;Sheet1&quot;</span>
+<span class="n">GOOGLE_APP_DEPLOYMENT_ID</span> <span class="o">=</span> <span class="s2">&quot;AKfycbymALx2RnjBws57Vv-b714gVTaMucoRx0zb1j7tTqWeevMoE4b6u5U7gj_8WkBQPON-&quot;</span>
+</pre></div>
+</div>
+<p>Здесь мы:
+1. Инициализируем I2C интерфейс на пинах GP4 (SDA) и GP5 (SCL)
+2. Создаем объект датчика BME280 с адресом 0x76 (стандартный адрес)
+3. Определяем константы для работы с Google Sheets (в рабочем коде их лучше брать из файла конфигурации)</p>
+<p><strong>Функция чтения данных с датчика</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">read_sensor_data</span><span class="p">():</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="n">bme</span><span class="o">.</span><span class="n">values</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Исходные значения с датчика:&quot;</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">values</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ошибка: неверный формат данных с датчика&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="n">temperature</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">pressure</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">humidity</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="c1"># Обработка строковых значений</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Удаляем единицы измерения и обрабатываем разные возможные форматы</span>
+        <span class="n">temperature</span> <span class="o">=</span> <span class="n">temperature</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;°C&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">pressure</span> <span class="o">=</span> <span class="n">pressure</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;hPa&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;гПа&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">humidity</span> <span class="o">=</span> <span class="n">humidity</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;%&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;После обработки: температура=</span><span class="si">{</span><span class="n">temperature</span><span class="si">}</span><span class="s2">, давление=</span><span class="si">{</span><span class="n">pressure</span><span class="si">}</span><span class="s2">, влажность=</span><span class="si">{</span><span class="n">humidity</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Преобразуем строки в числа</span>
+        <span class="n">temperature</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">temperature</span><span class="p">)</span>
+        <span class="n">pressure</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">pressure</span><span class="p">)</span>
+        <span class="n">humidity</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">humidity</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="n">temperature</span><span class="p">,</span>
+            <span class="s2">&quot;pressure&quot;</span><span class="p">:</span> <span class="n">pressure</span><span class="p">,</span>
+            <span class="s2">&quot;humidity&quot;</span><span class="p">:</span> <span class="n">humidity</span>
+        <span class="p">}</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка преобразования значений в числа: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<p>Функция <cite>read_sensor_data()</cite>:
+1. Получает значения с датчика BME280 через свойство <cite>values</cite>
+2. Проверяет, что мы получили данные в правильном формате
+3. Извлекает отдельные значения температуры, давления и влажности
+4. Очищает строковые значения от единиц измерения (°C, hPa, %)
+5. Заменяет запятые на точки (для корректного преобразования в числа)
+6. Преобразует строки в числа с плавающей точкой
+7. Возвращает словарь с обработанными значениями или None в случае ошибки</p>
+<p><strong>Функция отправки данных в Google Sheets</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">send_to_google_sheets</span><span class="p">():</span>
+    <span class="c1"># Подключаемся к WiFi</span>
+    <span class="n">connect_wifi</span><span class="p">()</span>
+
+    <span class="c1"># Получаем данные с датчика</span>
+    <span class="n">sensor_data</span> <span class="o">=</span> <span class="n">read_sensor_data</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">sensor_data</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Не удалось получить данные с датчика&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="c1"># Текущая дата и время</span>
+    <span class="n">timestamp</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">()</span>
+    <span class="n">date_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">timestamp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">timestamp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">timestamp</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">time_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">timestamp</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">timestamp</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">timestamp</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="c1"># Преобразуем числа в строки с запятой вместо точки</span>
+    <span class="n">temp_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">sensor_data</span><span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span>
+    <span class="n">pressure_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">sensor_data</span><span class="p">[</span><span class="s1">&#39;pressure&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span>
+    <span class="n">humidity_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">sensor_data</span><span class="p">[</span><span class="s1">&#39;humidity&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Данные для отправки: Дата: </span><span class="si">{</span><span class="n">date_str</span><span class="si">}</span><span class="s2">, Время: </span><span class="si">{</span><span class="n">time_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Температура: </span><span class="si">{</span><span class="n">temp_str</span><span class="si">}</span><span class="s2"> °C&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Давление: </span><span class="si">{</span><span class="n">pressure_str</span><span class="si">}</span><span class="s2"> hPa&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Влажность: </span><span class="si">{</span><span class="n">humidity_str</span><span class="si">}</span><span class="s2"> %&quot;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Создаем экземпляр для работы с Google Sheets</span>
+        <span class="n">ggsheet</span> <span class="o">=</span> <span class="n">MicroGoogleSheet</span><span class="p">(</span><span class="n">GOOGLE_SHEET_URL</span><span class="p">,</span> <span class="n">GOOGLE_SHEET_NAME</span><span class="p">)</span>
+        <span class="n">ggsheet</span><span class="o">.</span><span class="n">set_DeploymentID</span><span class="p">(</span><span class="n">GOOGLE_APP_DEPLOYMENT_ID</span><span class="p">)</span>
+
+        <span class="c1"># Получаем последний номер строки в таблице</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">cell_value</span> <span class="o">=</span> <span class="n">ggsheet</span><span class="o">.</span><span class="n">getCell</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">cell_value</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="n">row</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="c1"># Ограничиваем поиск</span>
+                <span class="k">if</span> <span class="n">row</span> <span class="o">&gt;</span> <span class="mi">1000</span><span class="p">:</span>
+                    <span class="n">row</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Если таблица слишком большая, начинаем с начала</span>
+                    <span class="k">break</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="c1"># Если возникла ошибка при получении ячейки, значит мы достигли конца таблицы</span>
+                <span class="k">break</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Запись будет добавлена в строку </span><span class="si">{</span><span class="n">row</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Формируем данные для записи с запятыми вместо точек</span>
+        <span class="n">data_row</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">date_str</span><span class="p">,</span>
+            <span class="n">time_str</span><span class="p">,</span>
+            <span class="n">temp_str</span><span class="p">,</span>
+            <span class="n">pressure_str</span><span class="p">,</span>
+            <span class="n">humidity_str</span>
+        <span class="p">]</span>
+
+        <span class="c1"># Записываем данные в таблицу</span>
+        <span class="n">ggsheet</span><span class="o">.</span><span class="n">appendRow</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">data_row</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Данные успешно отправлены в Google Sheets!&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка отправки данных в Google Sheets: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<p>Функция <cite>send_to_google_sheets()</cite>:
+1. Подключается к Wi-Fi (если еще не подключен)
+2. Получает данные с датчика через функцию <cite>read_sensor_data()</cite>
+3. Формирует строки даты и времени из текущего времени
+4. Преобразует числа в строки, заменяя точки на запятые (для правильного отображения в Google Sheets)
+5. Создает экземпляр MicroGoogleSheet с URL таблицы и именем листа
+6. Устанавливает Deployment ID для скрипта
+7. Находит первую пустую строку в таблице, последовательно проверяя значения в первом столбце
+8. Формирует массив данных для записи (дата, время, температура, давление, влажность)
+9. Отправляет данные в таблицу и возвращает результат операции</p>
+<p><strong>Основной цикл программы</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Запуск программы отправки данных с BME280 в Google Sheets...&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Настраиваемые параметры</span>
+    <span class="n">send_interval</span> <span class="o">=</span> <span class="mi">200</span>  <span class="c1"># Интервал отправки данных в секундах</span>
+    <span class="n">max_retries</span> <span class="o">=</span> <span class="mi">3</span>     <span class="c1"># Максимальное количество попыток при ошибке</span>
+
+    <span class="c1"># Чтение настроек из файла config, если они есть</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="s1">&#39;send_interval&#39;</span><span class="p">):</span>
+        <span class="n">send_interval</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">send_interval</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Интервал отправки данных: </span><span class="si">{</span><span class="n">send_interval</span><span class="si">}</span><span class="s2"> секунд&quot;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Отправка данных ---&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Попытки отправки с повторами при ошибке</span>
+            <span class="n">success</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">retries</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="k">while</span> <span class="ow">not</span> <span class="n">success</span> <span class="ow">and</span> <span class="n">retries</span> <span class="o">&lt;</span> <span class="n">max_retries</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">retries</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Повторная попытка </span><span class="si">{</span><span class="n">retries</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">max_retries</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+                    <span class="c1"># Небольшая задержка перед повторной попыткой</span>
+                    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+                <span class="n">success</span> <span class="o">=</span> <span class="n">send_to_google_sheets</span><span class="p">()</span>
+                <span class="n">retries</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
+                    <span class="k">break</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Не удалось отправить данные после </span><span class="si">{</span><span class="n">max_retries</span><span class="si">}</span><span class="s2"> попыток&quot;</span><span class="p">)</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Следующая отправка через </span><span class="si">{</span><span class="n">send_interval</span><span class="si">}</span><span class="s2"> секунд...&quot;</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">send_interval</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Программа остановлена пользователем&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Критическая ошибка: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># Перезапуск программы после короткой задержки</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Перезапуск программы через 10 секунд...&quot;</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">main</span><span class="p">()</span>  <span class="c1"># Рекурсивный вызов для перезапуска</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Функция <cite>main()</cite>:
+1. Устанавливает настройки интервала отправки и максимального количества повторов
+2. Проверяет наличие пользовательских настроек в файле config.py
+3. Запускает бесконечный цикл для периодической отправки данных
+4. При каждой итерации:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Пытается отправить данные с использованием функции <cite>send_to_google_sheets()</cite></p></li>
+<li><p>Если отправка не удалась, повторяет попытку до <cite>max_retries</cite> раз</p></li>
+<li><p>Ожидает указанный интервал времени перед следующей отправкой</p></li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="5">
+<li><p>Обрабатывает исключения:</p>
+<ul class="simple">
+<li><p>KeyboardInterrupt - для корректного завершения программы</p></li>
+<li><p>Другие исключения - перезапускает программу после задержки</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="id6">
+<h2>Загрузка и запуск проекта<a class="headerlink" href="#id6" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p>Убедитесь, что на вашем Raspberry Pi Pico W установлен MicroPython с поддержкой Wi-Fi.</p></li>
+<li><p>Скопируйте библиотеки на ваш Pico W:
+- bme280_float.py - библиотека для работы с датчиком BME280
+- ggsheet.py - наша библиотека для работы с Google Sheets</p></li>
+<li><p>Создайте и загрузите на Pico W файлы:
+- config.py (с вашими настройками Wi-Fi и Google Sheets)
+- main.py (основной код программы)</p></li>
+<li><p>Отредактируйте файл config.py, указав:
+- Имя и пароль вашей Wi-Fi сети
+- URL вашей таблицы Google Sheets
+- Deployment ID вашего Apps Script
+- Желаемый интервал отправки данных</p></li>
+<li><p>Перезагрузите Pico W, и программа начнет автоматически отправлять данные в вашу таблицу Google Sheets с указанным интервалом.</p></li>
+</ol>
+</section>
+<section id="id7">
+<h2>Анализ данных и создание графиков в Google Sheets<a class="headerlink" href="#id7" title="Ссылка на этот заголовок"></a></h2>
+<p>После того, как ваша система начнет отправлять данные в Google Sheets, вы можете использовать встроенные инструменты для их анализа и визуализации:</p>
+<ol class="arabic simple">
+<li><p><strong>Создание графика температуры</strong>:
+- Выделите столбцы с датой/временем и температурой
+- Выберите Insert &gt; Chart (Вставка &gt; Диаграмма)
+- Выберите Line chart (Линейный график)
+- Настройте параметры отображения (заголовок, легенду, оси)</p></li>
+<li><p><strong>Создание графика влажности и давления</strong>:
+- Аналогично создайте графики для столбцов влажности и давления
+- Вы можете создать комбинированный график с несколькими рядами данных</p></li>
+<li><p><strong>Добавление скользящего среднего</strong>:
+- Для сглаживания колебаний добавьте столбец со скользящим средним
+- Используйте формулу: =AVERAGE(C$2:C2) (где C - столбец с температурой)
+- Добавьте этот ряд данных на график</p></li>
+<li><p><strong>Анализ данных</strong>:
+- Найдите минимальные/максимальные значения с помощью функций MIN() и MAX()
+- Вычислите среднее значение за день/неделю с помощью AVERAGEIF()
+- Создайте сводную таблицу для анализа по дням недели или часам суток</p></li>
+<li><p><strong>Настройка оповещений</strong>:
+- В Google Sheets можно настроить правила условного форматирования
+- Выделите ячейки, которые хотите мониторить
+- Format &gt; Conditional formatting &gt; Custom formula
+- Используйте формулу типа =C2&gt;30 для выделения высоких температур</p></li>
+</ol>
+</section>
+<section id="id8">
+<h2>Пример анализа данных с помощью формул<a class="headerlink" href="#id8" title="Ссылка на этот заголовок"></a></h2>
+<p>Вот несколько полезных формул для анализа ваших данных в Google Sheets:</p>
+<ol class="arabic simple">
+<li><p><strong>Средняя температура за день</strong>:
+<code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">=AVERAGEIF(A:A,</span> <span class="pre">&quot;2023-11-15&quot;,</span> <span class="pre">C:C)</span>
+<span class="pre">`</span></code></p></li>
+<li><p><strong>Максимальная и минимальная температура за все время</strong>:
+<code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">=MAX(C:C)</span>
+<span class="pre">=MIN(C:C)</span>
+<span class="pre">`</span></code></p></li>
+<li><p><strong>Амплитуда температуры за день</strong>:
+<code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">=MAXIFS(C:C,</span> <span class="pre">A:A,</span> <span class="pre">&quot;2023-11-15&quot;)</span> <span class="pre">-</span> <span class="pre">MINIFS(C:C,</span> <span class="pre">A:A,</span> <span class="pre">&quot;2023-11-15&quot;)</span>
+<span class="pre">`</span></code></p></li>
+<li><p><strong>Среднее давление по часам суток</strong>:
+<code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">=AVERAGEIFS(D:D,</span> <span class="pre">B:B,</span> <span class="pre">&quot;&gt;09:00&quot;,</span> <span class="pre">B:B,</span> <span class="pre">&quot;&lt;10:00&quot;)</span>
+<span class="pre">`</span></code></p></li>
+</ol>
+</section>
+<section id="id9">
+<h2>Возможные проблемы и их решения<a class="headerlink" href="#id9" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Ошибка подключения к Wi-Fi</strong>:
+- Проверьте правильность SSID и пароля
+- Убедитесь, что ваша Wi-Fi сеть работает в диапазоне 2.4 ГГц (Pico W не поддерживает 5 ГГц)
+- Расположите Pico W ближе к роутеру</p></li>
+<li><p><strong>Ошибка чтения данных с BME280</strong>:
+- Проверьте подключение датчика (питание, I2C)
+- Убедитесь, что используется правильный I2C адрес (0x76 или 0x77)
+- Проверьте правильность инициализации I2C с пинами GP4 и GP5</p></li>
+<li><p><strong>Ошибка отправки данных в Google Sheets</strong>:
+- Проверьте URL таблицы и Deployment ID
+- Убедитесь, что Apps Script развернут с доступом «Anyone»
+- Проверьте, что ваша таблица не превышает лимиты API Google (100 запросов в минуту)</p></li>
+<li><p><strong>Проблемы с форматом данных</strong>:
+- Если в таблице отображаются неправильные значения, проверьте обработку данных в функции read_sensor_data()
+- Для корректного отображения десятичных чисел в Google Sheets замените точки на запятые</p></li>
+<li><p><strong>Высокое энергопотребление</strong>:
+- Увеличьте send_interval для более редкой отправки данных
+- Реализуйте режим сна между измерениями с помощью machine.deepsleep()</p></li>
+</ol>
+</section>
+<section id="id10">
+<h2>Расширение проекта<a class="headerlink" href="#id10" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Добавление других датчиков</strong>:
+- Подключите дополнительные датчики (освещенности, CO2, качества воздуха)
+- Расширьте код для чтения и отправки большего количества параметров</p></li>
+<li><p><strong>Создание панели мониторинга</strong>:
+- Используйте Google Data Studio для создания интерактивной панели
+- Подключите вашу таблицу в качестве источника данных</p></li>
+<li><p><strong>Настройка оповещений</strong>:
+- Добавьте код для отправки сообщений в Telegram при экстремальных значениях
+- Используйте IFTTT для создания автоматических оповещений на основе данных Google Sheets</p></li>
+<li><p><strong>Энергосбережение для автономной работы</strong>:
+- Реализуйте режимы глубокого сна между измерениями
+- Добавьте поддержку питания от батареи с контролем заряда</p></li>
+<li><p><strong>Анализ тенденций</strong>:
+- Добавьте в таблицу формулы для прогнозирования будущих значений
+- Используйте FORECAST функции Google Sheets для анализа тенденций</p></li>
+</ol>
+</section>
+<section id="id11">
+<h2>Заключение<a class="headerlink" href="#id11" title="Ссылка на этот заголовок"></a></h2>
+<p>В этом уроке мы создали систему для сбора данных о температуре, влажности и давлении с датчика BME280 и их автоматической отправки в Google Sheets. Такая система может использоваться для мониторинга параметров окружающей среды в вашем доме, офисе, теплице или любом другом месте, где важно отслеживать климатические условия.</p>
+<p>Благодаря хранению данных в Google Sheets, вы получаете доступ к мощным инструментам анализа, визуализации и совместного использования данных. Вы можете создавать графики для наблюдения за изменениями параметров во времени, настраивать оповещения о критических значениях и делиться информацией с другими пользователями.</p>
+<p>Этот проект демонстрирует, как недорогие и компактные устройства, такие как Raspberry Pi Pico W, могут быть использованы для создания полноценных IoT-решений, интегрированных с облачными сервисами.</p>
+<div class="admonition note">
+<p class="admonition-title">Примечание</p>
+<p>Для надежной работы в течение длительного времени рекомендуется добавить механизмы обработки ошибок и автоматического восстановления подключения, как показано в нашем коде. Также стоит учитывать лимиты API Google (100 запросов в минуту) при настройке интервала отправки данных.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="../mputelegram/mputelegram.html" class="btn btn-neutral float-left" title="MPU6050: уведомление о вибрации/наклоне в Telegram" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="../../../faq/index.html" class="btn btn-neutral float-right" title="FAQ" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2025, Dias Kabdualiyev. </p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

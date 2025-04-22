@@ -1,0 +1,374 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Проекты &mdash; документация Raspberry Pi Pico W Kit 0.1</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=d39ee99e" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.png"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=2b7aed8e"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/translations.js?v=5b699b7f"></script>
+      <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../search.html" />
+    <link rel="next" title="Подключение к интернету с использованием Wi-Fi на Raspberry Pi Pico W" href="wifi/wifi.html" />
+    <link rel="prev" title="Измерение ускорения и гироскопических данных с MPU6050 на Raspberry Pi Pico" href="../sensors/mpu6050/mpu6050.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Raspberry Pi Pico W Kit
+              <img src="../../_static/logo.png" class="logo" alt="Логотип"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../about/index.html">Учебный набор по MicroPython на базе Raspberry Pi Pico W</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html#id1">Вступление</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html#id2">Сильные стороны набора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html#id3">Для кого подходит этот набор</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html#id4">Компоненты набора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html#raspberry-pi-pico-w-15">Итоговый учебный план на Raspberry Pi Pico W (15 уроков)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../get-started/index.html">Знакомство с Raspberry Pi Pico W и MicroPython</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../get-started/picow.html">Знакомство с Pico W</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../get-started/micropython.html">Введение в MicroPython</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../get-started/micropython.html#id1">История начинается здесь</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../get-started/micropython.html#id2">Почему MicroPython?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../get-started/thonny.html">Установка Thonny IDE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../get-started/micropythoninstall.html">Установка MicroPython на ваш Pico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../get-started/uploadlibs.html">Загрузка библиотек на Pico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../get-started/thonnytutor.html">1.5 Краткое руководство по Thonny</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../get-started/thonnytutor.html#id1">Открытие и запуск кода напрямую</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Содержание курса по Raspberry Pi Pico W</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../sensors/index.html">Модуль датчиков и устройств</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../sensors/rgb/rgb.html">Управление RGB-светодиодом с общим катодом на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sensors/ws2812/ws2812.html">Управление адресным светодиодным кольцом на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sensors/light/light.html">Работа с датчиком освещенности на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sensors/pir/pir.html">Обнаружение движения с помощью PIR датчика и Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sensors/pot/pot.html">Управление потенциометром на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sensors/relay/relay.html">Управление реле с помощью Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sensors/servo/servo.html">Управление сервоприводом с помощью Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sensors/bme280/bme280.html">Использование датчика BME280 с Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sensors/mpu6050/mpu6050.html">Измерение ускорения и гироскопических данных с MPU6050 на Raspberry Pi Pico</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Проекты</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="wifi/wifi.html">Подключение к интернету с использованием Wi-Fi на Raspberry Pi Pico W</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webhello/webhello.html">Hello World: веб-сайт на Pico W</a></li>
+<li class="toctree-l3"><a class="reference internal" href="light/light.html">Считывание данных с датчика освещённости и отображение на веб-интерфейсе</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wifiscan/wifiscan.html">Управление RGB-светодиодом через веб-интерфейс</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wifioled/wifioled.html">Отображение информации о Wi-Fi на OLED-дисплее SSD1306</a></li>
+<li class="toctree-l3"><a class="reference internal" href="openwaethermap/owm.html">OpenWeatherMap: вывод данных о погоде на OLED-дисплей</a></li>
+<li class="toctree-l3"><a class="reference internal" href="owmws2812/owmws2812.html">Визуализация температуры из OpenWeatherMap на адресной ленте WS2812</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ws2812pir/ws2812pir.html">PIR-датчик: уведомление о движении с помощью WS2812</a></li>
+<li class="toctree-l3"><a class="reference internal" href="echobot/echobot.html">Телеграм-бот: введение</a></li>
+<li class="toctree-l3"><a class="reference internal" href="servotelegram/servotelegram.html">Управление сервоприводом через Telegram-бот</a></li>
+<li class="toctree-l3"><a class="reference internal" href="telegrambme/telegrambme.html">Получение данных о температуре (BME280) через Telegram-бот</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pirtelegram/pirtelegram.html">PIR-датчик: уведомление о движении в Telegram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mputelegram/mputelegram.html">MPU6050: уведомление о вибрации/наклоне в Telegram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="googlesheets/googlesheets.html">Google Sheets: хранение данных о температуре</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../faq/index.html">FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../faq/index.html#micropython">MicroPython</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../feedback/index.html">Обратная связь</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../feedback/index.html#id2">Контакты</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Raspberry Pi Pico W Kit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Содержание курса по Raspberry Pi Pico W</a></li>
+      <li class="breadcrumb-item active">Проекты</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Навигация по соседним страницам">
+        <a href="../sensors/mpu6050/mpu6050.html" class="btn btn-neutral float-left" title="Измерение ускорения и гироскопических данных с MPU6050 на Raspberry Pi Pico" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="wifi/wifi.html" class="btn btn-neutral float-right" title="Подключение к интернету с использованием Wi-Fi на Raspberry Pi Pico W" accesskey="n">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>Проекты<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="wifi/wifi.html">Подключение к интернету с использованием Wi-Fi на Raspberry Pi Pico W</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wifi/wifi.html#id1">Введение</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifi/wifi.html#id2">Необходимые компоненты</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifi/wifi.html#id3">Структура проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifi/wifi.html#id4">Пошаговые инструкции</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifi/wifi.html#id6">Инструкции по загрузке и запуску</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifi/wifi.html#id7">Возможные проблемы и их решения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifi/wifi.html#id9">Заключение</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifi/wifi.html#id10">Полный код программы</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="webhello/webhello.html">Hello World: веб-сайт на Pico W</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="webhello/webhello.html#id1">Введение</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webhello/webhello.html#id2">Необходимые компоненты</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webhello/webhello.html#id3">Структура проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webhello/webhello.html#id4">Шаг 1: Создание конфигурационного файла</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webhello/webhello.html#html">Шаг 2: Создание HTML-страницы</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webhello/webhello.html#id5">Шаг 3: Написание основного кода</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webhello/webhello.html#id6">Загрузка и запуск программы</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webhello/webhello.html#id7">Проверка работы веб-сервера</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webhello/webhello.html#id8">Возможные проблемы и их решения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webhello/webhello.html#id9">Заключение</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webhello/webhello.html#id10">Полный код программы</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="light/light.html">Считывание данных с датчика освещённости и отображение на веб-интерфейсе</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="light/light.html#id2">Введение</a></li>
+<li class="toctree-l2"><a class="reference internal" href="light/light.html#id3">Необходимые компоненты</a></li>
+<li class="toctree-l2"><a class="reference internal" href="light/light.html#id4">Схема подключения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="light/light.html#id5">Структура проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="light/light.html#id6">Пошаговые инструкции</a></li>
+<li class="toctree-l2"><a class="reference internal" href="light/light.html#id10">Объяснение кода</a></li>
+<li class="toctree-l2"><a class="reference internal" href="light/light.html#id11">Возможные проблемы и их решения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="light/light.html#id12">Расширения проекта</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="wifiscan/wifiscan.html">Управление RGB-светодиодом через веб-интерфейс</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wifiscan/wifiscan.html#id1">Введение</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifiscan/wifiscan.html#id2">Необходимые компоненты</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifiscan/wifiscan.html#id3">Схема подключения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifiscan/wifiscan.html#id4">Структура проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifiscan/wifiscan.html#id5">Код проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifiscan/wifiscan.html#id6">Загрузка и запуск проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifiscan/wifiscan.html#id7">Как это работает</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifiscan/wifiscan.html#id8">Возможные проблемы и их решения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifiscan/wifiscan.html#id9">Расширение проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifiscan/wifiscan.html#id10">Заключение</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="wifioled/wifioled.html">Отображение информации о Wi-Fi на OLED-дисплее SSD1306</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wifioled/wifioled.html#id1">Введение</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifioled/wifioled.html#id2">Необходимые компоненты</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifioled/wifioled.html#id3">Схема подключения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifioled/wifioled.html#id4">Структура проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifioled/wifioled.html#id5">Код проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifioled/wifioled.html#id6">Загрузка и запуск проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifioled/wifioled.html#id7">Как это работает</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifioled/wifioled.html#id8">Возможные проблемы и их решения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifioled/wifioled.html#id9">Расширение проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifioled/wifioled.html#id10">Заключение</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="openwaethermap/owm.html">OpenWeatherMap: вывод данных о погоде на OLED-дисплей</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="openwaethermap/owm.html#id1">Введение</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openwaethermap/owm.html#id2">Необходимые компоненты</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openwaethermap/owm.html#openweathermap">Подготовка к работе с OpenWeatherMap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openwaethermap/owm.html#id3">Схема подключения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openwaethermap/owm.html#id4">Структура проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openwaethermap/owm.html#id5">Код проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openwaethermap/owm.html#id6">Загрузка и запуск проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openwaethermap/owm.html#id7">Как это работает</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openwaethermap/owm.html#id8">Возможные проблемы и их решения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openwaethermap/owm.html#id9">Расширение проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openwaethermap/owm.html#id10">Заключение</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="owmws2812/owmws2812.html">Визуализация температуры из OpenWeatherMap на адресной ленте WS2812</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="owmws2812/owmws2812.html#id1">Введение</a></li>
+<li class="toctree-l2"><a class="reference internal" href="owmws2812/owmws2812.html#id2">Необходимые компоненты</a></li>
+<li class="toctree-l2"><a class="reference internal" href="owmws2812/owmws2812.html#id3">Схема подключения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="owmws2812/owmws2812.html#id4">Структура проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="owmws2812/owmws2812.html#id5">Код проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="owmws2812/owmws2812.html#id6">Возможные проблемы и их решения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="owmws2812/owmws2812.html#id7">Загрузка и запуск проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="owmws2812/owmws2812.html#id8">Как это работает</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ws2812pir/ws2812pir.html">PIR-датчик: уведомление о движении с помощью WS2812</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ws2812pir/ws2812pir.html#id1">Введение</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ws2812pir/ws2812pir.html#id2">Необходимые компоненты</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ws2812pir/ws2812pir.html#id3">Схема подключения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ws2812pir/ws2812pir.html#id4">Структура проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ws2812pir/ws2812pir.html#id5">Код проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ws2812pir/ws2812pir.html#id6">Загрузка и запуск проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ws2812pir/ws2812pir.html#id7">Как это работает</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ws2812pir/ws2812pir.html#id8">Возможные проблемы и их решения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ws2812pir/ws2812pir.html#id9">Расширение проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ws2812pir/ws2812pir.html#id10">Заключение</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="echobot/echobot.html">Телеграм-бот: введение</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="echobot/echobot.html#id2">Введение</a></li>
+<li class="toctree-l2"><a class="reference internal" href="echobot/echobot.html#id3">Необходимые компоненты</a></li>
+<li class="toctree-l2"><a class="reference internal" href="echobot/echobot.html#telegram-bot-api">Подготовка к работе с Telegram Bot API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="echobot/echobot.html#id4">Структура проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="echobot/echobot.html#id5">Код проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="echobot/echobot.html#id6">Загрузка и запуск проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="echobot/echobot.html#id7">Как это работает</a></li>
+<li class="toctree-l2"><a class="reference internal" href="echobot/echobot.html#id8">Возможные проблемы и их решения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="echobot/echobot.html#id9">Расширение проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="echobot/echobot.html#id10">Заключение</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="servotelegram/servotelegram.html">Управление сервоприводом через Telegram-бот</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="servotelegram/servotelegram.html#id1">Введение</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servotelegram/servotelegram.html#id2">Необходимые компоненты</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servotelegram/servotelegram.html#id3">Теория работы сервопривода</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servotelegram/servotelegram.html#id4">Схема подключения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servotelegram/servotelegram.html#id5">Структура проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servotelegram/servotelegram.html#id6">Код проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servotelegram/servotelegram.html#id7">Загрузка и запуск проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servotelegram/servotelegram.html#id8">Как это работает</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servotelegram/servotelegram.html#id9">Калибровка сервопривода</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servotelegram/servotelegram.html#id10">Возможные проблемы и их решения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servotelegram/servotelegram.html#id11">Расширение проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servotelegram/servotelegram.html#id12">Заключение</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="telegrambme/telegrambme.html">Получение данных о температуре (BME280) через Telegram-бот</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="telegrambme/telegrambme.html#id1">Введение</a></li>
+<li class="toctree-l2"><a class="reference internal" href="telegrambme/telegrambme.html#id2">Необходимые компоненты</a></li>
+<li class="toctree-l2"><a class="reference internal" href="telegrambme/telegrambme.html#bme280">О датчике BME280</a></li>
+<li class="toctree-l2"><a class="reference internal" href="telegrambme/telegrambme.html#id3">Схема подключения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="telegrambme/telegrambme.html#id4">Структура проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="telegrambme/telegrambme.html#id5">Код проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="telegrambme/telegrambme.html#id6">Загрузка и запуск проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="telegrambme/telegrambme.html#id7">Как это работает</a></li>
+<li class="toctree-l2"><a class="reference internal" href="telegrambme/telegrambme.html#id8">Калибровка датчика</a></li>
+<li class="toctree-l2"><a class="reference internal" href="telegrambme/telegrambme.html#id9">Возможные проблемы и их решения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="telegrambme/telegrambme.html#id10">Расширение проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="telegrambme/telegrambme.html#id11">Заключение</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pirtelegram/pirtelegram.html">PIR-датчик: уведомление о движении в Telegram</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pirtelegram/pirtelegram.html#id1">Введение</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pirtelegram/pirtelegram.html#id2">Необходимые компоненты</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pirtelegram/pirtelegram.html#pir">Теория работы PIR-датчика</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pirtelegram/pirtelegram.html#id3">Схема подключения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pirtelegram/pirtelegram.html#id4">Структура проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pirtelegram/pirtelegram.html#id5">Код проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pirtelegram/pirtelegram.html#id6">Загрузка и запуск проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pirtelegram/pirtelegram.html#id7">Как это работает</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pirtelegram/pirtelegram.html#id8">Настройка датчика PIR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pirtelegram/pirtelegram.html#id9">Возможные проблемы и их решения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pirtelegram/pirtelegram.html#id10">Расширение проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pirtelegram/pirtelegram.html#id11">Заключение</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mputelegram/mputelegram.html">MPU6050: уведомление о вибрации/наклоне в Telegram</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mputelegram/mputelegram.html#id1">Введение</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mputelegram/mputelegram.html#id2">Необходимые компоненты</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mputelegram/mputelegram.html#mpu6050">О датчике MPU6050</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mputelegram/mputelegram.html#id3">Схема подключения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mputelegram/mputelegram.html#id4">Структура проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mputelegram/mputelegram.html#id5">Код проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mputelegram/mputelegram.html#id6">Загрузка и запуск проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mputelegram/mputelegram.html#id7">Как это работает</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mputelegram/mputelegram.html#id8">Настройка чувствительности</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mputelegram/mputelegram.html#id9">Возможные проблемы и их решения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mputelegram/mputelegram.html#id10">Расширение проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mputelegram/mputelegram.html#id11">Заключение</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="googlesheets/googlesheets.html">Google Sheets: хранение данных о температуре</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="googlesheets/googlesheets.html#id1">Введение</a></li>
+<li class="toctree-l2"><a class="reference internal" href="googlesheets/googlesheets.html#id2">Необходимые компоненты</a></li>
+<li class="toctree-l2"><a class="reference internal" href="googlesheets/googlesheets.html#id3">Схема подключения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="googlesheets/googlesheets.html#google-sheets-apps-script">Настройка Google Sheets и скрипта Apps Script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="googlesheets/googlesheets.html#id4">Файловая структура проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="googlesheets/googlesheets.html#id5">Код проекта и его объяснение</a></li>
+<li class="toctree-l2"><a class="reference internal" href="googlesheets/googlesheets.html#id6">Загрузка и запуск проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="googlesheets/googlesheets.html#id7">Анализ данных и создание графиков в Google Sheets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="googlesheets/googlesheets.html#id8">Пример анализа данных с помощью формул</a></li>
+<li class="toctree-l2"><a class="reference internal" href="googlesheets/googlesheets.html#id9">Возможные проблемы и их решения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="googlesheets/googlesheets.html#id10">Расширение проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="googlesheets/googlesheets.html#id11">Заключение</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="../sensors/mpu6050/mpu6050.html" class="btn btn-neutral float-left" title="Измерение ускорения и гироскопических данных с MPU6050 на Raspberry Pi Pico" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="wifi/wifi.html" class="btn btn-neutral float-right" title="Подключение к интернету с использованием Wi-Fi на Raspberry Pi Pico W" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2025, Dias Kabdualiyev. </p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

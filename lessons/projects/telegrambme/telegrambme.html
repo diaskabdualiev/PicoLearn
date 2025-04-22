@@ -1,0 +1,708 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Получение данных о температуре (BME280) через Telegram-бот &mdash; документация Raspberry Pi Pico W Kit 0.1</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d39ee99e" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=2b7aed8e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/translations.js?v=5b699b7f"></script>
+      <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../../search.html" />
+    <link rel="next" title="PIR-датчик: уведомление о движении в Telegram" href="../pirtelegram/pirtelegram.html" />
+    <link rel="prev" title="Управление сервоприводом через Telegram-бот" href="../servotelegram/servotelegram.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Raspberry Pi Pico W Kit
+              <img src="../../../_static/logo.png" class="logo" alt="Логотип"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/index.html">Учебный набор по MicroPython на базе Raspberry Pi Pico W</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id1">Вступление</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id2">Сильные стороны набора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id3">Для кого подходит этот набор</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id4">Компоненты набора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#raspberry-pi-pico-w-15">Итоговый учебный план на Raspberry Pi Pico W (15 уроков)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get-started/index.html">Знакомство с Raspberry Pi Pico W и MicroPython</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/picow.html">Знакомство с Pico W</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/micropython.html">Введение в MicroPython</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/micropython.html#id1">История начинается здесь</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/micropython.html#id2">Почему MicroPython?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/thonny.html">Установка Thonny IDE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/micropythoninstall.html">Установка MicroPython на ваш Pico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/uploadlibs.html">Загрузка библиотек на Pico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/thonnytutor.html">1.5 Краткое руководство по Thonny</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/thonnytutor.html#id1">Открытие и запуск кода напрямую</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Содержание курса по Raspberry Pi Pico W</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../sensors/index.html">Модуль датчиков и устройств</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/rgb/rgb.html">Управление RGB-светодиодом с общим катодом на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/ws2812/ws2812.html">Управление адресным светодиодным кольцом на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/light/light.html">Работа с датчиком освещенности на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/pir/pir.html">Обнаружение движения с помощью PIR датчика и Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/pot/pot.html">Управление потенциометром на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/relay/relay.html">Управление реле с помощью Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/servo/servo.html">Управление сервоприводом с помощью Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/bme280/bme280.html">Использование датчика BME280 с Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/mpu6050/mpu6050.html">Измерение ускорения и гироскопических данных с MPU6050 на Raspberry Pi Pico</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Проекты</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../wifi/wifi.html">Подключение к интернету с использованием Wi-Fi на Raspberry Pi Pico W</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webhello/webhello.html">Hello World: веб-сайт на Pico W</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../light/light.html">Считывание данных с датчика освещённости и отображение на веб-интерфейсе</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wifiscan/wifiscan.html">Управление RGB-светодиодом через веб-интерфейс</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wifioled/wifioled.html">Отображение информации о Wi-Fi на OLED-дисплее SSD1306</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../openwaethermap/owm.html">OpenWeatherMap: вывод данных о погоде на OLED-дисплей</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../owmws2812/owmws2812.html">Визуализация температуры из OpenWeatherMap на адресной ленте WS2812</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ws2812pir/ws2812pir.html">PIR-датчик: уведомление о движении с помощью WS2812</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../echobot/echobot.html">Телеграм-бот: введение</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../servotelegram/servotelegram.html">Управление сервоприводом через Telegram-бот</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Получение данных о температуре (BME280) через Telegram-бот</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pirtelegram/pirtelegram.html">PIR-датчик: уведомление о движении в Telegram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mputelegram/mputelegram.html">MPU6050: уведомление о вибрации/наклоне в Telegram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../googlesheets/googlesheets.html">Google Sheets: хранение данных о температуре</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq/index.html">FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../faq/index.html#micropython">MicroPython</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../feedback/index.html">Обратная связь</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../feedback/index.html#id2">Контакты</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Raspberry Pi Pico W Kit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Содержание курса по Raspberry Pi Pico W</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Проекты</a></li>
+      <li class="breadcrumb-item active">Получение данных о температуре (BME280) через Telegram-бот</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Навигация по соседним страницам">
+        <a href="../servotelegram/servotelegram.html" class="btn btn-neutral float-left" title="Управление сервоприводом через Telegram-бот" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="../pirtelegram/pirtelegram.html" class="btn btn-neutral float-right" title="PIR-датчик: уведомление о движении в Telegram" accesskey="n">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="bme280-telegram">
+<h1>Получение данных о температуре (BME280) через Telegram-бот<a class="headerlink" href="#bme280-telegram" title="Ссылка на этот заголовок"></a></h1>
+<section id="id1">
+<h2>Введение<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h2>
+<p>В этом уроке мы создадим Telegram-бота, который будет отправлять данные о температуре, влажности и атмосферном давлении с датчика BME280, подключенного к Raspberry Pi Pico W. Пользователь сможет получать актуальные показания датчика, отправив команду <cite>/temp</cite>, что делает этот проект отличным примером удалённого мониторинга параметров окружающей среды.</p>
+</section>
+<section id="id2">
+<h2>Необходимые компоненты<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
+<ul class="simple">
+<li><p>Raspberry Pi Pico W</p></li>
+<li><p>Датчик BME280 (модуль с интерфейсом I2C)</p></li>
+<li><p>Соединительные провода</p></li>
+<li><p>Макетная плата (опционально)</p></li>
+<li><p>Доступ к Wi-Fi сети</p></li>
+<li><p>Аккаунт в Telegram</p></li>
+</ul>
+</section>
+<section id="bme280">
+<h2>О датчике BME280<a class="headerlink" href="#bme280" title="Ссылка на этот заголовок"></a></h2>
+<p>BME280 - это компактный цифровой датчик от Bosch, который позволяет измерять:
+- Температуру (с точностью до ±1°C)
+- Относительную влажность (с точностью до ±3%)
+- Атмосферное давление (с точностью до ±1 гПа)</p>
+<p>Датчик использует интерфейс I2C для связи с микроконтроллером, что требует всего двух линий передачи данных (SDA и SCL), помимо питания (VCC) и заземления (GND).</p>
+</section>
+<section id="id3">
+<h2>Схема подключения<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h2>
+<p>Подключение датчика BME280 к Raspberry Pi Pico W через I2C:</p>
+<ul class="simple">
+<li><p>VCC датчика BME280 к 3.3V (PIN 36) Pico W</p></li>
+<li><p>GND датчика BME280 к GND (PIN 38) Pico W</p></li>
+<li><p>SCL датчика BME280 к GP1 (PIN 2) Pico W - это I2C0 SCL</p></li>
+<li><p>SDA датчика BME280 к GP0 (PIN 1) Pico W - это I2C0 SDA</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Примечание</p>
+<p>BME280 может иметь разный I2C адрес в зависимости от модификации модуля. Обычно используется адрес 0x76 или 0x77. В нашем коде по умолчанию используется 0x76, но это можно изменить при необходимости.</p>
+</div>
+</section>
+<section id="id4">
+<h2>Структура проекта<a class="headerlink" href="#id4" title="Ссылка на этот заголовок"></a></h2>
+<p>Наш проект будет состоять из следующих файлов:
+- telegram.py - библиотека для работы с Telegram API (предоставлена)
+- bme280.py - библиотека для работы с датчиком BME280 (предоставлена)
+- config.py - конфигурационный файл с настройками Wi-Fi и токеном бота
+- main.py - основной файл программы с логикой бота и чтением данных с датчика</p>
+</section>
+<section id="id5">
+<h2>Код проекта<a class="headerlink" href="#id5" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p>Сначала создадим файл конфигурации (config.py):</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Конфигурационный файл для проекта BME280 с Telegram ботом</span>
+
+<span class="c1"># Настройки Wi-Fi</span>
+<span class="n">WIFI_SSID</span> <span class="o">=</span> <span class="s2">&quot;Название_вашей_сети&quot;</span>
+<span class="n">WIFI_PASSWORD</span> <span class="o">=</span> <span class="s2">&quot;Пароль_вашей_сети&quot;</span>
+
+<span class="c1"># Токен Telegram бота (получен от BotFather)</span>
+<span class="n">BOT_TOKEN</span> <span class="o">=</span> <span class="s2">&quot;ваш_токен_от_botfather&quot;</span>
+
+<span class="c1"># Настройки BME280</span>
+<span class="n">I2C_SCL_PIN</span> <span class="o">=</span> <span class="mi">1</span>   <span class="c1"># GP1 для I2C0</span>
+<span class="n">I2C_SDA_PIN</span> <span class="o">=</span> <span class="mi">0</span>   <span class="c1"># GP0 для I2C0</span>
+<span class="n">BME280_ADDR</span> <span class="o">=</span> <span class="mh">0x76</span>  <span class="c1"># Стандартный адрес для BME280 (иногда бывает 0x77)</span>
+
+<span class="c1"># Интервал проверки данных (в секундах)</span>
+<span class="n">UPDATE_INTERVAL</span> <span class="o">=</span> <span class="mi">60</span>  <span class="c1"># Обновлять данные каждую минуту</span>
+
+<span class="c1"># Авторизованные пользователи (Telegram IDs)</span>
+<span class="c1"># Оставьте пустым для доступа всем пользователям</span>
+<span class="c1"># или добавьте ID пользователей, которым разрешен доступ</span>
+<span class="c1"># например: AUTHORIZED_USERS = [123456789, 987654321]</span>
+<span class="n">AUTHORIZED_USERS</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Теперь создадим основной файл программы (main.py):</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">machine</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">uasyncio</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">machine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pin</span><span class="p">,</span> <span class="n">I2C</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">gc</span>
+
+<span class="c1"># Импортируем библиотеки</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">telegram</span><span class="w"> </span><span class="kn">import</span> <span class="n">TelegramBot</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">bme280</span><span class="w"> </span><span class="kn">import</span> <span class="n">BME280</span>
+
+<span class="c1"># Импортируем настройки из config.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">config</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">WIFI_SSID</span><span class="p">,</span> <span class="n">WIFI_PASSWORD</span><span class="p">,</span> <span class="n">BOT_TOKEN</span><span class="p">,</span>
+                   <span class="n">I2C_SCL_PIN</span><span class="p">,</span> <span class="n">I2C_SDA_PIN</span><span class="p">,</span> <span class="n">BME280_ADDR</span><span class="p">,</span>
+                   <span class="n">UPDATE_INTERVAL</span><span class="p">,</span> <span class="n">AUTHORIZED_USERS</span><span class="p">)</span>
+
+<span class="c1"># Настройка пина для встроенного светодиода</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="c1"># Кэшированные данные датчика</span>
+<span class="n">last_temp</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">last_pressure</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">last_humidity</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">last_update_time</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># Флаг для обозначения статуса инициализации датчика</span>
+<span class="n">sensor_initialized</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">sensor_error_message</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="c1"># Функция для мигания светодиодом</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">blink_led</span><span class="p">(</span><span class="n">times</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="mf">0.2</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">times</span><span class="p">):</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+
+<span class="c1"># Функция для инициализации BME280</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">init_bme280</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">sensor_initialized</span><span class="p">,</span> <span class="n">sensor_error_message</span><span class="p">,</span> <span class="n">bme</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Настройка I2C для BME280</span>
+        <span class="n">i2c</span> <span class="o">=</span> <span class="n">I2C</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">scl</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="n">I2C_SCL_PIN</span><span class="p">),</span> <span class="n">sda</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="n">I2C_SDA_PIN</span><span class="p">))</span>
+
+        <span class="c1"># Сканируем устройства на шине I2C</span>
+        <span class="n">devices</span> <span class="o">=</span> <span class="n">i2c</span><span class="o">.</span><span class="n">scan</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;I2C устройства найдены по адресам: </span><span class="si">{</span><span class="p">[</span><span class="nb">hex</span><span class="p">(</span><span class="n">device</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">devices</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">BME280_ADDR</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">devices</span><span class="p">:</span>
+            <span class="n">sensor_error_message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Датчик BME280 не найден по адресу </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="n">BME280_ADDR</span><span class="p">)</span><span class="si">}</span><span class="s2">. Проверьте подключение.&quot;</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">sensor_error_message</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Инициализация датчика BME280</span>
+        <span class="n">bme</span> <span class="o">=</span> <span class="n">BME280</span><span class="p">(</span><span class="n">i2c</span><span class="o">=</span><span class="n">i2c</span><span class="p">,</span> <span class="n">address</span><span class="o">=</span><span class="n">BME280_ADDR</span><span class="p">)</span>
+
+        <span class="c1"># Проверяем, работает ли датчик, считывая данные</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="n">bme</span><span class="o">.</span><span class="n">values</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Данные с датчика BME280: </span><span class="si">{</span><span class="n">values</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">sensor_initialized</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">sensor_error_message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Ошибка инициализации BME280: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">sensor_error_message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="c1"># Функция для получения данных с датчика</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_sensor_data</span><span class="p">(</span><span class="n">force_update</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">last_temp</span><span class="p">,</span> <span class="n">last_pressure</span><span class="p">,</span> <span class="n">last_humidity</span><span class="p">,</span> <span class="n">last_update_time</span>
+
+    <span class="n">current_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+    <span class="c1"># Проверяем, нужно ли обновить данные</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">force_update</span> <span class="ow">and</span> <span class="p">(</span><span class="n">current_time</span> <span class="o">-</span> <span class="n">last_update_time</span> <span class="o">&lt;</span> <span class="n">UPDATE_INTERVAL</span><span class="p">):</span>
+        <span class="c1"># Используем кэшированные данные</span>
+        <span class="k">return</span> <span class="n">last_temp</span><span class="p">,</span> <span class="n">last_pressure</span><span class="p">,</span> <span class="n">last_humidity</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">sensor_initialized</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Считываем данные с датчика</span>
+        <span class="n">temp</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">humidity</span> <span class="o">=</span> <span class="n">bme</span><span class="o">.</span><span class="n">read_compensated_data</span><span class="p">()</span>
+
+        <span class="c1"># Преобразуем данные в удобный формат</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">temp</span> <span class="o">/</span> <span class="mf">100.0</span>  <span class="c1"># Температура в градусах Цельсия</span>
+        <span class="n">pressure</span> <span class="o">=</span> <span class="n">pressure</span> <span class="o">/</span> <span class="mf">25600.0</span>  <span class="c1"># Давление в гПа</span>
+        <span class="n">humidity</span> <span class="o">=</span> <span class="n">humidity</span> <span class="o">/</span> <span class="mf">1024.0</span>  <span class="c1"># Влажность в процентах</span>
+
+        <span class="c1"># Обновляем кэшированные данные</span>
+        <span class="n">last_temp</span> <span class="o">=</span> <span class="n">temp</span>
+        <span class="n">last_pressure</span> <span class="o">=</span> <span class="n">pressure</span>
+        <span class="n">last_humidity</span> <span class="o">=</span> <span class="n">humidity</span>
+        <span class="n">last_update_time</span> <span class="o">=</span> <span class="n">current_time</span>
+
+        <span class="c1"># Мигаем светодиодом при обновлении данных</span>
+        <span class="n">blink_led</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">temp</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">humidity</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка чтения данных с BME280: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+<span class="c1"># Функция для форматирования данных для отправки пользователю</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">format_sensor_data</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">humidity</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">temp</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">pressure</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">humidity</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">sensor_error_message</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;❌ Ошибка датчика: </span><span class="si">{</span><span class="n">sensor_error_message</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;❌ Данные с датчика недоступны. Проверьте подключение BME280.&quot;</span>
+
+    <span class="c1"># Вычисляем высоту над уровнем моря на основе давления</span>
+    <span class="n">altitude</span> <span class="o">=</span> <span class="mi">44330</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">pressure</span><span class="o">/</span><span class="mf">1013.25</span><span class="p">)</span><span class="o">**</span><span class="mf">0.1903</span><span class="p">)</span>  <span class="c1"># Приблизительная формула</span>
+
+    <span class="c1"># Определяем комфортность температуры</span>
+    <span class="n">temp_comfort</span> <span class="o">=</span> <span class="s2">&quot;🥶 холодно&quot;</span>
+    <span class="k">if</span> <span class="n">temp</span> <span class="o">&gt;</span> <span class="mi">30</span><span class="p">:</span>
+        <span class="n">temp_comfort</span> <span class="o">=</span> <span class="s2">&quot;🔥 жарко&quot;</span>
+    <span class="k">elif</span> <span class="n">temp</span> <span class="o">&gt;</span> <span class="mi">25</span><span class="p">:</span>
+        <span class="n">temp_comfort</span> <span class="o">=</span> <span class="s2">&quot;♨️ тепло&quot;</span>
+    <span class="k">elif</span> <span class="n">temp</span> <span class="o">&gt;</span> <span class="mi">18</span><span class="p">:</span>
+        <span class="n">temp_comfort</span> <span class="o">=</span> <span class="s2">&quot;✅ комфортно&quot;</span>
+    <span class="k">elif</span> <span class="n">temp</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="n">temp_comfort</span> <span class="o">=</span> <span class="s2">&quot;❄️ прохладно&quot;</span>
+
+    <span class="c1"># Определяем комфортность влажности</span>
+    <span class="n">humidity_comfort</span> <span class="o">=</span> <span class="s2">&quot;✅ нормальная&quot;</span>
+    <span class="k">if</span> <span class="n">humidity</span> <span class="o">&gt;</span> <span class="mi">70</span><span class="p">:</span>
+        <span class="n">humidity_comfort</span> <span class="o">=</span> <span class="s2">&quot;💧 высокая&quot;</span>
+    <span class="k">elif</span> <span class="n">humidity</span> <span class="o">&lt;</span> <span class="mi">30</span><span class="p">:</span>
+        <span class="n">humidity_comfort</span> <span class="o">=</span> <span class="s2">&quot;🏜️ низкая&quot;</span>
+
+    <span class="c1"># Определяем условия давления</span>
+    <span class="n">pressure_condition</span> <span class="o">=</span> <span class="s2">&quot;✅ нормальное&quot;</span>
+    <span class="k">if</span> <span class="n">pressure</span> <span class="o">&gt;</span> <span class="mi">1020</span><span class="p">:</span>
+        <span class="n">pressure_condition</span> <span class="o">=</span> <span class="s2">&quot;☀️ высокое&quot;</span>
+    <span class="k">elif</span> <span class="n">pressure</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">:</span>
+        <span class="n">pressure_condition</span> <span class="o">=</span> <span class="s2">&quot;🌧️ низкое&quot;</span>
+
+    <span class="c1"># Формируем сообщение с данными</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;📊 Данные с датчика BME280:</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+    <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;🌡️ Температура: </span><span class="si">{</span><span class="n">temp</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°C (</span><span class="si">{</span><span class="n">temp_comfort</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;💧 Влажность: </span><span class="si">{</span><span class="n">humidity</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">% (</span><span class="si">{</span><span class="n">humidity_comfort</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;🔄 Давление: </span><span class="si">{</span><span class="n">pressure</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> гПа (</span><span class="si">{</span><span class="n">pressure_condition</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;🏔️ Высота: ~</span><span class="si">{</span><span class="n">altitude</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> м над уровнем моря</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+
+    <span class="c1"># Добавляем время последнего обновления</span>
+    <span class="n">last_update</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">last_update_time</span><span class="p">)</span>
+    <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;🕒 Данные обновлены: </span><span class="si">{</span><span class="n">last_update</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">last_update</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">last_update</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="k">return</span> <span class="n">message</span>
+
+<span class="c1"># Функция для проверки авторизации пользователя</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_authorized</span><span class="p">(</span><span class="n">user_id</span><span class="p">):</span>
+    <span class="c1"># Если список авторизованных пользователей пуст, разрешаем всем</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">AUTHORIZED_USERS</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="c1"># Иначе проверяем, есть ли пользователь в списке</span>
+    <span class="k">return</span> <span class="n">user_id</span> <span class="ow">in</span> <span class="n">AUTHORIZED_USERS</span>
+
+<span class="c1"># Обработчик сообщений для бота</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">message_handler</span><span class="p">(</span><span class="n">bot</span><span class="p">,</span> <span class="n">msg_type</span><span class="p">,</span> <span class="n">chat_name</span><span class="p">,</span> <span class="n">sender_name</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Получено сообщение от </span><span class="si">{</span><span class="n">sender_name</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">chat_id</span><span class="si">}</span><span class="s2">): </span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Получаем ID пользователя</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">user_id</span> <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">][</span><span class="s1">&#39;from&#39;</span><span class="p">][</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">user_id</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># Проверяем авторизацию</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_authorized</span><span class="p">(</span><span class="n">user_id</span><span class="p">):</span>
+        <span class="n">bot</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;❌ У вас нет доступа к данным датчика.&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="c1"># Обработка команды /start</span>
+    <span class="k">if</span> <span class="n">text</span> <span class="o">==</span> <span class="s2">&quot;/start&quot;</span><span class="p">:</span>
+        <span class="n">welcome_message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Привет, </span><span class="si">{</span><span class="n">sender_name</span><span class="si">}</span><span class="s2">! 👋</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">welcome_message</span> <span class="o">+=</span> <span class="s2">&quot;Я бот для мониторинга окружающей среды с датчиком BME280.</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">welcome_message</span> <span class="o">+=</span> <span class="s2">&quot;Отправь команду /temp, чтобы получить текущие данные о температуре, влажности и давлении.&quot;</span>
+        <span class="n">bot</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">chat_id</span><span class="p">,</span> <span class="n">welcome_message</span><span class="p">)</span>
+
+    <span class="c1"># Обработка команды /help</span>
+    <span class="k">elif</span> <span class="n">text</span> <span class="o">==</span> <span class="s2">&quot;/help&quot;</span><span class="p">:</span>
+        <span class="n">help_message</span> <span class="o">=</span> <span class="s2">&quot;Доступные команды:</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">help_message</span> <span class="o">+=</span> <span class="s2">&quot;/start - Начать работу с ботом</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">help_message</span> <span class="o">+=</span> <span class="s2">&quot;/help - Показать эту справку</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">help_message</span> <span class="o">+=</span> <span class="s2">&quot;/temp - Получить текущие данные с датчика</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">help_message</span> <span class="o">+=</span> <span class="s2">&quot;/status - Показать статус устройства&quot;</span>
+        <span class="n">bot</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">chat_id</span><span class="p">,</span> <span class="n">help_message</span><span class="p">)</span>
+
+    <span class="c1"># Обработка команды /status</span>
+    <span class="k">elif</span> <span class="n">text</span> <span class="o">==</span> <span class="s2">&quot;/status&quot;</span><span class="p">:</span>
+        <span class="n">uptime_sec</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">uptime_min</span> <span class="o">=</span> <span class="n">uptime_sec</span> <span class="o">//</span> <span class="mi">60</span>
+        <span class="n">uptime_hours</span> <span class="o">=</span> <span class="n">uptime_min</span> <span class="o">//</span> <span class="mi">60</span>
+
+        <span class="n">status_message</span> <span class="o">=</span> <span class="s2">&quot;📊 Статус устройства:</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">status_message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;🕒 Время работы: </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">uptime_hours</span><span class="p">)</span><span class="si">}</span><span class="s2">ч </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">uptime_min</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">60</span><span class="p">)</span><span class="si">}</span><span class="s2">м </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">uptime_sec</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">60</span><span class="p">)</span><span class="si">}</span><span class="s2">с</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">status_message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;💾 Свободная память: </span><span class="si">{</span><span class="n">gc</span><span class="o">.</span><span class="n">mem_free</span><span class="p">()</span><span class="si">}</span><span class="s2"> байт</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">status_message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;🌡️ Температура CPU: </span><span class="si">{</span><span class="n">machine</span><span class="o">.</span><span class="n">internal_temp</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">20</span><span class="si">}</span><span class="s2"> °C</span><span class="se">\n</span><span class="s2">&quot;</span>  <span class="c1"># Коррекция для более точных показаний</span>
+
+        <span class="k">if</span> <span class="n">sensor_initialized</span><span class="p">:</span>
+            <span class="n">status_message</span> <span class="o">+=</span> <span class="s2">&quot;🟢 Датчик BME280: Подключен и работает</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">status_message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;🔴 Датчик BME280: Ошибка (</span><span class="si">{</span><span class="n">sensor_error_message</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+        <span class="n">last_update</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">last_update_time</span><span class="p">)</span> <span class="k">if</span> <span class="n">last_update_time</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">last_update</span><span class="p">:</span>
+            <span class="n">status_message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;🔄 Последнее обновление данных: </span><span class="si">{</span><span class="n">last_update</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">last_update</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">last_update</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">status_message</span> <span class="o">+=</span> <span class="s2">&quot;🔄 Данные с датчика еще не считывались&quot;</span>
+
+        <span class="n">bot</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">chat_id</span><span class="p">,</span> <span class="n">status_message</span><span class="p">)</span>
+
+    <span class="c1"># Обработка команды /temp</span>
+    <span class="k">elif</span> <span class="n">text</span> <span class="o">==</span> <span class="s2">&quot;/temp&quot;</span><span class="p">:</span>
+        <span class="c1"># Считываем данные с датчика (с принудительным обновлением)</span>
+        <span class="n">temp</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">humidity</span> <span class="o">=</span> <span class="n">read_sensor_data</span><span class="p">(</span><span class="n">force_update</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Форматируем и отправляем сообщение</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">format_sensor_data</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">humidity</span><span class="p">)</span>
+        <span class="n">bot</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">chat_id</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+
+    <span class="c1"># Для неизвестных команд</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">bot</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;❓ Неизвестная команда. Отправьте /help для списка доступных команд.&quot;</span><span class="p">)</span>
+
+<span class="c1"># Асинхронная функция для периодического чтения данных с датчика</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">periodic_sensor_read</span><span class="p">():</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Считываем данные для кэширования</span>
+            <span class="n">read_sensor_data</span><span class="p">(</span><span class="n">force_update</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Периодическое обновление данных: T=</span><span class="si">{</span><span class="n">last_temp</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°C, P=</span><span class="si">{</span><span class="n">last_pressure</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">гПа, H=</span><span class="si">{</span><span class="n">last_humidity</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка при периодическом чтении датчика: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Ждем до следующего обновления</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">UPDATE_INTERVAL</span><span class="p">)</span>
+
+<span class="c1"># Асинхронная функция для запуска бота</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">run_bot</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Запуск Telegram-бота...&quot;</span><span class="p">)</span>
+    <span class="n">bot</span> <span class="o">=</span> <span class="n">TelegramBot</span><span class="p">(</span><span class="n">BOT_TOKEN</span><span class="p">,</span> <span class="n">message_handler</span><span class="p">)</span>
+
+    <span class="c1"># Запускаем основной цикл бота</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Бот запущен! Ожидание команд...&quot;</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">bot</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка в работе бота: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># Мигаем светодиодом при ошибке</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+            <span class="n">blink_led</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># Главная функция программы</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># Импортируем gc для отслеживания памяти</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">gc</span>
+    <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Инициализация...&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Индикация запуска с помощью светодиода</span>
+    <span class="n">blink_led</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+
+    <span class="c1"># Инициализируем датчик BME280</span>
+    <span class="k">if</span> <span class="n">init_bme280</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Датчик BME280 успешно инициализирован!&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Не удалось инициализировать датчик BME280!&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Подключаемся к Wi-Fi</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Подключение к Wi-Fi: </span><span class="si">{</span><span class="n">WIFI_SSID</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+
+    <span class="n">bot</span> <span class="o">=</span> <span class="n">TelegramBot</span><span class="p">(</span><span class="n">BOT_TOKEN</span><span class="p">,</span> <span class="n">message_handler</span><span class="p">)</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">connect_wifi</span><span class="p">(</span><span class="n">WIFI_SSID</span><span class="p">,</span> <span class="n">WIFI_PASSWORD</span><span class="p">)</span>
+
+    <span class="c1"># Мигаем светодиодом после успешного подключения</span>
+    <span class="n">blink_led</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Wi-Fi подключен!&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Запускаем бота в отдельной задаче</span>
+    <span class="n">bot_task</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">run_bot</span><span class="p">())</span>
+
+    <span class="c1"># Запускаем периодическое чтение данных в отдельной задаче</span>
+    <span class="n">sensor_task</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">periodic_sensor_read</span><span class="p">())</span>
+
+    <span class="c1"># Запускаем периодическую очистку памяти и индикацию работы</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>  <span class="c1"># Светодиод горит, показывая, что программа работает</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Запускаем программу с помощью асинхронного цикла событий</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Критическая ошибка: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">machine</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>  <span class="c1"># Перезагрузка при критической ошибке</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h2>Загрузка и запуск проекта<a class="headerlink" href="#id6" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p>Убедитесь, что на вашем Raspberry Pi Pico W установлен MicroPython с поддержкой Wi-Fi.</p></li>
+<li><p>Скопируйте файлы библиотек на ваш Pico W:
+- telegram.py (библиотека для работы с Telegram API)
+- bme280.py (библиотека для работы с датчиком BME280)</p></li>
+<li><p>Создайте и загрузите на Pico W файлы:
+- config.py (с вашими настройками Wi-Fi, токеном бота и параметрами датчика)
+- main.py (с кодом бота и чтением данных с датчика)</p></li>
+<li><p>Отредактируйте файл config.py, указав:
+- Имя и пароль вашей Wi-Fi сети
+- Токен вашего Telegram-бота, полученный от BotFather
+- При необходимости измените I2C_SCL_PIN, I2C_SDA_PIN и BME280_ADDR, если у вас другая конфигурация</p></li>
+<li><p>Подключите датчик BME280 к Pico W согласно схеме:
+- VCC -&gt; 3.3V
+- GND -&gt; GND
+- SCL -&gt; GP1
+- SDA -&gt; GP0</p></li>
+<li><p>Запустите программу, нажав кнопку Run в Thonny или перезагрузив Pico W.</p></li>
+<li><p>Найдите своего бота в Telegram по имени, которое вы указали при создании, и отправьте ему команду <cite>/start</cite>.</p></li>
+<li><p>После приветственного сообщения вы можете получать данные о температуре, влажности и давлении с помощью команды <cite>/temp</cite>.</p></li>
+</ol>
+</section>
+<section id="id7">
+<h2>Как это работает<a class="headerlink" href="#id7" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Инициализация датчика BME280</strong>:
+- Создаем объект I2C для связи с датчиком
+- Сканируем I2C-шину для поиска устройств
+- Инициализируем датчик BME280 с использованием библиотеки</p></li>
+<li><p><strong>Чтение данных с датчика</strong>:
+- Функция <cite>read_sensor_data</cite> получает «сырые» данные с датчика
+- Преобразуем данные в удобный формат (градусы Цельсия, гПа, проценты)
+- Кэшируем данные для уменьшения нагрузки на датчик</p></li>
+<li><p><strong>Форматирование данных для отправки</strong>:
+- Функция <cite>format_sensor_data</cite> создает информативное сообщение
+- Добавляем эмодзи и описательные характеристики (тепло/холодно, высокое/низкое давление)
+- Вычисляем приблизительную высоту над уровнем моря на основе давления</p></li>
+<li><p><strong>Обработка команд Telegram</strong>:
+- Обрабатываем команду <cite>/temp</cite> для отправки актуальных данных
+- Поддерживаем дополнительные команды <cite>/start</cite>, <cite>/help</cite> и <cite>/status</cite>
+- Проверяем авторизацию пользователя, если она настроена</p></li>
+<li><p><strong>Асинхронная архитектура</strong>:
+- Используем асинхронное программирование для эффективной работы
+- Запускаем две задачи: бот и периодическое чтение данных
+- Используем кэширование данных, чтобы не считывать с датчика при каждом запросе</p></li>
+</ol>
+</section>
+<section id="id8">
+<h2>Калибровка датчика<a class="headerlink" href="#id8" title="Ссылка на этот заголовок"></a></h2>
+<p>Датчик BME280 обычно уже откалиброван на заводе, но вы можете внести некоторые коррективы для повышения точности:</p>
+<ol class="arabic simple">
+<li><p><strong>Калибровка температуры</strong>:
+- Сравните показания датчика с известным эталоном (например, с точным термометром)
+- Добавьте коррекцию в коде, например:
+<code class="docutils literal notranslate"><span class="pre">`python</span>
+<span class="pre">temp</span> <span class="pre">=</span> <span class="pre">temp</span> <span class="pre">/</span> <span class="pre">100.0</span> <span class="pre">-</span> <span class="pre">1.5</span>&#160; <span class="pre">#</span> <span class="pre">Коррекция</span> <span class="pre">на</span> <span class="pre">-1.5</span> <span class="pre">градуса</span>
+<span class="pre">`</span></code></p></li>
+<li><p><strong>Калибровка давления</strong>:
+- Найдите текущее атмосферное давление по данным ближайшей метеостанции
+- Установите уровень моря для правильного расчета высоты:
+<code class="docutils literal notranslate"><span class="pre">`python</span>
+<span class="pre">bme.sealevel</span> <span class="pre">=</span> <span class="pre">101325</span>&#160; <span class="pre">#</span> <span class="pre">Давление</span> <span class="pre">на</span> <span class="pre">уровне</span> <span class="pre">моря</span> <span class="pre">в</span> <span class="pre">Па</span>
+<span class="pre">`</span></code></p></li>
+<li><p><strong>Учет высоты над уровнем моря</strong>:
+- Если вы знаете вашу высоту над уровнем моря, можно скорректировать давление:
+<code class="docutils literal notranslate"><span class="pre">`python</span>
+<span class="pre">#</span> <span class="pre">Преобразование</span> <span class="pre">давления</span> <span class="pre">на</span> <span class="pre">вашей</span> <span class="pre">высоте</span> <span class="pre">в</span> <span class="pre">давление</span> <span class="pre">на</span> <span class="pre">уровне</span> <span class="pre">моря</span>
+<span class="pre">altitude</span> <span class="pre">=</span> <span class="pre">300</span>&#160; <span class="pre">#</span> <span class="pre">Ваша</span> <span class="pre">высота</span> <span class="pre">над</span> <span class="pre">уровнем</span> <span class="pre">моря</span> <span class="pre">в</span> <span class="pre">метрах</span>
+<span class="pre">pressure_sea_level</span> <span class="pre">=</span> <span class="pre">pressure</span> <span class="pre">*</span> <span class="pre">(1</span> <span class="pre">-</span> <span class="pre">(0.0065</span> <span class="pre">*</span> <span class="pre">altitude)</span> <span class="pre">/</span> <span class="pre">(temp</span> <span class="pre">+</span> <span class="pre">0.0065</span> <span class="pre">*</span> <span class="pre">altitude</span> <span class="pre">+</span> <span class="pre">273.15))</span> <span class="pre">**</span> <span class="pre">-5.257</span>
+<span class="pre">`</span></code></p></li>
+</ol>
+</section>
+<section id="id9">
+<h2>Возможные проблемы и их решения<a class="headerlink" href="#id9" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Датчик не определяется на I2C шине</strong>:
+- Проверьте правильность подключения проводов (VCC, GND, SCL, SDA)
+- Убедитесь, что вы используете правильный I2C адрес (обычно 0x76 или 0x77)
+- Проверьте целостность проводов и контактов
+- Попробуйте использовать подтягивающие резисторы на линиях SCL и SDA (обычно 4.7kΩ к VCC)</p></li>
+<li><p><strong>Некорректные показания датчика</strong>:
+- Убедитесь, что датчик не нагревается от других компонентов (включая сам Pico W)
+- Проверьте питание датчика (должно быть стабильное 3.3В)
+- Дайте датчику «прогреться» несколько минут перед считыванием показаний
+- Избегайте размещения датчика вблизи источников тепла, холода или влаги</p></li>
+<li><p><strong>Бот не отвечает на команды</strong>:
+- Проверьте подключение к Wi-Fi
+- Убедитесь, что токен бота указан правильно
+- Включите режим отладки в библиотеке TelegramBot для получения дополнительной информации</p></li>
+<li><p><strong>Высокое энергопотребление</strong>:
+- Увеличьте UPDATE_INTERVAL для менее частого опроса датчика
+- Используйте режим сна между измерениями
+- Отключите лишние функции (например, подсветку светодиода)</p></li>
+<li><p><strong>Ошибки при получении данных</strong>:
+- Проверьте версию библиотеки bme280.py
+- Убедитесь, что в системе достаточно памяти для работы программы
+- Добавьте больше обработчиков исключений в критичных местах кода</p></li>
+</ol>
+</section>
+<section id="id10">
+<h2>Расширение проекта<a class="headerlink" href="#id10" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Добавление графиков и истории измерений</strong>:
+- Сохраняйте историю показаний в файл или в память
+- Добавьте команду для отправки графика изменения параметров за день/неделю
+- Используйте библиотеку для построения простых графиков и отправки их в виде изображений</p></li>
+<li><p><strong>Интеграция с другими датчиками</strong>:
+- Добавьте датчик CO2, PM2.5/PM10 для более полного мониторинга воздуха
+- Подключите датчик освещенности для оценки уровня света
+- Создайте комплексную метеостанцию с датчиком направления и скорости ветра</p></li>
+<li><p><strong>Улучшение интерфейса бота</strong>:
+- Добавьте Inline-клавиатуру с быстрыми командами
+- Реализуйте отправку уведомлений при превышении пороговых значений
+- Добавьте возможность настройки интервалов обновления и пороговых значений через бота</p></li>
+<li><p><strong>Анализ данных и прогнозы</strong>:
+- Реализуйте простые алгоритмы для прогнозирования погоды на основе изменения давления
+- Добавьте определение комфортности на основе индекса теплового комфорта
+- Создайте систему оповещений о возможных изменениях погоды</p></li>
+<li><p><strong>Энергосбережение для автономной работы</strong>:
+- Реализуйте режимы глубокого сна для экономии энергии
+- Добавьте поддержку питания от батареи с контролем заряда
+- Оптимизируйте код для минимального энергопотребления</p></li>
+</ol>
+</section>
+<section id="id11">
+<h2>Заключение<a class="headerlink" href="#id11" title="Ссылка на этот заголовок"></a></h2>
+<p>В этом уроке мы создали систему мониторинга окружающей среды с использованием датчика BME280 и Telegram-бота на базе Raspberry Pi Pico W. Наш проект позволяет удаленно получать актуальные данные о температуре, влажности и атмосферном давлении, что делает его полезным для домашнего использования, метеомониторинга или контроля условий в специальных помещениях.</p>
+<p>Благодаря асинхронной архитектуре и оптимизации чтения данных, система работает эффективно, с минимальной нагрузкой на микроконтроллер. Расширенные функции форматирования данных делают информацию более понятной и наглядной для пользователя.</p>
+<p>Этот проект можно легко расширить дополнительными функциями или интегрировать в более сложные системы умного дома и мониторинга окружающей среды.</p>
+<div class="admonition note">
+<p class="admonition-title">Примечание</p>
+<p>Точность измерений BME280 может зависеть от условий эксплуатации. Для наиболее точных показаний размещайте датчик вдали от источников тепла (включая сам Pico W), в хорошо проветриваемом месте, и защищайте от прямого солнечного света и попадания влаги.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="../servotelegram/servotelegram.html" class="btn btn-neutral float-left" title="Управление сервоприводом через Telegram-бот" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="../pirtelegram/pirtelegram.html" class="btn btn-neutral float-right" title="PIR-датчик: уведомление о движении в Telegram" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2025, Dias Kabdualiyev. </p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

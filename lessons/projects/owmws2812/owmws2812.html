@@ -1,0 +1,821 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Визуализация температуры из OpenWeatherMap на адресной ленте WS2812 &mdash; документация Raspberry Pi Pico W Kit 0.1</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d39ee99e" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=2b7aed8e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/translations.js?v=5b699b7f"></script>
+      <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../../search.html" />
+    <link rel="next" title="PIR-датчик: уведомление о движении с помощью WS2812" href="../ws2812pir/ws2812pir.html" />
+    <link rel="prev" title="OpenWeatherMap: вывод данных о погоде на OLED-дисплей" href="../openwaethermap/owm.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Raspberry Pi Pico W Kit
+              <img src="../../../_static/logo.png" class="logo" alt="Логотип"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/index.html">Учебный набор по MicroPython на базе Raspberry Pi Pico W</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id1">Вступление</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id2">Сильные стороны набора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id3">Для кого подходит этот набор</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id4">Компоненты набора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#raspberry-pi-pico-w-15">Итоговый учебный план на Raspberry Pi Pico W (15 уроков)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get-started/index.html">Знакомство с Raspberry Pi Pico W и MicroPython</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/picow.html">Знакомство с Pico W</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/micropython.html">Введение в MicroPython</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/micropython.html#id1">История начинается здесь</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/micropython.html#id2">Почему MicroPython?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/thonny.html">Установка Thonny IDE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/micropythoninstall.html">Установка MicroPython на ваш Pico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/uploadlibs.html">Загрузка библиотек на Pico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/thonnytutor.html">1.5 Краткое руководство по Thonny</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/thonnytutor.html#id1">Открытие и запуск кода напрямую</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Содержание курса по Raspberry Pi Pico W</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../sensors/index.html">Модуль датчиков и устройств</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/rgb/rgb.html">Управление RGB-светодиодом с общим катодом на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/ws2812/ws2812.html">Управление адресным светодиодным кольцом на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/light/light.html">Работа с датчиком освещенности на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/pir/pir.html">Обнаружение движения с помощью PIR датчика и Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/pot/pot.html">Управление потенциометром на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/relay/relay.html">Управление реле с помощью Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/servo/servo.html">Управление сервоприводом с помощью Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/bme280/bme280.html">Использование датчика BME280 с Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/mpu6050/mpu6050.html">Измерение ускорения и гироскопических данных с MPU6050 на Raspberry Pi Pico</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Проекты</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../wifi/wifi.html">Подключение к интернету с использованием Wi-Fi на Raspberry Pi Pico W</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webhello/webhello.html">Hello World: веб-сайт на Pico W</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../light/light.html">Считывание данных с датчика освещённости и отображение на веб-интерфейсе</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wifiscan/wifiscan.html">Управление RGB-светодиодом через веб-интерфейс</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wifioled/wifioled.html">Отображение информации о Wi-Fi на OLED-дисплее SSD1306</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../openwaethermap/owm.html">OpenWeatherMap: вывод данных о погоде на OLED-дисплей</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Визуализация температуры из OpenWeatherMap на адресной ленте WS2812</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ws2812pir/ws2812pir.html">PIR-датчик: уведомление о движении с помощью WS2812</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../echobot/echobot.html">Телеграм-бот: введение</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../servotelegram/servotelegram.html">Управление сервоприводом через Telegram-бот</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../telegrambme/telegrambme.html">Получение данных о температуре (BME280) через Telegram-бот</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pirtelegram/pirtelegram.html">PIR-датчик: уведомление о движении в Telegram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mputelegram/mputelegram.html">MPU6050: уведомление о вибрации/наклоне в Telegram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../googlesheets/googlesheets.html">Google Sheets: хранение данных о температуре</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq/index.html">FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../faq/index.html#micropython">MicroPython</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../feedback/index.html">Обратная связь</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../feedback/index.html#id2">Контакты</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Raspberry Pi Pico W Kit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Содержание курса по Raspberry Pi Pico W</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Проекты</a></li>
+      <li class="breadcrumb-item active">Визуализация температуры из OpenWeatherMap на адресной ленте WS2812</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Навигация по соседним страницам">
+        <a href="../openwaethermap/owm.html" class="btn btn-neutral float-left" title="OpenWeatherMap: вывод данных о погоде на OLED-дисплей" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="../ws2812pir/ws2812pir.html" class="btn btn-neutral float-right" title="PIR-датчик: уведомление о движении с помощью WS2812" accesskey="n">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="openweathermap-ws2812">
+<h1>Визуализация температуры из OpenWeatherMap на адресной ленте WS2812<a class="headerlink" href="#openweathermap-ws2812" title="Ссылка на этот заголовок"></a></h1>
+<section id="id1">
+<h2>Введение<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h2>
+<p>В этом уроке мы создадим интерактивный индикатор температуры, используя адресную RGB-ленту WS2812 и Raspberry Pi Pico W. Наше устройство будет получать данные о текущей температуре с сервиса OpenWeatherMap и отображать её с помощью различных цветов и анимаций на кольце из 12 светодиодов. Такой проект не только выглядит эффектно, но и служит наглядным индикатором погодных условий.</p>
+</section>
+<section id="id2">
+<h2>Необходимые компоненты<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
+<ul class="simple">
+<li><p>Raspberry Pi Pico W</p></li>
+<li><p>Адресная RGB-лента WS2812B (кольцо из 12 светодиодов)</p></li>
+<li><p>Провода для подключения</p></li>
+<li><p>Источник питания 5В (если используется только кольцо из 12 светодиодов, можно питать от Pico W)</p></li>
+<li><p>Резистор 470 Ом (опционально, для защиты первого светодиода)</p></li>
+<li><p>Конденсатор 1000 мкФ (опционально, для сглаживания скачков напряжения)</p></li>
+<li><p>OLED-дисплей SSD1306 (опционально, для отображения дополнительной информации)</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>Схема подключения<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h2>
+<p>Подключение адресной ленты WS2812B к Raspberry Pi Pico W:</p>
+<ul class="simple">
+<li><p>VCC ленты к VBUS (5В) Pico W (PIN 40)</p></li>
+<li><p>GND ленты к GND Pico W (PIN 38)</p></li>
+<li><p>DIN (вход данных) ленты к GP28 (PIN 34) Pico W через резистор 470 Ом</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Примечание</p>
+<p>Если вы используете более длинную ленту или несколько колец, рекомендуется подключить внешний источник питания 5В напрямую к ленте, соединив только GND с Pico W для общего заземления.</p>
+</div>
+</section>
+<section id="id4">
+<h2>Структура проекта<a class="headerlink" href="#id4" title="Ссылка на этот заголовок"></a></h2>
+<p>Наш проект будет состоять из следующих файлов:
+- config.py - конфигурационный файл с настройками Wi-Fi и OpenWeatherMap
+- neopixel.py - библиотека для работы с адресной лентой WS2812B
+- main.py - основной файл программы</p>
+</section>
+<section id="id5">
+<h2>Код проекта<a class="headerlink" href="#id5" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p>Сначала создадим файл конфигурации (config.py):</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Конфигурационный файл для проекта визуализации температуры</span>
+
+<span class="c1"># Настройки Wi-Fi</span>
+<span class="n">WIFI_SSID</span> <span class="o">=</span> <span class="s2">&quot;Название_вашей_сети&quot;</span>
+<span class="n">WIFI_PASSWORD</span> <span class="o">=</span> <span class="s2">&quot;Пароль_вашей_сети&quot;</span>
+
+<span class="c1"># Настройки OpenWeatherMap</span>
+<span class="n">OWM_API_KEY</span> <span class="o">=</span> <span class="s2">&quot;ваш_api_ключ_openweathermap&quot;</span>
+<span class="n">CITY_NAME</span> <span class="o">=</span> <span class="s2">&quot;Moscow&quot;</span>  <span class="c1"># Название города на английском</span>
+
+<span class="c1"># Настройки обновления</span>
+<span class="n">UPDATE_INTERVAL</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="mi">60</span>  <span class="c1"># Интервал обновления данных в секундах (10 минут)</span>
+
+<span class="c1"># Настройки светодиодной ленты</span>
+<span class="n">LED_COUNT</span> <span class="o">=</span> <span class="mi">12</span>  <span class="c1"># Количество светодиодов в кольце</span>
+<span class="n">LED_PIN</span> <span class="o">=</span> <span class="mi">28</span>     <span class="c1"># Номер GPIO пина для управления лентой</span>
+<span class="n">LED_BRIGHTNESS</span> <span class="o">=</span> <span class="mf">0.3</span>  <span class="c1"># Яркость от 0.0 до 1.0</span>
+
+<span class="c1"># Диапазоны температур для цветового кодирования (в градусах Цельсия)</span>
+<span class="n">TEMP_RANGES</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="o">-</span><span class="mi">30</span><span class="p">,</span> <span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)),</span>     <span class="c1"># Синий: очень холодно</span>
+    <span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">255</span><span class="p">)),</span>   <span class="c1"># Голубой: холодно</span>
+    <span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)),</span>     <span class="c1"># Циан: прохладно</span>
+    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">128</span><span class="p">)),</span>      <span class="c1"># Бирюзовый: свежо</span>
+    <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>       <span class="c1"># Зеленый: комфортно</span>
+    <span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>     <span class="c1"># Желто-зеленый: тепло</span>
+    <span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>     <span class="c1"># Желтый: очень тепло</span>
+    <span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>     <span class="c1"># Оранжевый: жарко</span>
+    <span class="p">(</span><span class="mi">35</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>        <span class="c1"># Красный: очень жарко</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Теперь нам понадобится библиотека neopixel.py для управления адресной лентой. Её можно загрузить из официального репозитория micropython-lib или создать самостоятельно по документации. Основной файл программы (main.py):</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">network</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">urequests</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">requests</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">machine</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">machine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pin</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">neopixel</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">gc</span>
+
+<span class="c1"># Импортируем настройки из config.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">config</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">WIFI_SSID</span><span class="p">,</span> <span class="n">WIFI_PASSWORD</span><span class="p">,</span> <span class="n">OWM_API_KEY</span><span class="p">,</span> <span class="n">CITY_NAME</span><span class="p">,</span>
+                    <span class="n">UPDATE_INTERVAL</span><span class="p">,</span> <span class="n">LED_COUNT</span><span class="p">,</span> <span class="n">LED_PIN</span><span class="p">,</span> <span class="n">LED_BRIGHTNESS</span><span class="p">,</span>
+                    <span class="n">TEMP_RANGES</span><span class="p">)</span>
+
+<span class="c1"># Настройка пина для встроенного светодиода</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="c1"># Инициализация адресной ленты WS2812B</span>
+<span class="n">pixels</span> <span class="o">=</span> <span class="n">neopixel</span><span class="o">.</span><span class="n">NeoPixel</span><span class="p">(</span><span class="n">Pin</span><span class="p">(</span><span class="n">LED_PIN</span><span class="p">),</span> <span class="n">LED_COUNT</span><span class="p">)</span>
+
+<span class="c1"># Установка начальной яркости</span>
+<span class="n">brightness</span> <span class="o">=</span> <span class="n">LED_BRIGHTNESS</span>
+
+<span class="c1"># Переменные для хранения текущих данных о погоде</span>
+<span class="n">current_temp</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">current_weather_id</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">current_color</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Функция для мигания встроенным светодиодом</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">blink_led</span><span class="p">(</span><span class="n">times</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="mf">0.2</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">times</span><span class="p">):</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+
+<span class="c1"># Функция для подключения к Wi-Fi</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">connect_to_wifi</span><span class="p">():</span>
+    <span class="c1"># Настраиваем Wi-Fi интерфейс</span>
+    <span class="n">wlan</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">WLAN</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">STA_IF</span><span class="p">)</span>
+    <span class="n">wlan</span><span class="o">.</span><span class="n">active</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Если уже подключены - отключаемся</span>
+    <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+        <span class="n">wlan</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Подключение к Wi-Fi сети </span><span class="si">{</span><span class="n">WIFI_SSID</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Установка всех светодиодов в синий цвет для индикации подключения</span>
+    <span class="n">set_all_pixels</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">32</span><span class="p">))</span>
+
+    <span class="c1"># Пытаемся подключиться к Wi-Fi</span>
+    <span class="n">wlan</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">WIFI_SSID</span><span class="p">,</span> <span class="n">WIFI_PASSWORD</span><span class="p">)</span>
+
+    <span class="c1"># Ждем подключения с таймаутом</span>
+    <span class="n">max_wait</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">dot_position</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">while</span> <span class="n">max_wait</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+            <span class="k">break</span>
+
+        <span class="c1"># Вращаем синюю точку по кругу для индикации процесса подключения</span>
+        <span class="n">set_all_pixels</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+        <span class="n">pixels</span><span class="p">[</span><span class="n">dot_position</span><span class="p">]</span> <span class="o">=</span> <span class="n">adjust_brightness</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">))</span>
+        <span class="n">pixels</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+
+        <span class="n">dot_position</span> <span class="o">=</span> <span class="p">(</span><span class="n">dot_position</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">LED_COUNT</span>
+
+        <span class="c1"># Мигаем встроенным светодиодом</span>
+        <span class="n">blink_led</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+
+        <span class="n">max_wait</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ожидание подключения...&quot;</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+    <span class="c1"># Проверяем результат подключения</span>
+    <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+        <span class="n">ip_address</span> <span class="o">=</span> <span class="n">wlan</span><span class="o">.</span><span class="n">ifconfig</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Подключено к Wi-Fi! IP-адрес: </span><span class="si">{</span><span class="n">ip_address</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Мигаем зеленым для индикации успешного подключения</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+            <span class="n">set_all_pixels</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+            <span class="n">pixels</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+            <span class="n">set_all_pixels</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+            <span class="n">pixels</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Не удалось подключиться к Wi-Fi&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Мигаем красным для индикации ошибки</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+            <span class="n">set_all_pixels</span><span class="p">((</span><span class="mi">32</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+            <span class="n">pixels</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+            <span class="n">set_all_pixels</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+            <span class="n">pixels</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="c1"># Функция для получения данных о погоде</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_weather_data</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">current_temp</span><span class="p">,</span> <span class="n">current_weather_id</span>
+
+    <span class="c1"># API URL для текущей погоды</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://api.openweathermap.org/data/2.5/weather?q=</span><span class="si">{</span><span class="n">CITY_NAME</span><span class="si">}</span><span class="s2">&amp;appid=</span><span class="si">{</span><span class="n">OWM_API_KEY</span><span class="si">}</span><span class="s2">&amp;units=metric&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Делаем запрос к API</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Запрос данных о погоде для города </span><span class="si">{</span><span class="n">CITY_NAME</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Пульсация белым цветом во время запроса данных</span>
+        <span class="n">pulse_color</span><span class="p">((</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="c1"># Проверяем статус ответа</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="c1"># Парсим JSON-ответ</span>
+            <span class="n">weather_data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+            <span class="c1"># Извлекаем температуру и ID погодных условий</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">weather_data</span><span class="p">[</span><span class="s1">&#39;main&#39;</span><span class="p">][</span><span class="s1">&#39;temp&#39;</span><span class="p">]</span>
+            <span class="n">weather_id</span> <span class="o">=</span> <span class="n">weather_data</span><span class="p">[</span><span class="s1">&#39;weather&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+
+            <span class="c1"># Сохраняем текущие данные</span>
+            <span class="n">current_temp</span> <span class="o">=</span> <span class="n">temp</span>
+            <span class="n">current_weather_id</span> <span class="o">=</span> <span class="n">weather_id</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Получены данные о погоде для </span><span class="si">{</span><span class="n">CITY_NAME</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Температура: </span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s2">°C&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ID погоды: </span><span class="si">{</span><span class="n">weather_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">temp</span><span class="p">,</span> <span class="n">weather_id</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка запроса: статус </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка при получении данных о погоде: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+<span class="c1"># Функция для настройки яркости цвета</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">adjust_brightness</span><span class="p">(</span><span class="n">color</span><span class="p">):</span>
+    <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">color</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">r</span> <span class="o">*</span> <span class="n">brightness</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">g</span> <span class="o">*</span> <span class="n">brightness</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">b</span> <span class="o">*</span> <span class="n">brightness</span><span class="p">))</span>
+
+<span class="c1"># Функция для установки всех пикселей в один цвет</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">set_all_pixels</span><span class="p">(</span><span class="n">color</span><span class="p">):</span>
+    <span class="n">adjusted_color</span> <span class="o">=</span> <span class="n">adjust_brightness</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">LED_COUNT</span><span class="p">):</span>
+        <span class="n">pixels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">adjusted_color</span>
+    <span class="n">pixels</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+
+<span class="c1"># Функция для определения цвета по температуре</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_temp_color</span><span class="p">(</span><span class="n">temp</span><span class="p">):</span>
+    <span class="c1"># Если температура ниже самого низкого диапазона</span>
+    <span class="k">if</span> <span class="n">temp</span> <span class="o">&lt;</span> <span class="n">TEMP_RANGES</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">TEMP_RANGES</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="c1"># Если температура выше самого высокого диапазона</span>
+    <span class="k">if</span> <span class="n">temp</span> <span class="o">&gt;</span> <span class="n">TEMP_RANGES</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">TEMP_RANGES</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="c1"># Находим подходящий диапазон</span>
+    <span class="k">for</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">TEMP_RANGES</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">low</span> <span class="o">&lt;=</span> <span class="n">temp</span> <span class="o">&lt;</span> <span class="n">high</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">color</span>
+
+    <span class="c1"># По умолчанию возвращаем белый</span>
+    <span class="k">return</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+
+<span class="c1"># Функция для плавного перехода между цветами</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">fade_to_color</span><span class="p">(</span><span class="n">new_color</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="mf">0.03</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">current_color</span>
+
+    <span class="c1"># Получаем текущие значения цвета</span>
+    <span class="n">r1</span><span class="p">,</span> <span class="n">g1</span><span class="p">,</span> <span class="n">b1</span> <span class="o">=</span> <span class="n">current_color</span>
+    <span class="n">r2</span><span class="p">,</span> <span class="n">g2</span><span class="p">,</span> <span class="n">b2</span> <span class="o">=</span> <span class="n">new_color</span>
+
+    <span class="c1"># Постепенно меняем цвет</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">ratio</span> <span class="o">=</span> <span class="n">i</span> <span class="o">/</span> <span class="n">steps</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">r1</span> <span class="o">+</span> <span class="p">(</span><span class="n">r2</span> <span class="o">-</span> <span class="n">r1</span><span class="p">)</span> <span class="o">*</span> <span class="n">ratio</span><span class="p">)</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">g1</span> <span class="o">+</span> <span class="p">(</span><span class="n">g2</span> <span class="o">-</span> <span class="n">g1</span><span class="p">)</span> <span class="o">*</span> <span class="n">ratio</span><span class="p">)</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">b1</span> <span class="o">+</span> <span class="p">(</span><span class="n">b2</span> <span class="o">-</span> <span class="n">b1</span><span class="p">)</span> <span class="o">*</span> <span class="n">ratio</span><span class="p">)</span>
+
+        <span class="n">set_all_pixels</span><span class="p">((</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+
+    <span class="c1"># Обновляем текущий цвет</span>
+    <span class="n">current_color</span> <span class="o">=</span> <span class="n">new_color</span>
+
+<span class="c1"># Функция для пульсации определенным цветом</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">pulse_color</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="n">times</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="mf">0.02</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">times</span><span class="p">):</span>
+        <span class="c1"># Нарастание яркости</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="p">):</span>
+            <span class="n">ratio</span> <span class="o">=</span> <span class="n">i</span> <span class="o">/</span> <span class="n">steps</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">ratio</span><span class="p">)</span>
+            <span class="n">g</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">color</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">ratio</span><span class="p">)</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">color</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">ratio</span><span class="p">)</span>
+            <span class="n">set_all_pixels</span><span class="p">((</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+
+        <span class="c1"># Затухание яркости</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">ratio</span> <span class="o">=</span> <span class="n">i</span> <span class="o">/</span> <span class="n">steps</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">ratio</span><span class="p">)</span>
+            <span class="n">g</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">color</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">ratio</span><span class="p">)</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">color</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">ratio</span><span class="p">)</span>
+            <span class="n">set_all_pixels</span><span class="p">((</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+
+<span class="c1"># Функция для создания эффекта дождя (для дождливой погоды)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">rain_animation</span><span class="p">(</span><span class="n">base_color</span><span class="p">,</span> <span class="n">drop_color</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">drops_per_sec</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">+</span> <span class="n">duration</span>
+
+    <span class="k">while</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">end_time</span><span class="p">:</span>
+        <span class="c1"># Устанавливаем базовый цвет</span>
+        <span class="n">set_all_pixels</span><span class="p">(</span><span class="n">base_color</span><span class="p">)</span>
+
+        <span class="c1"># Создаем &quot;капли&quot; случайно по кольцу</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>  <span class="c1"># Несколько капель одновременно</span>
+            <span class="n">drop_pos</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">LED_COUNT</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">pixels</span><span class="p">[</span><span class="n">drop_pos</span><span class="p">]</span> <span class="o">=</span> <span class="n">adjust_brightness</span><span class="p">(</span><span class="n">drop_color</span><span class="p">)</span>
+
+        <span class="n">pixels</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">drops_per_sec</span><span class="p">)</span>
+
+<span class="c1"># Функция для создания эффекта снега (для снежной погоды)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">snow_animation</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">snowflakes_per_sec</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">+</span> <span class="n">duration</span>
+
+    <span class="k">while</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">end_time</span><span class="p">:</span>
+        <span class="c1"># Темно-синий фон</span>
+        <span class="n">set_all_pixels</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">32</span><span class="p">))</span>
+
+        <span class="c1"># Создаем &quot;снежинки&quot; случайно по кольцу</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>  <span class="c1"># Несколько снежинок одновременно</span>
+            <span class="n">snow_pos</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">LED_COUNT</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">pixels</span><span class="p">[</span><span class="n">snow_pos</span><span class="p">]</span> <span class="o">=</span> <span class="n">adjust_brightness</span><span class="p">((</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">255</span><span class="p">))</span>
+
+        <span class="n">pixels</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">snowflakes_per_sec</span><span class="p">)</span>
+
+<span class="c1"># Функция для создания эффекта молнии (для грозы)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">thunder_animation</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">flash_count</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">+</span> <span class="n">duration</span>
+    <span class="n">dark_color</span> <span class="o">=</span> <span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>  <span class="c1"># Темно-синий для облаков</span>
+    <span class="n">flash_color</span> <span class="o">=</span> <span class="p">(</span><span class="mi">180</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>  <span class="c1"># Бело-голубая молния</span>
+
+    <span class="k">while</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">end_time</span><span class="p">:</span>
+        <span class="c1"># Устанавливаем темный цвет для облаков</span>
+        <span class="n">set_all_pixels</span><span class="p">(</span><span class="n">dark_color</span><span class="p">)</span>
+        <span class="n">pixels</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+
+        <span class="c1"># Случайная задержка между вспышками</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">))</span>
+
+        <span class="c1"># Вспышка молнии</span>
+        <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.7</span><span class="p">:</span>  <span class="c1"># 70% шанс молнии</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)):</span>  <span class="c1"># 1-3 вспышки подряд</span>
+                <span class="n">set_all_pixels</span><span class="p">(</span><span class="n">flash_color</span><span class="p">)</span>
+                <span class="n">pixels</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">))</span>
+                <span class="n">set_all_pixels</span><span class="p">(</span><span class="n">dark_color</span><span class="p">)</span>
+                <span class="n">pixels</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">))</span>
+
+<span class="c1"># Функция для создания эффекта облачности</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">cloud_animation</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">+</span> <span class="n">duration</span>
+    <span class="n">base_color</span> <span class="o">=</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># Серый для облаков</span>
+
+    <span class="k">while</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">end_time</span><span class="p">:</span>
+        <span class="c1"># Плавное изменение яркости для имитации движения облаков</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">):</span>
+            <span class="n">ratio</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mf">0.3</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">i</span> <span class="o">/</span> <span class="mi">30</span><span class="p">)))</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">base_color</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">ratio</span><span class="p">)</span>
+            <span class="n">g</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">base_color</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">ratio</span><span class="p">)</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">base_color</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">ratio</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">r</span> <span class="o">&gt;</span> <span class="mi">255</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="mi">255</span>
+            <span class="k">if</span> <span class="n">g</span> <span class="o">&gt;</span> <span class="mi">255</span><span class="p">:</span> <span class="n">g</span> <span class="o">=</span> <span class="mi">255</span>
+            <span class="k">if</span> <span class="n">b</span> <span class="o">&gt;</span> <span class="mi">255</span><span class="p">:</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">255</span>
+
+            <span class="n">set_all_pixels</span><span class="p">((</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="c1"># Функция для создания эффекта солнечного света</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">sun_animation</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">+</span> <span class="n">duration</span>
+
+    <span class="c1"># Желтый базовый цвет для солнца</span>
+    <span class="n">base_color</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">while</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">end_time</span><span class="p">:</span>
+        <span class="c1"># Имитация солнечных лучей, движущихся по кольцу</span>
+        <span class="k">for</span> <span class="n">start_pos</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">LED_COUNT</span><span class="p">):</span>
+            <span class="c1"># Сначала заполняем все приглушенным желтым</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">LED_COUNT</span><span class="p">):</span>
+                <span class="n">pixels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">adjust_brightness</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+            <span class="c1"># Теперь добавляем яркие лучи</span>
+            <span class="k">for</span> <span class="n">offset</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>  <span class="c1"># 4 луча</span>
+                <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="n">start_pos</span> <span class="o">+</span> <span class="n">offset</span> <span class="o">*</span> <span class="p">(</span><span class="n">LED_COUNT</span> <span class="o">//</span> <span class="mi">4</span><span class="p">))</span> <span class="o">%</span> <span class="n">LED_COUNT</span>
+                <span class="n">pixels</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span> <span class="o">=</span> <span class="n">adjust_brightness</span><span class="p">(</span><span class="n">base_color</span><span class="p">)</span>
+
+            <span class="n">pixels</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="c1"># Функция для выбора анимации на основе погодных условий</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">show_weather_animation</span><span class="p">(</span><span class="n">weather_id</span><span class="p">):</span>
+    <span class="c1"># Группы ID погодных условий:</span>
+    <span class="c1"># 2xx: Гроза</span>
+    <span class="c1"># 3xx: Морось</span>
+    <span class="c1"># 5xx: Дождь</span>
+    <span class="c1"># 6xx: Снег</span>
+    <span class="c1"># 7xx: Атмосферные явления (туман и т.д.)</span>
+    <span class="c1"># 800: Ясно</span>
+    <span class="c1"># 80x: Облачно</span>
+
+    <span class="c1"># Определяем тип анимации по ID погоды</span>
+    <span class="k">if</span> <span class="mi">200</span> <span class="o">&lt;=</span> <span class="n">weather_id</span> <span class="o">&lt;</span> <span class="mi">300</span><span class="p">:</span>  <span class="c1"># Гроза</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Анимация: Гроза&quot;</span><span class="p">)</span>
+        <span class="n">thunder_animation</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="mi">300</span> <span class="o">&lt;=</span> <span class="n">weather_id</span> <span class="o">&lt;</span> <span class="mi">400</span> <span class="ow">or</span> <span class="mi">500</span> <span class="o">&lt;=</span> <span class="n">weather_id</span> <span class="o">&lt;</span> <span class="mi">600</span><span class="p">:</span>  <span class="c1"># Дождь или морось</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Анимация: Дождь&quot;</span><span class="p">)</span>
+        <span class="n">blue_shade</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+        <span class="n">drop_color</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+        <span class="n">rain_animation</span><span class="p">(</span><span class="n">blue_shade</span><span class="p">,</span> <span class="n">drop_color</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="mi">600</span> <span class="o">&lt;=</span> <span class="n">weather_id</span> <span class="o">&lt;</span> <span class="mi">700</span><span class="p">:</span>  <span class="c1"># Снег</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Анимация: Снег&quot;</span><span class="p">)</span>
+        <span class="n">snow_animation</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="mi">700</span> <span class="o">&lt;=</span> <span class="n">weather_id</span> <span class="o">&lt;</span> <span class="mi">800</span><span class="p">:</span>  <span class="c1"># Туман, дымка и т.д.</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Анимация: Облачность/Туман&quot;</span><span class="p">)</span>
+        <span class="n">cloud_animation</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">weather_id</span> <span class="o">==</span> <span class="mi">800</span><span class="p">:</span>  <span class="c1"># Ясно</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Анимация: Солнечно&quot;</span><span class="p">)</span>
+        <span class="n">sun_animation</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="mi">801</span> <span class="o">&lt;=</span> <span class="n">weather_id</span> <span class="o">&lt;</span> <span class="mi">900</span><span class="p">:</span>  <span class="c1"># Облачно</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Анимация: Переменная облачность&quot;</span><span class="p">)</span>
+        <span class="n">cloud_animation</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># По умолчанию просто отображаем цвет по температуре</span>
+        <span class="n">temp_color</span> <span class="o">=</span> <span class="n">get_temp_color</span><span class="p">(</span><span class="n">current_temp</span><span class="p">)</span>
+        <span class="n">fade_to_color</span><span class="p">(</span><span class="n">temp_color</span><span class="p">)</span>
+
+<span class="c1"># Функция для отображения температуры на светодиодном кольце</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">display_temperature</span><span class="p">(</span><span class="n">temp</span><span class="p">):</span>
+    <span class="c1"># Получаем цвет для текущей температуры</span>
+    <span class="n">temp_color</span> <span class="o">=</span> <span class="n">get_temp_color</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Отображение температуры: </span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s2">°C, цвет: </span><span class="si">{</span><span class="n">temp_color</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Плавный переход к новому цвету</span>
+    <span class="n">fade_to_color</span><span class="p">(</span><span class="n">temp_color</span><span class="p">)</span>
+
+    <span class="c1"># Количество активных светодиодов зависит от температуры</span>
+    <span class="c1"># Отображаем от 1 до 12 светодиодов в зависимости от температуры</span>
+    <span class="c1"># Например, -20°C = 1 светодиод, +40°C = 12 светодиодов</span>
+    <span class="n">min_temp</span> <span class="o">=</span> <span class="o">-</span><span class="mi">20</span>
+    <span class="n">max_temp</span> <span class="o">=</span> <span class="mi">40</span>
+    <span class="n">temp_range</span> <span class="o">=</span> <span class="n">max_temp</span> <span class="o">-</span> <span class="n">min_temp</span>
+
+    <span class="c1"># Ограничиваем температуру в заданном диапазоне</span>
+    <span class="n">limited_temp</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">min_temp</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">max_temp</span><span class="p">))</span>
+
+    <span class="c1"># Вычисляем количество активных светодиодов</span>
+    <span class="n">active_leds</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(((</span><span class="n">limited_temp</span> <span class="o">-</span> <span class="n">min_temp</span><span class="p">)</span> <span class="o">/</span> <span class="n">temp_range</span><span class="p">)</span> <span class="o">*</span> <span class="n">LED_COUNT</span><span class="p">)</span>
+    <span class="n">active_leds</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">active_leds</span><span class="p">,</span> <span class="n">LED_COUNT</span><span class="p">))</span>  <span class="c1"># Минимум 1, максимум LED_COUNT</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Активных светодиодов: </span><span class="si">{</span><span class="n">active_leds</span><span class="si">}</span><span class="s2"> из </span><span class="si">{</span><span class="n">LED_COUNT</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Отображаем активные светодиоды</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">LED_COUNT</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">active_leds</span><span class="p">:</span>
+            <span class="n">pixels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">adjust_brightness</span><span class="p">(</span><span class="n">temp_color</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pixels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">pixels</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># Показываем уровень температуры 2 секунды</span>
+
+    <span class="c1"># Возвращаемся к общему цвету</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">LED_COUNT</span><span class="p">):</span>
+        <span class="n">pixels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">adjust_brightness</span><span class="p">(</span><span class="n">temp_color</span><span class="p">)</span>
+
+    <span class="n">pixels</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+
+<span class="c1"># Главная функция программы</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">current_temp</span><span class="p">,</span> <span class="n">current_weather_id</span>
+
+    <span class="c1"># Очищаем ленту при запуске</span>
+    <span class="n">set_all_pixels</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+    <span class="c1"># Приветственная анимация</span>
+    <span class="n">pulse_color</span><span class="p">((</span><span class="mi">32</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">32</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># Пульсация пурпурным</span>
+
+    <span class="c1"># Подключаемся к Wi-Fi</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">connect_to_wifi</span><span class="p">():</span>
+        <span class="c1"># Если не удалось подключиться, мигаем красным и перезагружаемся</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+            <span class="n">set_all_pixels</span><span class="p">((</span><span class="mi">32</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+            <span class="n">set_all_pixels</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+        <span class="c1"># Перезагружаем устройство</span>
+        <span class="n">machine</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+    <span class="c1"># Основной цикл программы</span>
+    <span class="n">last_update_time</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">current_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+        <span class="c1"># Проверяем, нужно ли обновить данные о погоде</span>
+        <span class="k">if</span> <span class="n">current_time</span> <span class="o">-</span> <span class="n">last_update_time</span> <span class="o">&gt;=</span> <span class="n">UPDATE_INTERVAL</span><span class="p">:</span>
+            <span class="c1"># Получаем новые данные о погоде</span>
+            <span class="n">temp</span><span class="p">,</span> <span class="n">weather_id</span> <span class="o">=</span> <span class="n">get_weather_data</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">temp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">weather_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># Отображаем температуру на светодиодном кольце</span>
+                <span class="n">display_temperature</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+
+                <span class="c1"># Показываем анимацию в зависимости от погодных условий</span>
+                <span class="n">show_weather_animation</span><span class="p">(</span><span class="n">weather_id</span><span class="p">)</span>
+
+                <span class="n">last_update_time</span> <span class="o">=</span> <span class="n">current_time</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Если не удалось получить данные, мигаем желтым</span>
+                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+                    <span class="n">set_all_pixels</span><span class="p">((</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+                    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
+                    <span class="n">set_all_pixels</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+                    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
+
+                <span class="c1"># Пробуем снова через минуту</span>
+                <span class="n">last_update_time</span> <span class="o">=</span> <span class="n">current_time</span> <span class="o">-</span> <span class="n">UPDATE_INTERVAL</span> <span class="o">+</span> <span class="mi">60</span>
+
+        <span class="c1"># Отображаем основной цвет, соответствующий текущей температуре</span>
+        <span class="k">if</span> <span class="n">current_temp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">temp_color</span> <span class="o">=</span> <span class="n">get_temp_color</span><span class="p">(</span><span class="n">current_temp</span><span class="p">)</span>
+            <span class="n">set_all_pixels</span><span class="p">(</span><span class="n">temp_color</span><span class="p">)</span>
+
+        <span class="c1"># Мигаем встроенным светодиодом для индикации работы</span>
+        <span class="n">blink_led</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+
+        <span class="c1"># Освобождаем память</span>
+        <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+
+        <span class="c1"># Ждем перед следующей проверкой</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Запускаем программу</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h2>Возможные проблемы и их решения<a class="headerlink" href="#id6" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Светодиоды не включаются или работают некорректно</strong>:
+- Проверьте правильность подключения проводов (VCC, GND, DIN).
+- Убедитесь, что вы используете правильный GPIO пин в конфигурации.
+- Проверьте напряжение питания - для WS2812B требуется 5В.
+- Попробуйте уменьшить яркость в config.py - возможно, ваш источник питания не обеспечивает достаточной мощности.</p></li>
+<li><p><strong>Ошибка при подключении к Wi-Fi</strong>:
+- Убедитесь, что вы указали правильный SSID и пароль в файле config.py.
+- Проверьте, что ваша Wi-Fi сеть работает в диапазоне 2.4 ГГц (Pico W не поддерживает 5 ГГц).
+- Перезагрузите Pico W и ваш Wi-Fi роутер.</p></li>
+<li><p><strong>Ошибка при получении данных о погоде</strong>:
+- Проверьте правильность API-ключа OpenWeatherMap.
+- Убедитесь, что название города указано корректно на английском языке.
+- Проверьте подключение к интернету.
+- Проверьте, не превышен ли лимит запросов к API (для бесплатного плана это 1000 запросов в день).</p></li>
+<li><p><strong>Память переполняется</strong>:
+- Если программа работает некоторое время, а затем зависает, возможно, происходит утечка памяти.
+- Добавьте больше вызовов gc.collect() в различные части кода.
+- Упростите анимации или уменьшите длительность их выполнения.</p></li>
+<li><p><strong>Цветовая индикация не соответствует ожиданиям</strong>:
+- Настройте диапазоны температур в TEMP_RANGES в файле config.py в соответствии с климатом вашего региона.
+- Убедитесь, что значения LED_BRIGHTNESS не слишком низкие или высокие.</p></li>
+</ol>
+</section>
+<section id="id7">
+<h2>Загрузка и запуск проекта<a class="headerlink" href="#id7" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p>Прежде всего вам нужно зарегистрироваться на OpenWeatherMap и получить бесплатный API-ключ.</p></li>
+<li><p>Скачайте библиотеку neopixel.py для работы с адресными светодиодами WS2812B, если она отсутствует в вашей прошивке MicroPython.</p></li>
+<li><p>Подключите Raspberry Pi Pico W к компьютеру через USB.</p></li>
+<li><p>Создайте и загрузите на Pico W следующие файлы:
+- config.py (с вашими настройками Wi-Fi, API-ключом и настройками светодиодного кольца)
+- main.py (с основным кодом программы)
+- neopixel.py (библиотека для управления светодиодами)</p></li>
+<li><p>Отредактируйте файл config.py, указав:
+- Имя и пароль вашей Wi-Fi сети
+- Ваш API-ключ OpenWeatherMap
+- Название вашего города на английском языке
+- При необходимости настройте яркость светодиодов и другие параметры</p></li>
+<li><p>Убедитесь, что WS2812B-кольцо правильно подключено к Pico W согласно схеме.</p></li>
+<li><p>Запустите программу, нажав кнопку Run в Thonny или перезагрузив Pico W.</p></li>
+<li><p>После успешного запуска вы увидите приветственную анимацию, затем индикацию подключения к Wi-Fi, и наконец, отображение температуры и погодных условий с помощью цветов и анимаций.</p></li>
+</ol>
+</section>
+<section id="id8">
+<h2>Как это работает<a class="headerlink" href="#id8" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic">
+<li><p><strong>Подключение к Wi-Fi</strong>:
+- Программа инициализирует Wi-Fi модуль и подключается к заданной сети.
+- Во время подключения на светодиодном кольце отображается синяя вращающаяся точка.
+- При успешном подключении кольцо мигнет зеленым, при ошибке - красным.</p></li>
+<li><p><strong>Получение данных о погоде</strong>:
+- После подключения к Wi-Fi, программа отправляет HTTP-запрос к API OpenWeatherMap.
+- Из ответа извлекаются текущая температура и ID погодных условий.
+- Во время запроса кольцо пульсирует белым цветом.</p></li>
+<li><p><strong>Отображение температуры</strong>:
+- Для отображения температуры используется цветовое кодирование:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Синий - очень холодно (ниже -20°C)</p></li>
+<li><p>Голубой и бирюзовый - холодно (-20°C до 0°C)</p></li>
+<li><p>Зеленый - комфортно (10°C до 20°C)</p></li>
+<li><p>Желтый и оранжевый - тепло (20°C до 30°C)</p></li>
+<li><p>Красный - жарко (выше 30°C)</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Также количество активных светодиодов показывает температуру в диапазоне от -20°C до +40°C.</p></li>
+</ul>
+</li>
+<li><p><strong>Погодные анимации</strong>:
+- В зависимости от ID погодных условий, программа выбирает соответствующую анимацию:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Гроза (ID 2xx): мигающие вспышки молний на темно-синем фоне</p></li>
+<li><p>Дождь (ID 3xx, 5xx): анимация капель, падающих на синем фоне</p></li>
+<li><p>Снег (ID 6xx): медленно мерцающие белые «снежинки» на синем фоне</p></li>
+<li><p>Туман, дымка (ID 7xx): серая пульсация для имитации тумана</p></li>
+<li><p>Ясно (ID 800): яркая желтая анимация вращающихся лучей солнца</p></li>
+<li><p>Облачно (ID 80x): мягкие переходы серого для имитации облаков</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Периодическое обновление</strong>:
+- Программа работает в бесконечном цикле и обновляет данные о погоде с интервалом, указанным в config.py.
+- Между обновлениями кольцо светится цветом, соответствующим текущей температуре, обеспечивая постоянную визуальную обратную связь.
+- Регулярно показываются анимации, соответствующие погодным условиям, чтобы сделать отображение более динамичным и информативным.</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="../openwaethermap/owm.html" class="btn btn-neutral float-left" title="OpenWeatherMap: вывод данных о погоде на OLED-дисплей" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="../ws2812pir/ws2812pir.html" class="btn btn-neutral float-right" title="PIR-датчик: уведомление о движении с помощью WS2812" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2025, Dias Kabdualiyev. </p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,570 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Измерение ускорения и гироскопических данных с MPU6050 на Raspberry Pi Pico &mdash; документация Raspberry Pi Pico W Kit 0.1</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d39ee99e" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=2b7aed8e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/translations.js?v=5b699b7f"></script>
+      <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../../search.html" />
+    <link rel="next" title="Проекты" href="../../projects/index.html" />
+    <link rel="prev" title="Использование датчика BME280 с Raspberry Pi Pico" href="../bme280/bme280.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Raspberry Pi Pico W Kit
+              <img src="../../../_static/logo.png" class="logo" alt="Логотип"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/index.html">Учебный набор по MicroPython на базе Raspberry Pi Pico W</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id1">Вступление</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id2">Сильные стороны набора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id3">Для кого подходит этот набор</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id4">Компоненты набора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#raspberry-pi-pico-w-15">Итоговый учебный план на Raspberry Pi Pico W (15 уроков)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get-started/index.html">Знакомство с Raspberry Pi Pico W и MicroPython</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/picow.html">Знакомство с Pico W</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/micropython.html">Введение в MicroPython</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/micropython.html#id1">История начинается здесь</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/micropython.html#id2">Почему MicroPython?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/thonny.html">Установка Thonny IDE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/micropythoninstall.html">Установка MicroPython на ваш Pico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/uploadlibs.html">Загрузка библиотек на Pico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/thonnytutor.html">1.5 Краткое руководство по Thonny</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/thonnytutor.html#id1">Открытие и запуск кода напрямую</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Содержание курса по Raspberry Pi Pico W</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Модуль датчиков и устройств</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../rgb/rgb.html">Управление RGB-светодиодом с общим катодом на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ws2812/ws2812.html">Управление адресным светодиодным кольцом на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../light/light.html">Работа с датчиком освещенности на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pir/pir.html">Обнаружение движения с помощью PIR датчика и Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pot/pot.html">Управление потенциометром на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../relay/relay.html">Управление реле с помощью Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../servo/servo.html">Управление сервоприводом с помощью Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bme280/bme280.html">Использование датчика BME280 с Raspberry Pi Pico</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Измерение ускорения и гироскопических данных с MPU6050 на Raspberry Pi Pico</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../projects/index.html">Проекты</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/wifi/wifi.html">Подключение к интернету с использованием Wi-Fi на Raspberry Pi Pico W</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/webhello/webhello.html">Hello World: веб-сайт на Pico W</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/light/light.html">Считывание данных с датчика освещённости и отображение на веб-интерфейсе</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/wifiscan/wifiscan.html">Управление RGB-светодиодом через веб-интерфейс</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/wifioled/wifioled.html">Отображение информации о Wi-Fi на OLED-дисплее SSD1306</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/openwaethermap/owm.html">OpenWeatherMap: вывод данных о погоде на OLED-дисплей</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/owmws2812/owmws2812.html">Визуализация температуры из OpenWeatherMap на адресной ленте WS2812</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/ws2812pir/ws2812pir.html">PIR-датчик: уведомление о движении с помощью WS2812</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/echobot/echobot.html">Телеграм-бот: введение</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/servotelegram/servotelegram.html">Управление сервоприводом через Telegram-бот</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/telegrambme/telegrambme.html">Получение данных о температуре (BME280) через Telegram-бот</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/pirtelegram/pirtelegram.html">PIR-датчик: уведомление о движении в Telegram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/mputelegram/mputelegram.html">MPU6050: уведомление о вибрации/наклоне в Telegram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/googlesheets/googlesheets.html">Google Sheets: хранение данных о температуре</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq/index.html">FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../faq/index.html#micropython">MicroPython</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../feedback/index.html">Обратная связь</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../feedback/index.html#id2">Контакты</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Raspberry Pi Pico W Kit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Содержание курса по Raspberry Pi Pico W</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Модуль датчиков и устройств</a></li>
+      <li class="breadcrumb-item active">Измерение ускорения и гироскопических данных с MPU6050 на Raspberry Pi Pico</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Навигация по соседним страницам">
+        <a href="../bme280/bme280.html" class="btn btn-neutral float-left" title="Использование датчика BME280 с Raspberry Pi Pico" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="../../projects/index.html" class="btn btn-neutral float-right" title="Проекты" accesskey="n">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="mpu6050-raspberry-pi-pico">
+<h1>Измерение ускорения и гироскопических данных с MPU6050 на Raspberry Pi Pico<a class="headerlink" href="#mpu6050-raspberry-pi-pico" title="Ссылка на этот заголовок"></a></h1>
+<section id="id1">
+<h2>Введение<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h2>
+<p>В этом уроке мы научимся использовать акселерометр и гироскоп MPU6050 (модуль GY-521) с микроконтроллером Raspberry Pi Pico. MPU6050 — это популярный датчик движения, который объединяет в себе трехосевой акселерометр и трехосевой гироскоп, что позволяет измерять ускорение, угловую скорость и ориентацию. Данный модуль широко применяется в робототехнике, дронах, системах стабилизации и различных проектах, требующих определения положения в пространстве.</p>
+</section>
+<section id="id2">
+<h2>Необходимые компоненты<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
+<ul class="simple">
+<li><p>Raspberry Pi Pico</p></li>
+<li><p>Модуль MPU6050 (GY-521)</p></li>
+<li><p>Макетная плата</p></li>
+<li><p>Соединительные провода</p></li>
+<li><p>Микро-USB кабель для питания и программирования</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>Структура проекта<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h2>
+<p>Наш проект будет состоять из следующих файлов:</p>
+<ul class="simple">
+<li><p><strong>mpu6050.py</strong> - библиотека для работы с датчиком MPU6050 (предоставляется)</p></li>
+<li><p><strong>main.py</strong> - основной файл с кодом для чтения данных с датчика</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>Схема подключения<a class="headerlink" href="#id4" title="Ссылка на этот заголовок"></a></h2>
+<p>Модуль MPU6050 подключается к Raspberry Pi Pico по интерфейсу I2C:</p>
+<ul class="simple">
+<li><p>VCC (питание) -&gt; 3.3V (пин 36 на Pico)</p></li>
+<li><p>GND (земля) -&gt; GND (пин 38 на Pico)</p></li>
+<li><p>SCL (тактовая линия I2C) -&gt; GP1 (пин 2 на Pico)</p></li>
+<li><p>SDA (линия данных I2C) -&gt; GP0 (пин 1 на Pico)</p></li>
+<li><p>XDA и XCL на модуле не подключаются</p></li>
+<li><p>AD0 на модуле подключается к GND (устанавливает I2C адрес 0x68)</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Примечание</p>
+<p>Модуль MPU6050 работает от напряжения 3.3В. Подключение к 5В может привести к повреждению датчика.</p>
+</div>
+</section>
+<section id="id5">
+<h2>Пошаговые инструкции<a class="headerlink" href="#id5" title="Ссылка на этот заголовок"></a></h2>
+<section id="id6">
+<h3>Шаг 1: Настройка оборудования<a class="headerlink" href="#id6" title="Ссылка на этот заголовок"></a></h3>
+<ol class="arabic simple">
+<li><p>Установите MicroPython на Raspberry Pi Pico, если это еще не сделано.</p></li>
+<li><p>Соберите схему в соответствии с описанием выше.</p></li>
+<li><p>Подключите Pico к компьютеру через USB-кабель.</p></li>
+</ol>
+</section>
+<section id="mpu6050-py">
+<h3>Шаг 2: Загрузка библиотеки mpu6050.py<a class="headerlink" href="#mpu6050-py" title="Ссылка на этот заголовок"></a></h3>
+<p>Для работы с датчиком MPU6050 мы будем использовать готовую библиотеку, которая предоставляется с этим уроком. Скопируйте файл <strong>mpu6050.py</strong> на Raspberry Pi Pico с помощью Thonny IDE или другого удобного метода.</p>
+<p>В библиотеке необходимо изменить инициализацию I2C для работы с Raspberry Pi Pico. Найдите строки:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initializing the I2C method for ESP32</span>
+<span class="c1"># Pin assignment:</span>
+<span class="c1"># SCL -&gt; GPIO 22</span>
+<span class="c1"># SDA -&gt; GPIO 21</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">i2c</span> <span class="o">=</span> <span class="n">SoftI2C</span><span class="p">(</span><span class="n">scl</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">22</span><span class="p">),</span> <span class="n">sda</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">21</span><span class="p">),</span> <span class="n">freq</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>И замените их на:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initializing the I2C method for Raspberry Pi Pico</span>
+<span class="c1"># Pin assignment:</span>
+<span class="c1"># SCL -&gt; GPIO 1</span>
+<span class="c1"># SDA -&gt; GPIO 0</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">i2c</span> <span class="o">=</span> <span class="n">SoftI2C</span><span class="p">(</span><span class="n">scl</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">sda</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">freq</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="main-py">
+<h3>Шаг 3: Создание основного файла main.py<a class="headerlink" href="#main-py" title="Ссылка на этот заголовок"></a></h3>
+<p>Создайте файл main.py со следующим содержимым:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">machine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pin</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">mpu6050</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="c1"># Настройка встроенного светодиода для индикации</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="c1"># Инициализация датчика MPU6050</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">mpu</span> <span class="o">=</span> <span class="n">mpu6050</span><span class="o">.</span><span class="n">MPU6050</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Датчик MPU6050 успешно инициализирован&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка инициализации MPU6050: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Функция для мигания светодиодом при чтении данных</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">blink_led</span><span class="p">():</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep_ms</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Разберем основные части кода:</p>
+<ol class="arabic simple">
+<li><p>Импортируем необходимые модули:
+* <code class="docutils literal notranslate"><span class="pre">Pin</span></code> для управления GPIO и светодиодом
+* <code class="docutils literal notranslate"><span class="pre">mpu6050</span></code> - нашу библиотеку для работы с датчиком
+* <code class="docutils literal notranslate"><span class="pre">time</span></code> для создания задержек</p></li>
+<li><p>Настраиваем встроенный светодиод для индикации процесса чтения.</p></li>
+<li><p>Создаем объект датчика MPU6050:
+* Используем конструктор из импортированной библиотеки
+* Обрабатываем возможные ошибки при инициализации</p></li>
+<li><p>Определяем функцию <code class="docutils literal notranslate"><span class="pre">blink_led()</span></code> для кратковременного включения светодиода при чтении данных.</p></li>
+</ol>
+<p>Теперь добавим функции для чтения и форматирования данных с датчика:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Функция для форматирования значений акселерометра и гироскопа</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">format_sensor_data</span><span class="p">(</span><span class="n">accel</span><span class="p">,</span> <span class="n">gyro</span><span class="p">,</span> <span class="n">temp</span><span class="p">):</span>
+    <span class="c1"># Форматирование данных акселерометра</span>
+    <span class="n">accel_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Акселерометр (м/с²): X=</span><span class="si">{</span><span class="n">accel</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, Y=</span><span class="si">{</span><span class="n">accel</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, Z=</span><span class="si">{</span><span class="n">accel</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">accel_abs</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Абсолютное ускорение: </span><span class="si">{</span><span class="n">mpu</span><span class="o">.</span><span class="n">read_accel_abs</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> м/с²&quot;</span>
+
+    <span class="c1"># Форматирование данных гироскопа</span>
+    <span class="n">gyro_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Гироскоп (°/с): X=</span><span class="si">{</span><span class="n">gyro</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, Y=</span><span class="si">{</span><span class="n">gyro</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, Z=</span><span class="si">{</span><span class="n">gyro</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="c1"># Форматирование данных температуры</span>
+    <span class="n">temp_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Температура: </span><span class="si">{</span><span class="n">temp</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> °C&quot;</span>
+
+    <span class="k">return</span> <span class="n">accel_str</span><span class="p">,</span> <span class="n">accel_abs</span><span class="p">,</span> <span class="n">gyro_str</span><span class="p">,</span> <span class="n">temp_str</span>
+
+<span class="c1"># Функция для расчета угла наклона в градусах</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">calculate_tilt_angles</span><span class="p">(</span><span class="n">angle_rad</span><span class="p">):</span>
+    <span class="n">x_angle</span> <span class="o">=</span> <span class="n">angle_rad</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">57.296</span>  <span class="c1"># Перевод из радиан в градусы (180/π ≈ 57.296)</span>
+    <span class="n">y_angle</span> <span class="o">=</span> <span class="n">angle_rad</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">57.296</span>
+
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Угол наклона: X=</span><span class="si">{</span><span class="n">x_angle</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">°, Y=</span><span class="si">{</span><span class="n">y_angle</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">°&quot;</span>
+</pre></div>
+</div>
+<p>Разберем эти функции:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">format_sensor_data(accel,</span> <span class="pre">gyro,</span> <span class="pre">temp)</span></code>:
+* Принимает данные акселерометра, гироскопа и температуры
+* Форматирует их в читаемые строки с указанием единиц измерения
+* Также вычисляет абсолютное ускорение (корень из суммы квадратов по трем осям)
+* Возвращает кортеж из строк для вывода</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">calculate_tilt_angles(angle_rad)</span></code>:
+* Принимает углы наклона в радианах
+* Преобразует их в градусы
+* Возвращает строку с углами наклона по осям X и Y</p></li>
+</ol>
+<p>Теперь добавим основной цикл программы:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Основной цикл программы</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Мониторинг данных с датчика MPU6050&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Нажмите Ctrl+C для завершения.&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;----------------------------------&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Настройка диапазонов измерений</span>
+    <span class="n">mpu</span><span class="o">.</span><span class="n">set_accel_range</span><span class="p">(</span><span class="n">mpu6050</span><span class="o">.</span><span class="n">_ACC_RNG_2G</span><span class="p">)</span>  <span class="c1"># ±2g</span>
+    <span class="n">mpu</span><span class="o">.</span><span class="n">set_gyro_range</span><span class="p">(</span><span class="n">mpu6050</span><span class="o">.</span><span class="n">_GYR_RNG_250DEG</span><span class="p">)</span>  <span class="c1"># ±250°/с</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="c1"># Мигаем светодиодом для индикации чтения</span>
+            <span class="n">blink_led</span><span class="p">()</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Чтение данных с датчика</span>
+                <span class="n">accel_data</span> <span class="o">=</span> <span class="n">mpu</span><span class="o">.</span><span class="n">read_accel_data</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># Ускорение в м/с²</span>
+                <span class="n">gyro_data</span> <span class="o">=</span> <span class="n">mpu</span><span class="o">.</span><span class="n">read_gyro_data</span><span class="p">()</span>  <span class="c1"># Угловая скорость в °/с</span>
+                <span class="n">temp</span> <span class="o">=</span> <span class="n">mpu</span><span class="o">.</span><span class="n">read_temperature</span><span class="p">()</span>  <span class="c1"># Температура в °C</span>
+                <span class="n">angle_data</span> <span class="o">=</span> <span class="n">mpu</span><span class="o">.</span><span class="n">read_angle</span><span class="p">()</span>  <span class="c1"># Углы наклона в радианах</span>
+
+                <span class="c1"># Форматирование и вывод данных</span>
+                <span class="n">accel_str</span><span class="p">,</span> <span class="n">accel_abs</span><span class="p">,</span> <span class="n">gyro_str</span><span class="p">,</span> <span class="n">temp_str</span> <span class="o">=</span> <span class="n">format_sensor_data</span><span class="p">(</span><span class="n">accel_data</span><span class="p">,</span> <span class="n">gyro_data</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span>
+                <span class="n">tilt_str</span> <span class="o">=</span> <span class="n">calculate_tilt_angles</span><span class="p">(</span><span class="n">angle_data</span><span class="p">)</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="n">accel_str</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">accel_abs</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">gyro_str</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">temp_str</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">tilt_str</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;----------------------------------&quot;</span><span class="p">)</span>
+
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка при чтении данных: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Ждем перед следующим чтением</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Мониторинг данных завершен.&quot;</span><span class="p">)</span>
+
+<span class="c1"># Запускаем программу</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Этот блок кода:</p>
+<ol class="arabic simple">
+<li><p>Создает основную функцию <code class="docutils literal notranslate"><span class="pre">main()</span></code>:
+* Выводит информационное сообщение о начале работы
+* Настраивает диапазоны измерений акселерометра (±2g) и гироскопа (±250°/с)
+* Входит в бесконечный цикл чтения данных</p></li>
+<li><p>В цикле:
+* Мигает светодиодом для индикации процесса чтения
+* Считывает данные с акселерометра, гироскопа и датчика температуры
+* Также получает углы наклона
+* Форматирует и выводит полученные данные
+* Обрабатывает возможные ошибки при чтении
+* Ждет 0.5 секунды перед следующим измерением</p></li>
+<li><p>Обрабатывает прерывание Ctrl+C для корректного завершения программы</p></li>
+<li><p>Запускает функцию <code class="docutils literal notranslate"><span class="pre">main()</span></code> при непосредственном выполнении файла</p></li>
+</ol>
+</section>
+</section>
+<section id="id7">
+<h2>Инструкции по загрузке и запуску<a class="headerlink" href="#id7" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p>Убедитесь, что библиотека mpu6050.py с исправленной инициализацией I2C загружена на ваш Raspberry Pi Pico.</p></li>
+<li><p>Скопируйте файл main.py на Pico (можно использовать Thonny IDE или любой другой метод).</p></li>
+<li><p>После загрузки файла программа автоматически запустится.</p></li>
+<li><p>Откройте последовательный порт (в Thonny это происходит автоматически) для просмотра вывода данных.</p></li>
+<li><p>Наблюдайте за показаниями датчика, обновляющимися каждые 0.5 секунды.</p></li>
+<li><p>Попробуйте наклонять и поворачивать датчик, чтобы увидеть изменения в значениях.</p></li>
+<li><p>Для завершения программы нажмите Ctrl+C.</p></li>
+</ol>
+</section>
+<section id="id8">
+<h2>Возможные проблемы и их решения<a class="headerlink" href="#id8" title="Ссылка на этот заголовок"></a></h2>
+<section id="id9">
+<h3>Датчик не инициализируется<a class="headerlink" href="#id9" title="Ссылка на этот заголовок"></a></h3>
+<p>Если датчик не инициализируется или выдает ошибку:</p>
+<ul class="simple">
+<li><p>Проверьте правильность подключения проводов.</p></li>
+<li><p>Убедитесь, что напряжение питания датчика составляет 3.3В.</p></li>
+<li><p>Проверьте, что в библиотеке правильно указаны пины для I2C.</p></li>
+<li><p>Датчик MPU6050 имеет два возможных адреса: 0x68 (по умолчанию) и 0x69. Если пин AD0 не подключен к GND, попробуйте изменить адрес в коде:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mpu</span> <span class="o">=</span> <span class="n">mpu6050</span><span class="o">.</span><span class="n">MPU6050</span><span class="p">(</span><span class="n">addr</span><span class="o">=</span><span class="mh">0x69</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id10">
+<h3>Неточные или странные показания<a class="headerlink" href="#id10" title="Ссылка на этот заголовок"></a></h3>
+<p>Если показания датчика кажутся неточными или странными:</p>
+<ul class="simple">
+<li><p>Поместите датчик на ровную поверхность и перезагрузите Pico, чтобы обнулить начальные показания.</p></li>
+<li><p>Проверьте, не подвергается ли датчик вибрациям от других компонентов.</p></li>
+<li><p>Для более точных измерений может потребоваться калибровка смещения:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Примерный код для калибровки (добавьте перед основным циклом)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Калибровка датчика. Держите MPU6050 неподвижно...&quot;</span><span class="p">)</span>
+<span class="n">offset_x</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">offset_y</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">offset_z</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">gyro</span> <span class="o">=</span> <span class="n">mpu</span><span class="o">.</span><span class="n">read_gyro_data</span><span class="p">()</span>
+    <span class="n">offset_x</span> <span class="o">+=</span> <span class="n">gyro</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span>
+    <span class="n">offset_y</span> <span class="o">+=</span> <span class="n">gyro</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span>
+    <span class="n">offset_z</span> <span class="o">+=</span> <span class="n">gyro</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">]</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep_ms</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Усреднение смещений</span>
+<span class="n">offset_x</span> <span class="o">/=</span> <span class="mi">100</span>
+<span class="n">offset_y</span> <span class="o">/=</span> <span class="mi">100</span>
+<span class="n">offset_z</span> <span class="o">/=</span> <span class="mi">100</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Калибровка завершена. Смещения: X=</span><span class="si">{</span><span class="n">offset_x</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, Y=</span><span class="si">{</span><span class="n">offset_y</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, Z=</span><span class="si">{</span><span class="n">offset_z</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="i2c">
+<h3>Ошибки I2C коммуникации<a class="headerlink" href="#i2c" title="Ссылка на этот заголовок"></a></h3>
+<p>Если возникают прерывистые ошибки связи:</p>
+<ul class="simple">
+<li><p>Уменьшите частоту I2C в библиотеке mpu6050.py:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">i2c</span> <span class="o">=</span> <span class="n">SoftI2C</span><span class="p">(</span><span class="n">scl</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">sda</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">freq</span><span class="o">=</span><span class="mi">50000</span><span class="p">)</span>  <span class="c1"># Снижаем до 50 кГц</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Используйте более короткие соединительные провода.</p></li>
+<li><p>Добавьте подтягивающие резисторы (4.7 кОм) на линии SDA и SCL, если их нет на модуле.</p></li>
+</ul>
+</section>
+</section>
+<section id="id11">
+<h2>Заключение<a class="headerlink" href="#id11" title="Ссылка на этот заголовок"></a></h2>
+<p>В этом уроке мы научились:</p>
+<ul class="simple">
+<li><p>Подключать датчик MPU6050 к Raspberry Pi Pico</p></li>
+<li><p>Настраивать библиотеку для работы с датчиком</p></li>
+<li><p>Считывать данные акселерометра и гироскопа</p></li>
+<li><p>Вычислять углы наклона и абсолютное ускорение</p></li>
+<li><p>Отображать полученные данные в удобном формате</p></li>
+</ul>
+<p>Этот проект можно расширить различными способами:</p>
+<ul class="simple">
+<li><p>Добавить фильтрацию данных для устранения шума (например, комплементарный фильтр или фильтр Калмана)</p></li>
+<li><p>Реализовать обнаружение определенных движений (тряска, падение, вращение)</p></li>
+<li><p>Интегрировать с другими датчиками для создания системы инерциальной навигации</p></li>
+<li><p>Использовать данные для управления роботом или стабилизации камеры</p></li>
+<li><p>Добавить визуализацию данных на OLED-дисплее или через веб-интерфейс</p></li>
+</ul>
+</section>
+<section id="id12">
+<h2>Полный код программы<a class="headerlink" href="#id12" title="Ссылка на этот заголовок"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">machine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pin</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">mpu6050</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="c1"># Настройка встроенного светодиода для индикации</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="c1"># Инициализация датчика MPU6050</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">mpu</span> <span class="o">=</span> <span class="n">mpu6050</span><span class="o">.</span><span class="n">MPU6050</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Датчик MPU6050 успешно инициализирован&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка инициализации MPU6050: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Функция для мигания светодиодом при чтении данных</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">blink_led</span><span class="p">():</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep_ms</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+
+<span class="c1"># Функция для форматирования значений акселерометра и гироскопа</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">format_sensor_data</span><span class="p">(</span><span class="n">accel</span><span class="p">,</span> <span class="n">gyro</span><span class="p">,</span> <span class="n">temp</span><span class="p">):</span>
+    <span class="c1"># Форматирование данных акселерометра</span>
+    <span class="n">accel_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Акселерометр (м/с²): X=</span><span class="si">{</span><span class="n">accel</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, Y=</span><span class="si">{</span><span class="n">accel</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, Z=</span><span class="si">{</span><span class="n">accel</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">accel_abs</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Абсолютное ускорение: </span><span class="si">{</span><span class="n">mpu</span><span class="o">.</span><span class="n">read_accel_abs</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> м/с²&quot;</span>
+
+    <span class="c1"># Форматирование данных гироскопа</span>
+    <span class="n">gyro_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Гироскоп (°/с): X=</span><span class="si">{</span><span class="n">gyro</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, Y=</span><span class="si">{</span><span class="n">gyro</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, Z=</span><span class="si">{</span><span class="n">gyro</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="c1"># Форматирование данных температуры</span>
+    <span class="n">temp_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Температура: </span><span class="si">{</span><span class="n">temp</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> °C&quot;</span>
+
+    <span class="k">return</span> <span class="n">accel_str</span><span class="p">,</span> <span class="n">accel_abs</span><span class="p">,</span> <span class="n">gyro_str</span><span class="p">,</span> <span class="n">temp_str</span>
+
+<span class="c1"># Функция для расчета угла наклона в градусах</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">calculate_tilt_angles</span><span class="p">(</span><span class="n">angle_rad</span><span class="p">):</span>
+    <span class="n">x_angle</span> <span class="o">=</span> <span class="n">angle_rad</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">57.296</span>  <span class="c1"># Перевод из радиан в градусы (180/π ≈ 57.296)</span>
+    <span class="n">y_angle</span> <span class="o">=</span> <span class="n">angle_rad</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">57.296</span>
+
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Угол наклона: X=</span><span class="si">{</span><span class="n">x_angle</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">°, Y=</span><span class="si">{</span><span class="n">y_angle</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">°&quot;</span>
+
+<span class="c1"># Основной цикл программы</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Мониторинг данных с датчика MPU6050&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Нажмите Ctrl+C для завершения.&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;----------------------------------&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Настройка диапазонов измерений</span>
+    <span class="n">mpu</span><span class="o">.</span><span class="n">set_accel_range</span><span class="p">(</span><span class="n">mpu6050</span><span class="o">.</span><span class="n">_ACC_RNG_2G</span><span class="p">)</span>  <span class="c1"># ±2g</span>
+    <span class="n">mpu</span><span class="o">.</span><span class="n">set_gyro_range</span><span class="p">(</span><span class="n">mpu6050</span><span class="o">.</span><span class="n">_GYR_RNG_250DEG</span><span class="p">)</span>  <span class="c1"># ±250°/с</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="c1"># Мигаем светодиодом для индикации чтения</span>
+            <span class="n">blink_led</span><span class="p">()</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Чтение данных с датчика</span>
+                <span class="n">accel_data</span> <span class="o">=</span> <span class="n">mpu</span><span class="o">.</span><span class="n">read_accel_data</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># Ускорение в м/с²</span>
+                <span class="n">gyro_data</span> <span class="o">=</span> <span class="n">mpu</span><span class="o">.</span><span class="n">read_gyro_data</span><span class="p">()</span>  <span class="c1"># Угловая скорость в °/с</span>
+                <span class="n">temp</span> <span class="o">=</span> <span class="n">mpu</span><span class="o">.</span><span class="n">read_temperature</span><span class="p">()</span>  <span class="c1"># Температура в °C</span>
+                <span class="n">angle_data</span> <span class="o">=</span> <span class="n">mpu</span><span class="o">.</span><span class="n">read_angle</span><span class="p">()</span>  <span class="c1"># Углы наклона в радианах</span>
+
+                <span class="c1"># Форматирование и вывод данных</span>
+                <span class="n">accel_str</span><span class="p">,</span> <span class="n">accel_abs</span><span class="p">,</span> <span class="n">gyro_str</span><span class="p">,</span> <span class="n">temp_str</span> <span class="o">=</span> <span class="n">format_sensor_data</span><span class="p">(</span><span class="n">accel_data</span><span class="p">,</span> <span class="n">gyro_data</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span>
+                <span class="n">tilt_str</span> <span class="o">=</span> <span class="n">calculate_tilt_angles</span><span class="p">(</span><span class="n">angle_data</span><span class="p">)</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="n">accel_str</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">accel_abs</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">gyro_str</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">temp_str</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">tilt_str</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;----------------------------------&quot;</span><span class="p">)</span>
+
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка при чтении данных: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Ждем перед следующим чтением</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Мониторинг данных завершен.&quot;</span><span class="p">)</span>
+
+<span class="c1"># Запускаем программу</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="../bme280/bme280.html" class="btn btn-neutral float-left" title="Использование датчика BME280 с Raspberry Pi Pico" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="../../projects/index.html" class="btn btn-neutral float-right" title="Проекты" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2025, Dias Kabdualiyev. </p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,554 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Использование датчика BME280 с Raspberry Pi Pico &mdash; документация Raspberry Pi Pico W Kit 0.1</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d39ee99e" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=2b7aed8e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/translations.js?v=5b699b7f"></script>
+      <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../../search.html" />
+    <link rel="next" title="Измерение ускорения и гироскопических данных с MPU6050 на Raspberry Pi Pico" href="../mpu6050/mpu6050.html" />
+    <link rel="prev" title="Управление сервоприводом с помощью Raspberry Pi Pico" href="../servo/servo.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Raspberry Pi Pico W Kit
+              <img src="../../../_static/logo.png" class="logo" alt="Логотип"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/index.html">Учебный набор по MicroPython на базе Raspberry Pi Pico W</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id1">Вступление</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id2">Сильные стороны набора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id3">Для кого подходит этот набор</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id4">Компоненты набора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#raspberry-pi-pico-w-15">Итоговый учебный план на Raspberry Pi Pico W (15 уроков)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get-started/index.html">Знакомство с Raspberry Pi Pico W и MicroPython</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/picow.html">Знакомство с Pico W</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/micropython.html">Введение в MicroPython</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/micropython.html#id1">История начинается здесь</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/micropython.html#id2">Почему MicroPython?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/thonny.html">Установка Thonny IDE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/micropythoninstall.html">Установка MicroPython на ваш Pico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/uploadlibs.html">Загрузка библиотек на Pico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/thonnytutor.html">1.5 Краткое руководство по Thonny</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/thonnytutor.html#id1">Открытие и запуск кода напрямую</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Содержание курса по Raspberry Pi Pico W</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Модуль датчиков и устройств</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../rgb/rgb.html">Управление RGB-светодиодом с общим катодом на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ws2812/ws2812.html">Управление адресным светодиодным кольцом на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../light/light.html">Работа с датчиком освещенности на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pir/pir.html">Обнаружение движения с помощью PIR датчика и Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pot/pot.html">Управление потенциометром на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../relay/relay.html">Управление реле с помощью Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../servo/servo.html">Управление сервоприводом с помощью Raspberry Pi Pico</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Использование датчика BME280 с Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mpu6050/mpu6050.html">Измерение ускорения и гироскопических данных с MPU6050 на Raspberry Pi Pico</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../projects/index.html">Проекты</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/wifi/wifi.html">Подключение к интернету с использованием Wi-Fi на Raspberry Pi Pico W</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/webhello/webhello.html">Hello World: веб-сайт на Pico W</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/light/light.html">Считывание данных с датчика освещённости и отображение на веб-интерфейсе</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/wifiscan/wifiscan.html">Управление RGB-светодиодом через веб-интерфейс</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/wifioled/wifioled.html">Отображение информации о Wi-Fi на OLED-дисплее SSD1306</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/openwaethermap/owm.html">OpenWeatherMap: вывод данных о погоде на OLED-дисплей</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/owmws2812/owmws2812.html">Визуализация температуры из OpenWeatherMap на адресной ленте WS2812</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/ws2812pir/ws2812pir.html">PIR-датчик: уведомление о движении с помощью WS2812</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/echobot/echobot.html">Телеграм-бот: введение</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/servotelegram/servotelegram.html">Управление сервоприводом через Telegram-бот</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/telegrambme/telegrambme.html">Получение данных о температуре (BME280) через Telegram-бот</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/pirtelegram/pirtelegram.html">PIR-датчик: уведомление о движении в Telegram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/mputelegram/mputelegram.html">MPU6050: уведомление о вибрации/наклоне в Telegram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/googlesheets/googlesheets.html">Google Sheets: хранение данных о температуре</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq/index.html">FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../faq/index.html#micropython">MicroPython</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../feedback/index.html">Обратная связь</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../feedback/index.html#id2">Контакты</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Raspberry Pi Pico W Kit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Содержание курса по Raspberry Pi Pico W</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Модуль датчиков и устройств</a></li>
+      <li class="breadcrumb-item active">Использование датчика BME280 с Raspberry Pi Pico</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Навигация по соседним страницам">
+        <a href="../servo/servo.html" class="btn btn-neutral float-left" title="Управление сервоприводом с помощью Raspberry Pi Pico" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="../mpu6050/mpu6050.html" class="btn btn-neutral float-right" title="Измерение ускорения и гироскопических данных с MPU6050 на Raspberry Pi Pico" accesskey="n">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="bme280-raspberry-pi-pico">
+<h1>Использование датчика BME280 с Raspberry Pi Pico<a class="headerlink" href="#bme280-raspberry-pi-pico" title="Ссылка на этот заголовок"></a></h1>
+<section id="id1">
+<h2>Введение<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h2>
+<p>В этом уроке мы научимся работать с датчиком BME280 на базе Raspberry Pi Pico. BME280 - это высокоточный датчик от Bosch, который измеряет температуру, атмосферное давление и относительную влажность воздуха. Благодаря интерфейсу I2C, этот датчик легко подключить к микроконтроллеру. Мы создадим программу для считывания данных с датчика и вывода их в консоль, что может быть использовано для создания метеостанций, систем умного дома или экологического мониторинга.</p>
+</section>
+<section id="id2">
+<h2>Необходимые компоненты<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
+<ul class="simple">
+<li><p>Raspberry Pi Pico</p></li>
+<li><p>Датчик BME280</p></li>
+<li><p>Макетная плата</p></li>
+<li><p>Соединительные провода</p></li>
+<li><p>Микро-USB кабель для питания и программирования</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>Структура проекта<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h2>
+<p>Наш проект будет состоять из следующих файлов:</p>
+<ul class="simple">
+<li><p><strong>bme280.py</strong> - библиотека для работы с датчиком BME280 (предоставляется)</p></li>
+<li><p><strong>main.py</strong> - основной файл с кодом для чтения данных с датчика</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>Схема подключения<a class="headerlink" href="#id4" title="Ссылка на этот заголовок"></a></h2>
+<p>Датчик BME280 подключается к Raspberry Pi Pico по интерфейсу I2C:</p>
+<ul class="simple">
+<li><p>VCC (питание) -&gt; 3.3V (пин 36 на Pico)</p></li>
+<li><p>GND (земля) -&gt; GND (пин 38 на Pico)</p></li>
+<li><p>SCL (тактовая линия I2C) -&gt; GP1 (пин 2 на Pico)</p></li>
+<li><p>SDA (линия данных I2C) -&gt; GP0 (пин 1 на Pico)</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Примечание</p>
+<p>BME280 может работать как по I2C, так и по SPI интерфейсу. В этом уроке мы используем I2C, так как он требует меньше проводов для подключения и проще в использовании.</p>
+</div>
+</section>
+<section id="id5">
+<h2>Пошаговые инструкции<a class="headerlink" href="#id5" title="Ссылка на этот заголовок"></a></h2>
+<section id="id6">
+<h3>Шаг 1: Настройка оборудования<a class="headerlink" href="#id6" title="Ссылка на этот заголовок"></a></h3>
+<ol class="arabic simple">
+<li><p>Установите MicroPython на Raspberry Pi Pico, если это еще не сделано.</p></li>
+<li><p>Соберите схему в соответствии с описанием выше.</p></li>
+<li><p>Подключите Pico к компьютеру через USB-кабель.</p></li>
+</ol>
+</section>
+<section id="bme280-py">
+<h3>Шаг 2: Загрузка библиотеки bme280.py<a class="headerlink" href="#bme280-py" title="Ссылка на этот заголовок"></a></h3>
+<p>Для работы с датчиком BME280 мы будем использовать готовую библиотеку, которая предоставляется с этим уроком. Скопируйте файл <strong>bme280.py</strong> на Raspberry Pi Pico с помощью Thonny IDE или другого удобного метода.</p>
+</section>
+<section id="main-py">
+<h3>Шаг 3: Создание основного файла main.py<a class="headerlink" href="#main-py" title="Ссылка на этот заголовок"></a></h3>
+<p>Создайте файл main.py со следующим содержимым:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">machine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pin</span><span class="p">,</span> <span class="n">I2C</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">bme280</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="c1"># Настройка I2C</span>
+<span class="n">i2c</span> <span class="o">=</span> <span class="n">I2C</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">scl</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">sda</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">freq</span><span class="o">=</span><span class="mi">400000</span><span class="p">)</span>
+
+<span class="c1"># Сканирование I2C-шины для поиска устройств</span>
+<span class="n">devices</span> <span class="o">=</span> <span class="n">i2c</span><span class="o">.</span><span class="n">scan</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">devices</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Найдены I2C устройства с адресами: </span><span class="si">{</span><span class="p">[</span><span class="nb">hex</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">devices</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I2C устройства не найдены!&quot;</span><span class="p">)</span>
+
+<span class="c1"># Создание объекта датчика BME280</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">bme</span> <span class="o">=</span> <span class="n">bme280</span><span class="o">.</span><span class="n">BME280</span><span class="p">(</span><span class="n">i2c</span><span class="o">=</span><span class="n">i2c</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Датчик BME280 успешно инициализирован&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка инициализации BME280: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Разберем основные части кода:</p>
+<ol class="arabic simple">
+<li><p>Импортируем необходимые модули:
+* <code class="docutils literal notranslate"><span class="pre">Pin</span></code> и <code class="docutils literal notranslate"><span class="pre">I2C</span></code> для работы с GPIO и I2C интерфейсом
+* <code class="docutils literal notranslate"><span class="pre">bme280</span></code> - нашу библиотеку для работы с датчиком
+* <code class="docutils literal notranslate"><span class="pre">time</span></code> для создания задержек</p></li>
+<li><p>Настраиваем I2C интерфейс:
+* Используем I2C(0) - первый I2C контроллер на Pico
+* Задаем пины SCL (GP1) и SDA (GP0)
+* Устанавливаем частоту 400 кГц для быстрой работы</p></li>
+<li><p>Сканируем I2C-шину для обнаружения подключенных устройств:
+* Выводим список найденных устройств и их адреса
+* BME280 обычно имеет адрес 0x76 или 0x77</p></li>
+<li><p>Создаем объект для работы с датчиком:
+* Используем конструктор <code class="docutils literal notranslate"><span class="pre">BME280</span></code> из импортированной библиотеки
+* Передаем объект I2C для коммуникации с датчиком
+* Обрабатываем возможные ошибки при инициализации</p></li>
+</ol>
+<p>Теперь добавим функции для считывания и отображения данных:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Функция для форматирования значений температуры, давления и влажности</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">format_sensor_data</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">press</span><span class="p">,</span> <span class="n">hum</span><span class="p">):</span>
+    <span class="n">temp_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Температура: </span><span class="si">{</span><span class="n">temp</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> °C&quot;</span>
+    <span class="n">press_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Давление: </span><span class="si">{</span><span class="n">press</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> гПа&quot;</span>
+    <span class="n">hum_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Влажность: </span><span class="si">{</span><span class="n">hum</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> %&quot;</span>
+    <span class="k">return</span> <span class="n">temp_str</span><span class="p">,</span> <span class="n">press_str</span><span class="p">,</span> <span class="n">hum_str</span>
+
+<span class="c1"># Функция для считывания данных с датчика</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_bme280_data</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Получаем данные с датчика</span>
+        <span class="n">temp_raw</span><span class="p">,</span> <span class="n">press_raw</span><span class="p">,</span> <span class="n">hum_raw</span> <span class="o">=</span> <span class="n">bme</span><span class="o">.</span><span class="n">read_compensated_data</span><span class="p">()</span>
+
+        <span class="c1"># Преобразуем данные в удобный формат</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">temp_raw</span> <span class="o">/</span> <span class="mi">100</span>  <span class="c1"># Температура в градусах Цельсия</span>
+        <span class="n">press</span> <span class="o">=</span> <span class="n">press_raw</span> <span class="o">/</span> <span class="mi">256</span> <span class="o">/</span> <span class="mi">100</span>  <span class="c1"># Давление в гПа</span>
+        <span class="n">hum</span> <span class="o">=</span> <span class="n">hum_raw</span> <span class="o">/</span> <span class="mi">1024</span>  <span class="c1"># Влажность в процентах</span>
+
+        <span class="k">return</span> <span class="n">temp</span><span class="p">,</span> <span class="n">press</span><span class="p">,</span> <span class="n">hum</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка чтения данных: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<p>Разберем эти функции:</p>
+<ol class="arabic">
+<li><p><code class="docutils literal notranslate"><span class="pre">format_sensor_data(temp,</span> <span class="pre">press,</span> <span class="pre">hum)</span></code>:
+* Принимает числовые значения температуры, давления и влажности
+* Форматирует их в читаемые строки с указанием единиц измерения
+* Возвращает кортеж из трех строк для вывода</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read_bme280_data()</span></code>:
+* Использует метод <code class="docutils literal notranslate"><span class="pre">read_compensated_data()</span></code> библиотеки для получения сырых данных с датчика
+* Преобразует полученные значения в стандартные единицы измерения:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Температура в градусах Цельсия</p></li>
+<li><p>Давление в гектопаскалях (гПа)</p></li>
+<li><p>Влажность в процентах</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Обрабатывает возможные исключения при чтении</p></li>
+<li><p>Возвращает кортеж из трех значений или None в случае ошибки</p></li>
+</ul>
+</li>
+</ol>
+<p>Теперь добавим основной цикл программы:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Основной цикл программы</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Мониторинг данных с датчика BME280&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Нажмите Ctrl+C для завершения.&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;----------------------------------&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Настройка встроенного светодиода для индикации</span>
+    <span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="c1"># Мигаем светодиодом для индикации чтения</span>
+            <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+
+            <span class="c1"># Считываем данные с датчика</span>
+            <span class="n">temp</span><span class="p">,</span> <span class="n">press</span><span class="p">,</span> <span class="n">hum</span> <span class="o">=</span> <span class="n">read_bme280_data</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">temp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># Форматируем и выводим данные</span>
+                <span class="n">temp_str</span><span class="p">,</span> <span class="n">press_str</span><span class="p">,</span> <span class="n">hum_str</span> <span class="o">=</span> <span class="n">format_sensor_data</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">press</span><span class="p">,</span> <span class="n">hum</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">temp_str</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">press_str</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">hum_str</span><span class="p">)</span>
+
+                <span class="c1"># Дополнительная информация - точка росы и высота</span>
+                <span class="n">dew_point</span> <span class="o">=</span> <span class="n">bme</span><span class="o">.</span><span class="n">dew_point</span> <span class="o">/</span> <span class="mi">100</span>
+                <span class="n">altitude</span> <span class="o">=</span> <span class="n">bme</span><span class="o">.</span><span class="n">altitude</span> <span class="o">/</span> <span class="mi">100</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Точка росы: </span><span class="si">{</span><span class="n">dew_point</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> °C&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Приблизительная высота: </span><span class="si">{</span><span class="n">altitude</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> м&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;----------------------------------&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Выключаем светодиод</span>
+            <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+
+            <span class="c1"># Ждем перед следующим чтением</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Мониторинг данных завершен.&quot;</span><span class="p">)</span>
+
+<span class="c1"># Запускаем программу</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Этот блок кода:</p>
+<ol class="arabic">
+<li><p>Создает основную функцию <code class="docutils literal notranslate"><span class="pre">main()</span></code>, которая входит в бесконечный цикл измерений:
+* Настраивает встроенный светодиод для индикации
+* В цикле:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Включает светодиод для индикации чтения</p></li>
+<li><p>Считывает данные с датчика</p></li>
+<li><p>Форматирует и выводит значения в консоль</p></li>
+<li><p>Получает и выводит дополнительные параметры (точка росы и высота)</p></li>
+<li><p>Выключает светодиод</p></li>
+<li><p>Ждет 2 секунды перед следующим измерением</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Обрабатывает прерывание Ctrl+C для корректного завершения программы</p></li>
+</ul>
+</li>
+<li><p>Запускает функцию <code class="docutils literal notranslate"><span class="pre">main()</span></code> при непосредственном выполнении файла</p></li>
+</ol>
+</section>
+</section>
+<section id="id7">
+<h2>Инструкции по загрузке и запуску<a class="headerlink" href="#id7" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p>Убедитесь, что библиотека bme280.py загружена на ваш Raspberry Pi Pico.</p></li>
+<li><p>Скопируйте файл main.py на Pico (можно использовать Thonny IDE или любой другой метод).</p></li>
+<li><p>После загрузки файла программа автоматически запустится.</p></li>
+<li><p>Откройте последовательный порт (в Thonny это происходит автоматически) для просмотра вывода данных.</p></li>
+<li><p>Наблюдайте за показаниями датчика, обновляющимися каждые 2 секунды.</p></li>
+<li><p>Для завершения программы нажмите Ctrl+C.</p></li>
+</ol>
+</section>
+<section id="id8">
+<h2>Возможные проблемы и их решения<a class="headerlink" href="#id8" title="Ссылка на этот заголовок"></a></h2>
+<section id="id9">
+<h3>Датчик не обнаруживается<a class="headerlink" href="#id9" title="Ссылка на этот заголовок"></a></h3>
+<p>Если датчик не обнаруживается при сканировании I2C-шины:</p>
+<ul class="simple">
+<li><p>Проверьте правильность подключения проводов.</p></li>
+<li><p>Убедитесь, что напряжение питания датчика составляет 3.3В.</p></li>
+<li><p>Некоторые модули BME280 могут иметь адрес 0x77 вместо стандартного 0x76. В этом случае измените строку инициализации датчика:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bme</span> <span class="o">=</span> <span class="n">bme280</span><span class="o">.</span><span class="n">BME280</span><span class="p">(</span><span class="n">i2c</span><span class="o">=</span><span class="n">i2c</span><span class="p">,</span> <span class="n">address</span><span class="o">=</span><span class="mh">0x77</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id10">
+<h3>Неверные показания датчика<a class="headerlink" href="#id10" title="Ссылка на этот заголовок"></a></h3>
+<p>Если показания датчика кажутся неправильными:</p>
+<ul class="simple">
+<li><p>Проверьте, не находится ли датчик рядом с источниками тепла (например, рядом с другими электронными компонентами).</p></li>
+<li><p>Убедитесь, что датчик не подвергается воздействию прямых солнечных лучей или сквозняков.</p></li>
+<li><p>Дайте датчику время для стабилизации (около 1-2 минут после включения).</p></li>
+</ul>
+</section>
+<section id="id11">
+<h3>Ошибки при чтении данных<a class="headerlink" href="#id11" title="Ссылка на этот заголовок"></a></h3>
+<p>Если возникают ошибки при чтении данных:</p>
+<ul class="simple">
+<li><p>Проверьте целостность библиотеки bme280.py.</p></li>
+<li><p>Попробуйте уменьшить частоту I2C:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">i2c</span> <span class="o">=</span> <span class="n">I2C</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">scl</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">sda</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">freq</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span>  <span class="c1"># уменьшаем до 100 кГц</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Используйте более короткие соединительные провода для минимизации помех.</p></li>
+</ul>
+</section>
+</section>
+<section id="id12">
+<h2>Заключение<a class="headerlink" href="#id12" title="Ссылка на этот заголовок"></a></h2>
+<p>В этом уроке мы научились:</p>
+<ul class="simple">
+<li><p>Подключать датчик BME280 к Raspberry Pi Pico</p></li>
+<li><p>Инициализировать датчик и считывать с него данные</p></li>
+<li><p>Преобразовывать сырые данные в удобный для восприятия формат</p></li>
+<li><p>Выводить информацию о температуре, давлении и влажности</p></li>
+<li><p>Получать дополнительные метеорологические параметры (точка росы и высота)</p></li>
+</ul>
+<p>Этот проект можно расширить различными способами:</p>
+<ul class="simple">
+<li><p>Добавить вывод данных на дисплей (например, OLED или LCD)</p></li>
+<li><p>Создать систему регистрации данных с сохранением на microSD карту</p></li>
+<li><p>Настроить беспроводную передачу данных (при наличии Raspberry Pi Pico W)</p></li>
+<li><p>Добавить анализ данных и предсказание погоды</p></li>
+<li><p>Интегрировать с другими датчиками для создания комплексной метеостанции</p></li>
+</ul>
+</section>
+<section id="id13">
+<h2>Полный код программы<a class="headerlink" href="#id13" title="Ссылка на этот заголовок"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">machine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pin</span><span class="p">,</span> <span class="n">I2C</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">bme280</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="c1"># Настройка I2C</span>
+<span class="n">i2c</span> <span class="o">=</span> <span class="n">I2C</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">scl</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">sda</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">freq</span><span class="o">=</span><span class="mi">400000</span><span class="p">)</span>
+
+<span class="c1"># Сканирование I2C-шины для поиска устройств</span>
+<span class="n">devices</span> <span class="o">=</span> <span class="n">i2c</span><span class="o">.</span><span class="n">scan</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">devices</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Найдены I2C устройства с адресами: </span><span class="si">{</span><span class="p">[</span><span class="nb">hex</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">devices</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I2C устройства не найдены!&quot;</span><span class="p">)</span>
+
+<span class="c1"># Создание объекта датчика BME280</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">bme</span> <span class="o">=</span> <span class="n">bme280</span><span class="o">.</span><span class="n">BME280</span><span class="p">(</span><span class="n">i2c</span><span class="o">=</span><span class="n">i2c</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Датчик BME280 успешно инициализирован&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка инициализации BME280: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Функция для форматирования значений температуры, давления и влажности</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">format_sensor_data</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">press</span><span class="p">,</span> <span class="n">hum</span><span class="p">):</span>
+    <span class="n">temp_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Температура: </span><span class="si">{</span><span class="n">temp</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> °C&quot;</span>
+    <span class="n">press_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Давление: </span><span class="si">{</span><span class="n">press</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> гПа&quot;</span>
+    <span class="n">hum_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Влажность: </span><span class="si">{</span><span class="n">hum</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> %&quot;</span>
+    <span class="k">return</span> <span class="n">temp_str</span><span class="p">,</span> <span class="n">press_str</span><span class="p">,</span> <span class="n">hum_str</span>
+
+<span class="c1"># Функция для считывания данных с датчика</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_bme280_data</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Получаем данные с датчика</span>
+        <span class="n">temp_raw</span><span class="p">,</span> <span class="n">press_raw</span><span class="p">,</span> <span class="n">hum_raw</span> <span class="o">=</span> <span class="n">bme</span><span class="o">.</span><span class="n">read_compensated_data</span><span class="p">()</span>
+
+        <span class="c1"># Преобразуем данные в удобный формат</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">temp_raw</span> <span class="o">/</span> <span class="mi">100</span>  <span class="c1"># Температура в градусах Цельсия</span>
+        <span class="n">press</span> <span class="o">=</span> <span class="n">press_raw</span> <span class="o">/</span> <span class="mi">256</span> <span class="o">/</span> <span class="mi">100</span>  <span class="c1"># Давление в гПа</span>
+        <span class="n">hum</span> <span class="o">=</span> <span class="n">hum_raw</span> <span class="o">/</span> <span class="mi">1024</span>  <span class="c1"># Влажность в процентах</span>
+
+        <span class="k">return</span> <span class="n">temp</span><span class="p">,</span> <span class="n">press</span><span class="p">,</span> <span class="n">hum</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка чтения данных: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+<span class="c1"># Основной цикл программы</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Мониторинг данных с датчика BME280&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Нажмите Ctrl+C для завершения.&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;----------------------------------&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Настройка встроенного светодиода для индикации</span>
+    <span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="c1"># Мигаем светодиодом для индикации чтения</span>
+            <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+
+            <span class="c1"># Считываем данные с датчика</span>
+            <span class="n">temp</span><span class="p">,</span> <span class="n">press</span><span class="p">,</span> <span class="n">hum</span> <span class="o">=</span> <span class="n">read_bme280_data</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">temp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># Форматируем и выводим данные</span>
+                <span class="n">temp_str</span><span class="p">,</span> <span class="n">press_str</span><span class="p">,</span> <span class="n">hum_str</span> <span class="o">=</span> <span class="n">format_sensor_data</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">press</span><span class="p">,</span> <span class="n">hum</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">temp_str</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">press_str</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">hum_str</span><span class="p">)</span>
+
+                <span class="c1"># Дополнительная информация - точка росы и высота</span>
+                <span class="n">dew_point</span> <span class="o">=</span> <span class="n">bme</span><span class="o">.</span><span class="n">dew_point</span> <span class="o">/</span> <span class="mi">100</span>
+                <span class="n">altitude</span> <span class="o">=</span> <span class="n">bme</span><span class="o">.</span><span class="n">altitude</span> <span class="o">/</span> <span class="mi">100</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Точка росы: </span><span class="si">{</span><span class="n">dew_point</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> °C&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Приблизительная высота: </span><span class="si">{</span><span class="n">altitude</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> м&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;----------------------------------&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Выключаем светодиод</span>
+            <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+
+            <span class="c1"># Ждем перед следующим чтением</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Мониторинг данных завершен.&quot;</span><span class="p">)</span>
+
+<span class="c1"># Запускаем программу</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="../servo/servo.html" class="btn btn-neutral float-left" title="Управление сервоприводом с помощью Raspberry Pi Pico" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="../mpu6050/mpu6050.html" class="btn btn-neutral float-right" title="Измерение ускорения и гироскопических данных с MPU6050 на Raspberry Pi Pico" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2025, Dias Kabdualiyev. </p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

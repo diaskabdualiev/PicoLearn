@@ -1,0 +1,286 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Знакомство с Pico W &mdash; документация Raspberry Pi Pico W Kit 0.1</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=d39ee99e" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=2b7aed8e"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=5b699b7f"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="../genindex.html" />
+    <link rel="search" title="Поиск" href="../search.html" />
+    <link rel="next" title="Введение в MicroPython" href="micropython.html" />
+    <link rel="prev" title="Знакомство с Raspberry Pi Pico W и MicroPython" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Raspberry Pi Pico W Kit
+              <img src="../_static/logo.png" class="logo" alt="Логотип"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about/index.html">Учебный набор по MicroPython на базе Raspberry Pi Pico W</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../about/index.html#id1">Вступление</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/index.html#id2">Сильные стороны набора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/index.html#id3">Для кого подходит этот набор</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/index.html#id4">Компоненты набора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/index.html#raspberry-pi-pico-w-15">Итоговый учебный план на Raspberry Pi Pico W (15 уроков)</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Знакомство с Raspberry Pi Pico W и MicroPython</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Знакомство с Pico W</a></li>
+<li class="toctree-l2"><a class="reference internal" href="micropython.html">Введение в MicroPython</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="micropython.html#id1">История начинается здесь</a></li>
+<li class="toctree-l3"><a class="reference internal" href="micropython.html#id2">Почему MicroPython?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="thonny.html">Установка Thonny IDE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="micropythoninstall.html">Установка MicroPython на ваш Pico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uploadlibs.html">Загрузка библиотек на Pico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="thonnytutor.html">1.5 Краткое руководство по Thonny</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="thonnytutor.html#id1">Открытие и запуск кода напрямую</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lessons/index.html">Содержание курса по Raspberry Pi Pico W</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lessons/sensors/index.html">Модуль датчиков и устройств</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lessons/sensors/rgb/rgb.html">Управление RGB-светодиодом с общим катодом на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lessons/sensors/ws2812/ws2812.html">Управление адресным светодиодным кольцом на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lessons/sensors/light/light.html">Работа с датчиком освещенности на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lessons/sensors/pir/pir.html">Обнаружение движения с помощью PIR датчика и Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lessons/sensors/pot/pot.html">Управление потенциометром на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lessons/sensors/relay/relay.html">Управление реле с помощью Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lessons/sensors/servo/servo.html">Управление сервоприводом с помощью Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lessons/sensors/bme280/bme280.html">Использование датчика BME280 с Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lessons/sensors/mpu6050/mpu6050.html">Измерение ускорения и гироскопических данных с MPU6050 на Raspberry Pi Pico</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lessons/projects/index.html">Проекты</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lessons/projects/wifi/wifi.html">Подключение к интернету с использованием Wi-Fi на Raspberry Pi Pico W</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lessons/projects/webhello/webhello.html">Hello World: веб-сайт на Pico W</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lessons/projects/light/light.html">Считывание данных с датчика освещённости и отображение на веб-интерфейсе</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lessons/projects/wifiscan/wifiscan.html">Управление RGB-светодиодом через веб-интерфейс</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lessons/projects/wifioled/wifioled.html">Отображение информации о Wi-Fi на OLED-дисплее SSD1306</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lessons/projects/openwaethermap/owm.html">OpenWeatherMap: вывод данных о погоде на OLED-дисплей</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lessons/projects/owmws2812/owmws2812.html">Визуализация температуры из OpenWeatherMap на адресной ленте WS2812</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lessons/projects/ws2812pir/ws2812pir.html">PIR-датчик: уведомление о движении с помощью WS2812</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lessons/projects/echobot/echobot.html">Телеграм-бот: введение</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lessons/projects/servotelegram/servotelegram.html">Управление сервоприводом через Telegram-бот</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lessons/projects/telegrambme/telegrambme.html">Получение данных о температуре (BME280) через Telegram-бот</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lessons/projects/pirtelegram/pirtelegram.html">PIR-датчик: уведомление о движении в Telegram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lessons/projects/mputelegram/mputelegram.html">MPU6050: уведомление о вибрации/наклоне в Telegram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lessons/projects/googlesheets/googlesheets.html">Google Sheets: хранение данных о температуре</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../faq/index.html">FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../faq/index.html#micropython">MicroPython</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../feedback/index.html">Обратная связь</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../feedback/index.html#id2">Контакты</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Raspberry Pi Pico W Kit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Знакомство с Raspberry Pi Pico W и MicroPython</a></li>
+      <li class="breadcrumb-item active">Знакомство с Pico W</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Навигация по соседним страницам">
+        <a href="index.html" class="btn btn-neutral float-left" title="Знакомство с Raspberry Pi Pico W и MicroPython" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="micropython.html" class="btn btn-neutral float-right" title="Введение в MicroPython" accesskey="n">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pico-w">
+<h1>Знакомство с Pico W<a class="headerlink" href="#pico-w" title="Ссылка на этот заголовок"></a></h1>
+<p><img alt="&quot;Описание картинки&quot;" src="../_images/pico_w_side.webp" /></p>
+<p>Raspberry Pi Pico W добавляет беспроводные возможности к популярной линейке микроконтроллерных плат Raspberry Pi Pico.
+В основе Pico лежит наш собственный чип RP2040, а платформа Pico славится высокой производительностью, низкой ценой
+и простотой в использовании.</p>
+<p>Raspberry Pi Pico W поддерживает беспроводную сеть 2.4GHz 802.11 b/g/n, имеет встроенную антенну и сертификат
+модульной совместимости. Может работать как в режиме «станции», так и в режиме «точки доступа».
+Полный доступ к сетевым функциям доступен как разработчикам на C, так и на MicroPython.</p>
+<p>Raspberry Pi Pico W сочетает в себе RP2040 с 2 МБ флеш-памяти и чипом питания, поддерживающим входное напряжение
+от 1.8 до 5.5 В. На плате есть 26 выводов GPIO, три из которых могут работать в качестве аналоговых входов,
+на стандартных сквозных отверстиях с шагом 0,1» и фрезерованными краями. Raspberry Pi Pico W доступен как поштучно,
+так и в роллах по 480 штук для автоматизированной сборки.</p>
+<p><strong>Характеристики</strong></p>
+<ul class="simple">
+<li><p>Форм-фактор 21 мм x 51 мм</p></li>
+<li><p>Микроконтроллер RP2040, разработанный Raspberry Pi в Великобритании</p></li>
+<li><p>Двухъядерный процессор Arm Cortex-M0+ с гибкой частотой до 133 МГц</p></li>
+<li><p>264 кБ встроенной SRAM</p></li>
+<li><p>2 МБ флеш-памяти QSPI на плате</p></li>
+<li><p>Беспроводная сеть 2.4GHz 802.11n</p></li>
+<li><p>26 многофункциональных GPIO, включая 3 аналоговых входа</p></li>
+<li><p>2 x UART, 2 x SPI, 2 x I2C, 16 каналов PWM</p></li>
+<li><p>1 x USB 1.1 контроллер и PHY, с поддержкой режима хоста и устройства</p></li>
+<li><p>8 программируемых PIO (Programmable I/O) для создания своих периферийных модулей</p></li>
+<li><p>Поддержка входного питания от 1.8 до 5.5 В</p></li>
+<li><p>Рабочая температура от -20°C до +70°C</p></li>
+<li><p>Фрезерованные контактные площадки позволяют припаивать модуль прямо на материнскую плату</p></li>
+<li><p>Программирование методом drag-and-drop (перетаскивания) через USB</p></li>
+<li><p>Низкопотребляющие режимы сна и «dormant»</p></li>
+<li><p>Точный встроенный генератор тактовой частоты</p></li>
+<li><p>Датчик температуры</p></li>
+<li><p>Акселерация целочисленных и плавающих вычислений на аппаратном уровне</p></li>
+</ul>
+<p><strong>Выводы Pico</strong></p>
+<p><img alt="&quot;Описание картинки&quot;" src="../_images/pico_pin.jpg" /></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 27.8%" />
+<col style="width: 55.6%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Название</p></th>
+<th class="head"><p>Описание</p></th>
+<th class="head"><p>Функция</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>GP0–GP28</p></td>
+<td><p>Цифровые входы/выходы общего назначения (GPIO)</p></td>
+<td><p>Могут работать как вход или выход; не имеют фиксированного назначения</p></td>
+</tr>
+<tr class="row-odd"><td><p>GND</p></td>
+<td><p>Общий (нулевой) контакт</p></td>
+<td><p>Несколько контактов GND по периметру Pico W для удобства подключения</p></td>
+</tr>
+<tr class="row-even"><td><p>RUN</p></td>
+<td><p>Управление питанием Pico (включение/выключение)</p></td>
+<td><p>Позволяет запускать и останавливать Pico W с другого микроконтроллера</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPxx_ADCx</p></td>
+<td><p>GPIO или аналоговый вход</p></td>
+<td><p>Могут быть как аналоговыми входами, так и цифровыми (не одновременно)</p></td>
+</tr>
+<tr class="row-even"><td><p>ADC_VREF</p></td>
+<td><p>Опорное напряжение для АЦП</p></td>
+<td><p>Специальный вход, задающий опорное напряжение для аналоговых входов</p></td>
+</tr>
+<tr class="row-odd"><td><p>AGND</p></td>
+<td><p>Общий (нулевой) контакт для АЦП</p></td>
+<td><p>Специальная земля для работы с ADC_VREF</p></td>
+</tr>
+<tr class="row-even"><td><p>3V3(O)</p></td>
+<td><p>Питание 3,3 В</p></td>
+<td><p>Источник 3,3 В, которым питается сама Pico W, получаемый от VSYS</p></td>
+</tr>
+<tr class="row-odd"><td><p>3V3(E)</p></td>
+<td><p>Управление питанием 3,3 В</p></td>
+<td><p>Позволяет включать и выключать линию 3V3(O), а значит и саму Pico W</p></td>
+</tr>
+<tr class="row-even"><td><p>VSYS</p></td>
+<td><p>Питание от 2 до 5 В</p></td>
+<td><p>Контакт напрямую соединён с внутренним источником питания Pico; выключение этого контакта обесточит всю плату</p></td>
+</tr>
+<tr class="row-odd"><td><p>VBUS</p></td>
+<td><p>Питание 5 В</p></td>
+<td><p>Источник 5 В от micro-USB порта Pico; можно использовать для устройств, требующих более 3,3 В</p></td>
+</tr>
+</tbody>
+</table>
+<p>Лучшее место, чтобы найти всю необходимую информацию для начала работы с Raspberry Pi Pico W —
+<a class="reference external" href="https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html">официальная документация</a>.</p>
+<p>Или вы можете перейти по ссылкам ниже:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://datasheets.raspberrypi.com/picow/pico-w-product-brief.pdf">Raspberry Pi Pico W product brief</a></p></li>
+<li><p><a class="reference external" href="https://datasheets.raspberrypi.com/picow/pico-w-datasheet.pdf">Raspberry Pi Pico W datasheet</a></p></li>
+<li><p><a class="reference external" href="https://datasheets.raspberrypi.org/pico/getting-started-with-pico.pdf">Getting started with Raspberry Pi Pico: C/C++ development</a></p></li>
+<li><p><a class="reference external" href="https://datasheets.raspberrypi.org/pico/raspberry-pi-pico-c-sdk.pdf">Raspberry Pi Pico C/C++ SDK</a></p></li>
+<li><p><a class="reference external" href="https://raspberrypi.github.io/pico-sdk-doxygen/">API-level Doxygen documentation for the Raspberry Pi Pico C/C++ SDK</a></p></li>
+<li><p><a class="reference external" href="https://datasheets.raspberrypi.org/pico/raspberry-pi-pico-python-sdk.pdf">Raspberry Pi Pico Python SDK</a></p></li>
+<li><p><a class="reference external" href="https://datasheets.raspberrypi.org/rp2040/rp2040-datasheet.pdf">Raspberry Pi RP2040 datasheet</a></p></li>
+<li><p><a class="reference external" href="https://datasheets.raspberrypi.org/rp2040/hardware-design-with-rp2040.pdf">Hardware design with RP2040</a></p></li>
+<li><p><a class="reference external" href="https://datasheets.raspberrypi.com/picow/RPi-PicoW-PUBLIC-20220607.zip">Raspberry Pi Pico W design files</a></p></li>
+<li><p><a class="reference external" href="https://datasheets.raspberrypi.com/picow/PicoW-step.zip">Raspberry Pi Pico W STEP file</a></p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="index.html" class="btn btn-neutral float-left" title="Знакомство с Raspberry Pi Pico W и MicroPython" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="micropython.html" class="btn btn-neutral float-right" title="Введение в MicroPython" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2025, Dias Kabdualiyev. </p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

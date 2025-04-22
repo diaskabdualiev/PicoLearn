@@ -1,0 +1,788 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hello World: веб-сайт на Pico W &mdash; документация Raspberry Pi Pico W Kit 0.1</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d39ee99e" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=2b7aed8e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/translations.js?v=5b699b7f"></script>
+      <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../../search.html" />
+    <link rel="next" title="Считывание данных с датчика освещённости и отображение на веб-интерфейсе" href="../light/light.html" />
+    <link rel="prev" title="Подключение к интернету с использованием Wi-Fi на Raspberry Pi Pico W" href="../wifi/wifi.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Raspberry Pi Pico W Kit
+              <img src="../../../_static/logo.png" class="logo" alt="Логотип"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/index.html">Учебный набор по MicroPython на базе Raspberry Pi Pico W</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id1">Вступление</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id2">Сильные стороны набора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id3">Для кого подходит этот набор</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id4">Компоненты набора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#raspberry-pi-pico-w-15">Итоговый учебный план на Raspberry Pi Pico W (15 уроков)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get-started/index.html">Знакомство с Raspberry Pi Pico W и MicroPython</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/picow.html">Знакомство с Pico W</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/micropython.html">Введение в MicroPython</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/micropython.html#id1">История начинается здесь</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/micropython.html#id2">Почему MicroPython?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/thonny.html">Установка Thonny IDE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/micropythoninstall.html">Установка MicroPython на ваш Pico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/uploadlibs.html">Загрузка библиотек на Pico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/thonnytutor.html">1.5 Краткое руководство по Thonny</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/thonnytutor.html#id1">Открытие и запуск кода напрямую</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Содержание курса по Raspberry Pi Pico W</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../sensors/index.html">Модуль датчиков и устройств</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/rgb/rgb.html">Управление RGB-светодиодом с общим катодом на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/ws2812/ws2812.html">Управление адресным светодиодным кольцом на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/light/light.html">Работа с датчиком освещенности на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/pir/pir.html">Обнаружение движения с помощью PIR датчика и Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/pot/pot.html">Управление потенциометром на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/relay/relay.html">Управление реле с помощью Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/servo/servo.html">Управление сервоприводом с помощью Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/bme280/bme280.html">Использование датчика BME280 с Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/mpu6050/mpu6050.html">Измерение ускорения и гироскопических данных с MPU6050 на Raspberry Pi Pico</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Проекты</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../wifi/wifi.html">Подключение к интернету с использованием Wi-Fi на Raspberry Pi Pico W</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Hello World: веб-сайт на Pico W</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../light/light.html">Считывание данных с датчика освещённости и отображение на веб-интерфейсе</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wifiscan/wifiscan.html">Управление RGB-светодиодом через веб-интерфейс</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wifioled/wifioled.html">Отображение информации о Wi-Fi на OLED-дисплее SSD1306</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../openwaethermap/owm.html">OpenWeatherMap: вывод данных о погоде на OLED-дисплей</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../owmws2812/owmws2812.html">Визуализация температуры из OpenWeatherMap на адресной ленте WS2812</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ws2812pir/ws2812pir.html">PIR-датчик: уведомление о движении с помощью WS2812</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../echobot/echobot.html">Телеграм-бот: введение</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../servotelegram/servotelegram.html">Управление сервоприводом через Telegram-бот</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../telegrambme/telegrambme.html">Получение данных о температуре (BME280) через Telegram-бот</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pirtelegram/pirtelegram.html">PIR-датчик: уведомление о движении в Telegram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mputelegram/mputelegram.html">MPU6050: уведомление о вибрации/наклоне в Telegram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../googlesheets/googlesheets.html">Google Sheets: хранение данных о температуре</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq/index.html">FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../faq/index.html#micropython">MicroPython</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../feedback/index.html">Обратная связь</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../feedback/index.html#id2">Контакты</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Raspberry Pi Pico W Kit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Содержание курса по Raspberry Pi Pico W</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Проекты</a></li>
+      <li class="breadcrumb-item active">Hello World: веб-сайт на Pico W</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Навигация по соседним страницам">
+        <a href="../wifi/wifi.html" class="btn btn-neutral float-left" title="Подключение к интернету с использованием Wi-Fi на Raspberry Pi Pico W" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="../light/light.html" class="btn btn-neutral float-right" title="Считывание данных с датчика освещённости и отображение на веб-интерфейсе" accesskey="n">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="hello-world-pico-w">
+<h1>Hello World: веб-сайт на Pico W<a class="headerlink" href="#hello-world-pico-w" title="Ссылка на этот заголовок"></a></h1>
+<section id="id1">
+<h2>Введение<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h2>
+<p>В этом уроке мы научимся создавать простой веб-сервер на Raspberry Pi Pico W, который будет отвечать на запросы фразой «Hello, World!». Мы разберем, как подключить Pico W к WiFi сети с использованием отдельного конфигурационного файла, и как создать минимальный веб-сервер на MicroPython.</p>
+</section>
+<section id="id2">
+<h2>Необходимые компоненты<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
+<ul class="simple">
+<li><p>Raspberry Pi Pico W (обязательно версия с WiFi модулем)</p></li>
+<li><p>Компьютер с USB-портом и доступом к сети WiFi</p></li>
+<li><p>Micro-USB кабель для подключения Pico W к компьютеру</p></li>
+<li><p>Доступ к WiFi сети с частотой 2.4 ГГц (Pico W не поддерживает сети 5 ГГц)</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>Структура проекта<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h2>
+<p>Для организации нашего проекта мы создадим три файла:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">config.py</span></code> - конфигурационный файл с параметрами WiFi сети</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">index.html</span></code> - простая HTML-страница для отображения в браузере</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">main.py</span></code> - основной файл программы с веб-сервером</p></li>
+</ol>
+</section>
+<section id="id4">
+<h2>Шаг 1: Создание конфигурационного файла<a class="headerlink" href="#id4" title="Ссылка на этот заголовок"></a></h2>
+<p>Сначала создадим файл <code class="docutils literal notranslate"><span class="pre">config.py</span></code> с параметрами подключения к WiFi:</p>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-text">config.py</span><a class="headerlink" href="#id11" title="Ссылка на этот код"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Настройки WiFi</span>
+<span class="n">SSID</span> <span class="o">=</span> <span class="s2">&quot;Имя_вашей_WiFi_сети&quot;</span>
+<span class="n">PASSWORD</span> <span class="o">=</span> <span class="s2">&quot;Пароль_от_WiFi_сети&quot;</span>
+
+<span class="c1"># Настройки веб-сервера</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">80</span>
+</pre></div>
+</div>
+</div>
+<p>В этом файле мы храним:</p>
+<ul class="simple">
+<li><p>SSID - название вашей WiFi сети</p></li>
+<li><p>PASSWORD - пароль от вашей WiFi сети</p></li>
+<li><p>PORT - порт, на котором будет работать веб-сервер (стандартный HTTP порт - 80)</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Примечание</p>
+<p>Замените «Имя_вашей_WiFi_сети» и «Пароль_от_WiFi_сети» на реальные данные вашей WiFi сети.</p>
+</div>
+</section>
+<section id="html">
+<h2>Шаг 2: Создание HTML-страницы<a class="headerlink" href="#html" title="Ссылка на этот заголовок"></a></h2>
+<p>Теперь создадим простую HTML-страницу:</p>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-text">index.html</span><a class="headerlink" href="#id12" title="Ссылка на этот код"></a></div>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Pico W Server<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;width=device-width, initial-scale=1&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Hello, World!<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Вы успешно запустили веб-сервер на Raspberry Pi Pico W.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>IP-адрес: {IP_ADDRESS}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Время работы: {UPTIME} сек.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<p>В этом файле мы создаем простую HTML-страницу со следующими элементами:</p>
+<ul class="simple">
+<li><p>Заголовок страницы «Pico W Server»</p></li>
+<li><p>Мета-тег для корректного отображения на мобильных устройствах</p></li>
+<li><p>Заголовок H1 «Hello, World!»</p></li>
+<li><p>Информационные параграфы</p></li>
+<li><p>Специальные плейсхолдеры {IP_ADDRESS} и {UPTIME}, которые будут заменены на реальные значения</p></li>
+</ul>
+</section>
+<section id="id5">
+<h2>Шаг 3: Написание основного кода<a class="headerlink" href="#id5" title="Ссылка на этот заголовок"></a></h2>
+<p>Теперь создадим файл main.py. Рассмотрим его по частям для лучшего понимания.</p>
+<p>Импорт необходимых библиотек:</p>
+<div class="literal-block-wrapper docutils container" id="id13">
+<div class="code-block-caption"><span class="caption-text">main.py (импорты)</span><a class="headerlink" href="#id13" title="Ссылка на этот код"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">network</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">socket</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">machine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pin</span><span class="p">,</span> <span class="n">Timer</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">gc</span>
+
+<span class="c1"># Импортируем настройки из конфигурационного файла</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">config</span>
+</pre></div>
+</div>
+</div>
+<p>Здесь мы импортируем:</p>
+<ul class="simple">
+<li><p>network - для работы с WiFi</p></li>
+<li><p>socket - для создания сетевых соединений</p></li>
+<li><p>time - для задержек</p></li>
+<li><p>Pin и Timer из machine - для работы со светодиодом и таймером</p></li>
+<li><p>gc - сборщик мусора для оптимизации памяти</p></li>
+<li><p>config - наш конфигурационный файл с настройками WiFi</p></li>
+</ul>
+<p>Настройка светодиода и таймера:</p>
+<div class="literal-block-wrapper docutils container" id="id14">
+<div class="code-block-caption"><span class="caption-text">main.py (настройка светодиода и таймера)</span><a class="headerlink" href="#id14" title="Ссылка на этот код"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Настраиваем встроенный светодиод для индикации статуса</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="c1"># Счетчик времени работы</span>
+<span class="n">uptime_seconds</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">timer</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>В этой части:</p>
+<ul class="simple">
+<li><p>Настраиваем встроенный светодиод Pico W как выход для индикации статуса</p></li>
+<li><p>Создаем переменную uptime_seconds для отслеживания времени работы</p></li>
+<li><p>Инициализируем объект Timer для подсчета времени</p></li>
+</ul>
+<p>Вспомогательные функции для работы светодиода и таймера:</p>
+<div class="literal-block-wrapper docutils container" id="id15">
+<div class="code-block-caption"><span class="caption-text">main.py (вспомогательные функции)</span><a class="headerlink" href="#id15" title="Ссылка на этот код"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">blink_led</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="mf">0.2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Мигает светодиодом n раз&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">increment_uptime</span><span class="p">(</span><span class="n">timer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Увеличивает счетчик времени работы&quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">uptime_seconds</span>
+    <span class="n">uptime_seconds</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<p>Эти функции:</p>
+<ul class="simple">
+<li><p>blink_led - мигает светодиодом заданное количество раз с определенной задержкой</p></li>
+<li><p>increment_uptime - функция обратного вызова для таймера, увеличивает счетчик времени работы</p></li>
+</ul>
+<p>Функция подключения к WiFi:</p>
+<div class="literal-block-wrapper docutils container" id="id16">
+<div class="code-block-caption"><span class="caption-text">main.py (первая часть подключения к WiFi)</span><a class="headerlink" href="#id16" title="Ссылка на этот код"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">connect_to_wifi</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Подключение к WiFi сети&quot;&quot;&quot;</span>
+    <span class="c1"># Индикация начала подключения к WiFi</span>
+    <span class="n">blink_led</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+
+    <span class="c1"># Включаем WiFi</span>
+    <span class="n">wlan</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">WLAN</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">STA_IF</span><span class="p">)</span>
+    <span class="n">wlan</span><span class="o">.</span><span class="n">active</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Начинаем подключение к сети</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Подключение к WiFi сети: </span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">SSID</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">wlan</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">SSID</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">PASSWORD</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>В первой части функции connect_to_wifi:</p>
+<ul class="simple">
+<li><p>Мигаем светодиодом 3 раза для индикации начала подключения</p></li>
+<li><p>Создаем объект WLAN в режиме станции (STA_IF) для подключения к существующей сети</p></li>
+<li><p>Активируем WiFi модуль и начинаем подключение с параметрами из config.py</p></li>
+</ul>
+<p>Ожидание подключения к WiFi:</p>
+<div class="literal-block-wrapper docutils container" id="id17">
+<div class="code-block-caption"><span class="caption-text">main.py (ожидание подключения к WiFi)</span><a class="headerlink" href="#id17" title="Ссылка на этот код"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="c1"># Ждем подключения с таймаутом в 10 секунд</span>
+    <span class="n">max_wait</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="k">while</span> <span class="n">max_wait</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">status</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">wlan</span><span class="o">.</span><span class="n">status</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="n">max_wait</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ожидание подключения...&quot;</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Проверяем статус подключения</span>
+    <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">status</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Не удалось подключиться к WiFi&quot;</span><span class="p">)</span>
+        <span class="n">blink_led</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>  <span class="c1"># Индикация ошибки</span>
+        <span class="k">return</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</div>
+<p>В этой части функции:</p>
+<ul class="simple">
+<li><p>Устанавливаем таймаут 10 секунд для ожидания подключения</p></li>
+<li><p>В цикле проверяем статус подключения:</p>
+<ul>
+<li><p>status &lt; 0 означает ошибку</p></li>
+<li><p>status &gt;= 3 означает, что процесс подключения завершен (успешно или с ошибкой)</p></li>
+</ul>
+</li>
+<li><p>Если статус не равен 3 (STAT_GOT_IP), выводим сообщение об ошибке, мигаем светодиодом и возвращаем None</p></li>
+</ul>
+<p>Завершение подключения к WiFi:</p>
+<div class="literal-block-wrapper docutils container" id="id18">
+<div class="code-block-caption"><span class="caption-text">main.py (завершение подключения к WiFi)</span><a class="headerlink" href="#id18" title="Ссылка на этот код"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="c1"># Успешное подключение</span>
+    <span class="n">ip_address</span> <span class="o">=</span> <span class="n">wlan</span><span class="o">.</span><span class="n">ifconfig</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Подключено! IP-адрес: </span><span class="si">{</span><span class="n">ip_address</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">blink_led</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>  <span class="c1"># Индикация успеха</span>
+
+    <span class="k">return</span> <span class="n">ip_address</span>
+</pre></div>
+</div>
+</div>
+<p>При успешном подключении:</p>
+<ul class="simple">
+<li><p>Получаем IP-адрес устройства с помощью wlan.ifconfig()[0]</p></li>
+<li><p>Выводим сообщение об успешном подключении и полученный IP-адрес</p></li>
+<li><p>Мигаем светодиодом 2 раза для индикации успеха</p></li>
+<li><p>Возвращаем полученный IP-адрес</p></li>
+</ul>
+<p>Функция для чтения HTML файла:</p>
+<div class="literal-block-wrapper docutils container" id="id19">
+<div class="code-block-caption"><span class="caption-text">main.py (чтение HTML файла)</span><a class="headerlink" href="#id19" title="Ссылка на этот код"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">read_html_file</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Чтение HTML файла из памяти&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;index.html&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ошибка при чтении HTML файла&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello, World!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&quot;</span>
+</pre></div>
+</div>
+</div>
+<p>Эта функция:</p>
+<ul class="simple">
+<li><p>Пытается открыть и прочитать файл index.html</p></li>
+<li><p>В случае успеха возвращает содержимое файла</p></li>
+<li><p>В случае ошибки (например, если файл не найден), возвращает простой HTML-код с «Hello, World!»</p></li>
+</ul>
+<p>Инициализация веб-сервера:</p>
+<div class="literal-block-wrapper docutils container" id="id20">
+<div class="code-block-caption"><span class="caption-text">main.py (инициализация веб-сервера)</span><a class="headerlink" href="#id20" title="Ссылка на этот код"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">start_web_server</span><span class="p">(</span><span class="n">ip_address</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Запуск веб-сервера&quot;&quot;&quot;</span>
+    <span class="c1"># Настраиваем сокет</span>
+    <span class="n">addr</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">getaddrinfo</span><span class="p">(</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">PORT</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">()</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Веб-сервер запущен на http://</span><span class="si">{</span><span class="n">ip_address</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">PORT</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Запускаем таймер для отслеживания времени работы</span>
+    <span class="n">timer</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">period</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Timer</span><span class="o">.</span><span class="n">PERIODIC</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">increment_uptime</span><span class="p">)</span>
+
+    <span class="c1"># Загружаем шаблон HTML</span>
+    <span class="n">html_template</span> <span class="o">=</span> <span class="n">read_html_file</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>В этой части:</p>
+<ul class="simple">
+<li><p>Создаем сокет и настраиваем его для прослушивания указанного порта</p></li>
+<li><p>Выводим информацию о запущенном веб-сервере с его адресом</p></li>
+<li><p>Инициализируем таймер для отслеживания времени работы (вызывает функцию increment_uptime каждую секунду)</p></li>
+<li><p>Загружаем HTML шаблон из файла с помощью функции read_html_file</p></li>
+</ul>
+<p>Цикл обработки запросов:</p>
+<div class="literal-block-wrapper docutils container" id="id21">
+<div class="code-block-caption"><span class="caption-text">main.py (цикл обработки запросов)</span><a class="headerlink" href="#id21" title="Ссылка на этот код"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="c1"># Ожидаем и обрабатываем запросы</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Собираем мусор для освобождения памяти</span>
+            <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+
+            <span class="c1"># Принимаем подключение</span>
+            <span class="n">client</span><span class="p">,</span> <span class="n">addr</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Подключение от: </span><span class="si">{</span><span class="n">addr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Мигаем светодиодом при каждом запросе</span>
+            <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+
+            <span class="c1"># Читаем запрос</span>
+            <span class="n">request</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+
+            <span class="c1"># Подготавливаем HTML с актуальными данными</span>
+            <span class="n">html</span> <span class="o">=</span> <span class="n">html_template</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{IP_ADDRESS}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ip_address</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{UPTIME}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">uptime_seconds</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>В цикле обработки запросов:</p>
+<ul class="simple">
+<li><p>Вызываем сборщик мусора для оптимизации использования памяти</p></li>
+<li><p>Ожидаем и принимаем подключение с помощью s.accept()</p></li>
+<li><p>Включаем светодиод для индикации активности</p></li>
+<li><p>Читаем запрос от клиента (до 1024 байт)</p></li>
+<li><p>Подготавливаем HTML-ответ, заменяя плейсхолдеры на актуальные значения</p></li>
+</ul>
+<p>Отправка ответа:</p>
+<div class="literal-block-wrapper docutils container" id="id22">
+<div class="code-block-caption"><span class="caption-text">main.py (отправка ответа)</span><a class="headerlink" href="#id22" title="Ссылка на этот код"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>            <span class="c1"># Отправляем ответ</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;HTTP/1.0 200 OK</span><span class="se">\r\n</span><span class="s1">Content-type: text/html</span><span class="se">\r\n\r\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+
+            <span class="c1"># Закрываем соединение</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+            <span class="c1"># Выключаем светодиод</span>
+            <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка при обработке запроса: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>При отправке ответа:</p>
+<ul class="simple">
+<li><p>Отправляем HTTP заголовки с кодом 200 OK и типом содержимого text/html</p></li>
+<li><p>Отправляем подготовленный HTML-контент</p></li>
+<li><p>Закрываем соединение с клиентом</p></li>
+<li><p>Выключаем светодиод</p></li>
+<li><p>Обрабатываем возможные исключения и выводим сообщение об ошибке</p></li>
+</ul>
+<p>Основная функция:</p>
+<div class="literal-block-wrapper docutils container" id="id23">
+<div class="code-block-caption"><span class="caption-text">main.py (основная функция)</span><a class="headerlink" href="#id23" title="Ссылка на этот код"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Основная функция&quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Запуск Hello World веб-сервера на Pico W&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Подключаемся к WiFi</span>
+    <span class="n">ip_address</span> <span class="o">=</span> <span class="n">connect_to_wifi</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">ip_address</span><span class="p">:</span>
+        <span class="c1"># Запускаем веб-сервер</span>
+        <span class="n">start_web_server</span><span class="p">(</span><span class="n">ip_address</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Если не удалось подключиться, мигаем светодиодом в режиме ошибки</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">blink_led</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Запускаем программу</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>Основная функция:</p>
+<ul class="simple">
+<li><p>Выводит сообщение о запуске веб-сервера</p></li>
+<li><p>Вызывает функцию connect_to_wifi для подключения к WiFi</p></li>
+<li><p>Если подключение успешно (получен IP-адрес), запускает веб-сервер</p></li>
+<li><p>Если подключение не удалось, входит в режим индикации ошибки, бесконечно мигая светодиодом</p></li>
+</ul>
+<p>В последней строке кода проверяется, что файл запущен напрямую (не импортирован), и если это так, вызывается функция main().</p>
+</section>
+<section id="id6">
+<h2>Загрузка и запуск программы<a class="headerlink" href="#id6" title="Ссылка на этот заголовок"></a></h2>
+<p>Для запуска проекта:</p>
+<ol class="arabic simple">
+<li><p>Подключите Raspberry Pi Pico W к компьютеру через USB-кабель</p></li>
+<li><p>Скопируйте файлы <code class="docutils literal notranslate"><span class="pre">config.py</span></code>, <code class="docutils literal notranslate"><span class="pre">index.html</span></code> и <code class="docutils literal notranslate"><span class="pre">main.py</span></code> на Pico W</p></li>
+<li><p>Обновите <code class="docutils literal notranslate"><span class="pre">config.py</span></code> с параметрами вашей WiFi сети</p></li>
+<li><p>Перезагрузите Pico W (отключите и подключите заново или нажмите кнопку RESET)</p></li>
+</ol>
+<p>После перезагрузки Pico W:</p>
+<ul class="simple">
+<li><p>Подключится к WiFi сети (если успешно - светодиод мигнет дважды)</p></li>
+<li><p>Запустит веб-сервер</p></li>
+<li><p>В консоли будет выведен IP-адрес</p></li>
+</ul>
+</section>
+<section id="id7">
+<h2>Проверка работы веб-сервера<a class="headerlink" href="#id7" title="Ссылка на этот заголовок"></a></h2>
+<p>Чтобы проверить работу веб-сервера:</p>
+<ol class="arabic simple">
+<li><p>Посмотрите IP-адрес Pico W в консоли</p></li>
+<li><p>Откройте браузер на устройстве, подключенном к той же WiFi сети</p></li>
+<li><p>Введите в адресную строку: <code class="docutils literal notranslate"><span class="pre">http://IP-адрес</span></code> (например, <code class="docutils literal notranslate"><span class="pre">http://192.168.1.100</span></code>)</p></li>
+<li><p>Вы должны увидеть страницу с сообщением «Hello, World!» и информацией о Pico W</p></li>
+</ol>
+<p>При каждом обновлении страницы:</p>
+<ul class="simple">
+<li><p>На Pico W будет кратковременно загораться светодиод</p></li>
+<li><p>Счетчик времени работы на странице будет увеличиваться</p></li>
+</ul>
+</section>
+<section id="id8">
+<h2>Возможные проблемы и их решения<a class="headerlink" href="#id8" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Не удается подключиться к WiFi</strong></p>
+<ul class="simple">
+<li><p>Проверьте правильность SSID и пароля в файле <code class="docutils literal notranslate"><span class="pre">config.py</span></code></p></li>
+<li><p>Убедитесь, что WiFi сеть работает на частоте 2.4 ГГц (Pico W не поддерживает 5 ГГц)</p></li>
+<li><p>Проверьте, что Pico W находится в зоне действия WiFi сети</p></li>
+</ul>
+</li>
+<li><p><strong>Не удается получить доступ к веб-серверу</strong></p>
+<ul class="simple">
+<li><p>Убедитесь, что устройство подключено к той же WiFi сети</p></li>
+<li><p>Проверьте, правильно ли введен IP-адрес в браузере</p></li>
+<li><p>Перезагрузите Pico W и обратите внимание на новый IP-адрес в консоли</p></li>
+</ul>
+</li>
+<li><p><strong>Светодиод быстро мигает 5 раз и повторяет</strong></p>
+<ul class="simple">
+<li><p>Это указывает на ошибку подключения к WiFi</p></li>
+<li><p>Проверьте настройки WiFi в config.py</p></li>
+<li><p>Убедитесь, что сеть доступна и в зоне действия</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="id9">
+<h2>Заключение<a class="headerlink" href="#id9" title="Ссылка на этот заголовок"></a></h2>
+<p>В этом уроке мы научились:</p>
+<ul class="simple">
+<li><p>Создавать конфигурационный файл для WiFi соединения</p></li>
+<li><p>Подключать Raspberry Pi Pico W к WiFi сети</p></li>
+<li><p>Создавать простой веб-сервер на MicroPython</p></li>
+<li><p>Отображать «Hello, World!» страницу с динамическим содержимым</p></li>
+<li><p>Использовать светодиод для индикации статуса</p></li>
+</ul>
+<p>Этот проект является отличной основой для создания более сложных веб-приложений на базе Raspberry Pi Pico W.</p>
+</section>
+<section id="id10">
+<h2>Полный код программы<a class="headerlink" href="#id10" title="Ссылка на этот заголовок"></a></h2>
+<p>Вот полный код всех файлов проекта:</p>
+<div class="literal-block-wrapper docutils container" id="id24">
+<div class="code-block-caption"><span class="caption-text">config.py (полный код)</span><a class="headerlink" href="#id24" title="Ссылка на этот код"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Настройки WiFi</span>
+<span class="n">SSID</span> <span class="o">=</span> <span class="s2">&quot;Имя_вашей_WiFi_сети&quot;</span>
+<span class="n">PASSWORD</span> <span class="o">=</span> <span class="s2">&quot;Пароль_от_WiFi_сети&quot;</span>
+
+<span class="c1"># Настройки веб-сервера</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">80</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id25">
+<div class="code-block-caption"><span class="caption-text">index.html (полный код)</span><a class="headerlink" href="#id25" title="Ссылка на этот код"></a></div>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Pico W Server<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;width=device-width, initial-scale=1&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Hello, World!<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Вы успешно запустили веб-сервер на Raspberry Pi Pico W.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>IP-адрес: {IP_ADDRESS}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Время работы: {UPTIME} сек.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id26">
+<div class="code-block-caption"><span class="caption-text">main.py (полный код)</span><a class="headerlink" href="#id26" title="Ссылка на этот код"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">network</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">socket</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">machine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pin</span><span class="p">,</span> <span class="n">Timer</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">gc</span>
+
+<span class="c1"># Импортируем настройки из конфигурационного файла</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">config</span>
+
+<span class="c1"># Настраиваем встроенный светодиод для индикации статуса</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="c1"># Счетчик времени работы</span>
+<span class="n">uptime_seconds</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">timer</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">()</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">blink_led</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="mf">0.2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Мигает светодиодом n раз&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">increment_uptime</span><span class="p">(</span><span class="n">timer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Увеличивает счетчик времени работы&quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">uptime_seconds</span>
+    <span class="n">uptime_seconds</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">connect_to_wifi</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Подключение к WiFi сети&quot;&quot;&quot;</span>
+    <span class="c1"># Индикация начала подключения к WiFi</span>
+    <span class="n">blink_led</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+
+    <span class="c1"># Включаем WiFi</span>
+    <span class="n">wlan</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">WLAN</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">STA_IF</span><span class="p">)</span>
+    <span class="n">wlan</span><span class="o">.</span><span class="n">active</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Начинаем подключение к сети</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Подключение к WiFi сети: </span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">SSID</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">wlan</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">SSID</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">PASSWORD</span><span class="p">)</span>
+
+    <span class="c1"># Ждем подключения с таймаутом в 10 секунд</span>
+    <span class="n">max_wait</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="k">while</span> <span class="n">max_wait</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">status</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">wlan</span><span class="o">.</span><span class="n">status</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="n">max_wait</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ожидание подключения...&quot;</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Проверяем статус подключения</span>
+    <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">status</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Не удалось подключиться к WiFi&quot;</span><span class="p">)</span>
+        <span class="n">blink_led</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>  <span class="c1"># Индикация ошибки</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="c1"># Успешное подключение</span>
+    <span class="n">ip_address</span> <span class="o">=</span> <span class="n">wlan</span><span class="o">.</span><span class="n">ifconfig</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Подключено! IP-адрес: </span><span class="si">{</span><span class="n">ip_address</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">blink_led</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>  <span class="c1"># Индикация успеха</span>
+
+    <span class="k">return</span> <span class="n">ip_address</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">read_html_file</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Чтение HTML файла из памяти&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;index.html&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ошибка при чтении HTML файла&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello, World!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&quot;</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">start_web_server</span><span class="p">(</span><span class="n">ip_address</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Запуск веб-сервера&quot;&quot;&quot;</span>
+    <span class="c1"># Настраиваем сокет</span>
+    <span class="n">addr</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">getaddrinfo</span><span class="p">(</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">PORT</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">()</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Веб-сервер запущен на http://</span><span class="si">{</span><span class="n">ip_address</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">PORT</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Запускаем таймер для отслеживания времени работы</span>
+    <span class="n">timer</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">period</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Timer</span><span class="o">.</span><span class="n">PERIODIC</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">increment_uptime</span><span class="p">)</span>
+
+    <span class="c1"># Загружаем шаблон HTML</span>
+    <span class="n">html_template</span> <span class="o">=</span> <span class="n">read_html_file</span><span class="p">()</span>
+
+    <span class="c1"># Ожидаем и обрабатываем запросы</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Собираем мусор для освобождения памяти</span>
+            <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+
+            <span class="c1"># Принимаем подключение</span>
+            <span class="n">client</span><span class="p">,</span> <span class="n">addr</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Подключение от: </span><span class="si">{</span><span class="n">addr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Мигаем светодиодом при каждом запросе</span>
+            <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+
+            <span class="c1"># Читаем запрос</span>
+            <span class="n">request</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+
+            <span class="c1"># Подготавливаем HTML с актуальными данными</span>
+            <span class="n">html</span> <span class="o">=</span> <span class="n">html_template</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{IP_ADDRESS}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ip_address</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{UPTIME}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">uptime_seconds</span><span class="p">))</span>
+
+            <span class="c1"># Отправляем ответ</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;HTTP/1.0 200 OK</span><span class="se">\r\n</span><span class="s1">Content-type: text/html</span><span class="se">\r\n\r\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+
+            <span class="c1"># Закрываем соединение</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+            <span class="c1"># Выключаем светодиод</span>
+            <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка при обработке запроса: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Основная функция&quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Запуск Hello World веб-сервера на Pico W&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Подключаемся к WiFi</span>
+    <span class="n">ip_address</span> <span class="o">=</span> <span class="n">connect_to_wifi</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">ip_address</span><span class="p">:</span>
+        <span class="c1"># Запускаем веб-сервер</span>
+        <span class="n">start_web_server</span><span class="p">(</span><span class="n">ip_address</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Если не удалось подключиться, мигаем светодиодом в режиме ошибки</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">blink_led</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Запускаем программу</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="../wifi/wifi.html" class="btn btn-neutral float-left" title="Подключение к интернету с использованием Wi-Fi на Raspberry Pi Pico W" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="../light/light.html" class="btn btn-neutral float-right" title="Считывание данных с датчика освещённости и отображение на веб-интерфейсе" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2025, Dias Kabdualiyev. </p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

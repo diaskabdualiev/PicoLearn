@@ -1,0 +1,421 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Управление реле с помощью Raspberry Pi Pico &mdash; документация Raspberry Pi Pico W Kit 0.1</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d39ee99e" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=2b7aed8e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/translations.js?v=5b699b7f"></script>
+      <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../../search.html" />
+    <link rel="next" title="Управление сервоприводом с помощью Raspberry Pi Pico" href="../servo/servo.html" />
+    <link rel="prev" title="Управление потенциометром на Raspberry Pi Pico" href="../pot/pot.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Raspberry Pi Pico W Kit
+              <img src="../../../_static/logo.png" class="logo" alt="Логотип"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/index.html">Учебный набор по MicroPython на базе Raspberry Pi Pico W</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id1">Вступление</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id2">Сильные стороны набора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id3">Для кого подходит этот набор</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id4">Компоненты набора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#raspberry-pi-pico-w-15">Итоговый учебный план на Raspberry Pi Pico W (15 уроков)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get-started/index.html">Знакомство с Raspberry Pi Pico W и MicroPython</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/picow.html">Знакомство с Pico W</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/micropython.html">Введение в MicroPython</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/micropython.html#id1">История начинается здесь</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/micropython.html#id2">Почему MicroPython?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/thonny.html">Установка Thonny IDE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/micropythoninstall.html">Установка MicroPython на ваш Pico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/uploadlibs.html">Загрузка библиотек на Pico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/thonnytutor.html">1.5 Краткое руководство по Thonny</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/thonnytutor.html#id1">Открытие и запуск кода напрямую</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Содержание курса по Raspberry Pi Pico W</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Модуль датчиков и устройств</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../rgb/rgb.html">Управление RGB-светодиодом с общим катодом на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ws2812/ws2812.html">Управление адресным светодиодным кольцом на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../light/light.html">Работа с датчиком освещенности на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pir/pir.html">Обнаружение движения с помощью PIR датчика и Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pot/pot.html">Управление потенциометром на Raspberry Pi Pico</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Управление реле с помощью Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../servo/servo.html">Управление сервоприводом с помощью Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bme280/bme280.html">Использование датчика BME280 с Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mpu6050/mpu6050.html">Измерение ускорения и гироскопических данных с MPU6050 на Raspberry Pi Pico</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../projects/index.html">Проекты</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/wifi/wifi.html">Подключение к интернету с использованием Wi-Fi на Raspberry Pi Pico W</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/webhello/webhello.html">Hello World: веб-сайт на Pico W</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/light/light.html">Считывание данных с датчика освещённости и отображение на веб-интерфейсе</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/wifiscan/wifiscan.html">Управление RGB-светодиодом через веб-интерфейс</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/wifioled/wifioled.html">Отображение информации о Wi-Fi на OLED-дисплее SSD1306</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/openwaethermap/owm.html">OpenWeatherMap: вывод данных о погоде на OLED-дисплей</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/owmws2812/owmws2812.html">Визуализация температуры из OpenWeatherMap на адресной ленте WS2812</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/ws2812pir/ws2812pir.html">PIR-датчик: уведомление о движении с помощью WS2812</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/echobot/echobot.html">Телеграм-бот: введение</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/servotelegram/servotelegram.html">Управление сервоприводом через Telegram-бот</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/telegrambme/telegrambme.html">Получение данных о температуре (BME280) через Telegram-бот</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/pirtelegram/pirtelegram.html">PIR-датчик: уведомление о движении в Telegram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/mputelegram/mputelegram.html">MPU6050: уведомление о вибрации/наклоне в Telegram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/googlesheets/googlesheets.html">Google Sheets: хранение данных о температуре</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq/index.html">FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../faq/index.html#micropython">MicroPython</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../feedback/index.html">Обратная связь</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../feedback/index.html#id2">Контакты</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Raspberry Pi Pico W Kit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Содержание курса по Raspberry Pi Pico W</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Модуль датчиков и устройств</a></li>
+      <li class="breadcrumb-item active">Управление реле с помощью Raspberry Pi Pico</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Навигация по соседним страницам">
+        <a href="../pot/pot.html" class="btn btn-neutral float-left" title="Управление потенциометром на Raspberry Pi Pico" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="../servo/servo.html" class="btn btn-neutral float-right" title="Управление сервоприводом с помощью Raspberry Pi Pico" accesskey="n">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="raspberry-pi-pico">
+<h1>Управление реле с помощью Raspberry Pi Pico<a class="headerlink" href="#raspberry-pi-pico" title="Ссылка на этот заголовок"></a></h1>
+<section id="id1">
+<h2>Введение<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h2>
+<p>В этом уроке мы научимся управлять реле с помощью Raspberry Pi Pico. Реле - это электромеханическое устройство, которое позволяет управлять высоковольтными цепями с помощью низковольтных сигналов. Мы сможем включать и выключать различные устройства, такие как лампы, вентиляторы или другие электроприборы. Данный проект является отличной основой для систем домашней автоматизации.</p>
+</section>
+<section id="id2">
+<h2>Необходимые компоненты<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
+<ul class="simple">
+<li><p>Raspberry Pi Pico</p></li>
+<li><p>Модуль реле (1-канальный или многоканальный)</p></li>
+<li><p>Макетная плата</p></li>
+<li><p>Соединительные провода</p></li>
+<li><p>Микро-USB кабель для питания и программирования</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>Структура проекта<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h2>
+<p>Наш проект будет состоять из одного файла:</p>
+<ul class="simple">
+<li><p><strong>main.py</strong> - основной файл с кодом для управления реле и вывода информации в консоль</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>Схема подключения<a class="headerlink" href="#id4" title="Ссылка на этот заголовок"></a></h2>
+<p>Модуль реле подключается к Raspberry Pi Pico следующим образом:</p>
+<ul class="simple">
+<li><p>VCC пин реле подключается к пину VBUS (5V) на Pico</p></li>
+<li><p>GND пин реле подключается к пину GND на Pico</p></li>
+<li><p>IN (или Signal) пин реле подключается к пину GP16 на Pico</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Примечание</p>
+<p>Некоторые модули реле являются активными при низком уровне сигнала (active-low), что означает, что реле включается при подаче 0V (GND) на управляющий вход. Другие модули могут быть активными при высоком уровне (active-high). Проверьте документацию вашего модуля.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Предупреждение</p>
+<p>Работа с реле может включать в себя управление высоким напряжением. Будьте предельно осторожны и не подключайте высоковольтные устройства, если вы не уверены в своих знаниях электробезопасности.</p>
+</div>
+</section>
+<section id="id5">
+<h2>Пошаговые инструкции<a class="headerlink" href="#id5" title="Ссылка на этот заголовок"></a></h2>
+<section id="id6">
+<h3>Шаг 1: Настройка оборудования<a class="headerlink" href="#id6" title="Ссылка на этот заголовок"></a></h3>
+<ol class="arabic simple">
+<li><p>Установите MicroPython на Raspberry Pi Pico, если это еще не сделано.</p></li>
+<li><p>Соберите схему в соответствии с описанием выше.</p></li>
+<li><p>Подключите Pico к компьютеру через USB-кабель.</p></li>
+</ol>
+</section>
+<section id="main-py">
+<h3>Шаг 2: Создание основного файла main.py<a class="headerlink" href="#main-py" title="Ссылка на этот заголовок"></a></h3>
+<p>Создайте файл main.py со следующим содержимым:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">machine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pin</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="c1"># Настройка пина для управления реле (GPIO16)</span>
+<span class="n">relay</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="c1"># Настройка пина для встроенного светодиода</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="c1"># Функция для переключения состояния реле</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">toggle_relay</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+    <span class="n">relay</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>  <span class="c1"># Включить или выключить реле</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>    <span class="c1"># Синхронизировать светодиод с реле</span>
+
+    <span class="k">if</span> <span class="n">state</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Реле ВКЛЮЧЕНО&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Реле ВЫКЛЮЧЕНО&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Разберем основные части кода:</p>
+<ol class="arabic simple">
+<li><p>Импортируем необходимые модули для работы с GPIO и таймингом.</p></li>
+<li><p>Настраиваем пин GP16 как выход для управления реле.</p></li>
+<li><p>Настраиваем встроенный светодиод для дублирования статуса реле.</p></li>
+<li><p>Создаем функцию <code class="docutils literal notranslate"><span class="pre">toggle_relay()</span></code>, которая переключает состояние реле и светодиода, а также выводит текущее состояние в консоль.</p></li>
+</ol>
+<p>Теперь добавим основной цикл программы:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Основной цикл программы</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Начало работы с реле...&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Нажмите Ctrl+C для завершения.&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-----------------------------&quot;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="c1"># Включаем реле</span>
+            <span class="n">toggle_relay</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="c1"># Ждем 2 секунды</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+            <span class="c1"># Выключаем реле</span>
+            <span class="n">toggle_relay</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="c1"># Ждем 2 секунды</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="c1"># При прерывании убедимся, что реле выключено</span>
+        <span class="n">toggle_relay</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Работа с реле завершена.&quot;</span><span class="p">)</span>
+
+<span class="c1"># Запускаем программу</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Этот блок кода:</p>
+<ol class="arabic simple">
+<li><p>Создает основную функцию <code class="docutils literal notranslate"><span class="pre">main()</span></code>, которая входит в бесконечный цикл управления реле.</p></li>
+<li><p>В цикле:
+- Включает реле и ждет 2 секунды
+- Выключает реле и ждет 2 секунды
+- Повторяет цикл</p></li>
+<li><p>При нажатии Ctrl+C программа корректно завершается, убедившись, что реле выключено.</p></li>
+</ol>
+</section>
+</section>
+<section id="id7">
+<h2>Инструкции по загрузке и запуску<a class="headerlink" href="#id7" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p>Подключите Raspberry Pi Pico к компьютеру через USB-кабель.</p></li>
+<li><p>Скопируйте файл main.py на Pico (можно использовать Thonny IDE или любой другой метод).</p></li>
+<li><p>После загрузки файла программа автоматически запустится.</p></li>
+<li><p>Откройте последовательный порт (в Thonny это происходит автоматически) для просмотра вывода данных.</p></li>
+<li><p>Наблюдайте, как реле периодически включается и выключается.</p></li>
+<li><p>Для завершения программы нажмите Ctrl+C.</p></li>
+</ol>
+</section>
+<section id="id8">
+<h2>Возможные проблемы и их решения<a class="headerlink" href="#id8" title="Ссылка на этот заголовок"></a></h2>
+<section id="id9">
+<h3>Реле не переключается<a class="headerlink" href="#id9" title="Ссылка на этот заголовок"></a></h3>
+<p>Если реле не переключается должным образом, проверьте следующее:</p>
+<ul class="simple">
+<li><p>Убедитесь, что модуль реле получает достаточное питание (5V).</p></li>
+<li><p>Проверьте полярность подключения всех проводов.</p></li>
+<li><p>Некоторые модули реле имеют инвертированную логику (active-low), попробуйте изменить код:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Для реле с инвертированной логикой (active-low)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">toggle_relay</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+    <span class="n">relay</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="ow">not</span> <span class="n">state</span><span class="p">)</span>  <span class="c1"># Инвертируем логику</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>        <span class="c1"># Светодиод работает как обычно</span>
+
+    <span class="k">if</span> <span class="n">state</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Реле ВКЛЮЧЕНО&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Реле ВЫКЛЮЧЕНО&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id10">
+<h3>Щелчки без переключения<a class="headerlink" href="#id10" title="Ссылка на этот заголовок"></a></h3>
+<p>Если вы слышите щелчки реле, но подключенное устройство не включается:</p>
+<ul class="simple">
+<li><p>Проверьте подключение нагрузки к контактам реле (COM и NO/NC).</p></li>
+<li><p>Убедитесь, что используете правильные контакты:
+* NO (Normally Open) - нормально разомкнутый контакт
+* NC (Normally Closed) - нормально замкнутый контакт
+* COM - общий контакт</p></li>
+</ul>
+</section>
+<section id="pico">
+<h3>Перегрев Pico<a class="headerlink" href="#pico" title="Ссылка на этот заголовок"></a></h3>
+<p>Если Raspberry Pi Pico нагревается:</p>
+<ul class="simple">
+<li><p>Убедитесь, что для питания реле используется внешний источник или пин VBUS (5V), а не 3.3V.</p></li>
+<li><p>Рассмотрите возможность использования транзистора или оптопары для развязки, если ваше реле потребляет слишком много тока.</p></li>
+</ul>
+</section>
+</section>
+<section id="id11">
+<h2>Заключение<a class="headerlink" href="#id11" title="Ссылка на этот заголовок"></a></h2>
+<p>В этом уроке мы научились:</p>
+<ul class="simple">
+<li><p>Подключать модуль реле к Raspberry Pi Pico</p></li>
+<li><p>Управлять реле с помощью GPIO</p></li>
+<li><p>Создавать программу для циклического переключения реле</p></li>
+<li><p>Обрабатывать различные ситуации с реле</p></li>
+</ul>
+<p>Проект можно расширить различными способами:</p>
+<ul class="simple">
+<li><p>Добавить управление несколькими реле</p></li>
+<li><p>Интегрировать датчики для автоматического управления реле (например, датчик температуры)</p></li>
+<li><p>Создать планировщик для включения/выключения реле в определенное время</p></li>
+<li><p>Добавить кнопки или веб-интерфейс для ручного управления</p></li>
+</ul>
+</section>
+<section id="id12">
+<h2>Полный код программы<a class="headerlink" href="#id12" title="Ссылка на этот заголовок"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">machine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pin</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="c1"># Настройка пина для управления реле (GPIO16)</span>
+<span class="n">relay</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="c1"># Настройка пина для встроенного светодиода</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="c1"># Функция для переключения состояния реле</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">toggle_relay</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+    <span class="n">relay</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>  <span class="c1"># Включить или выключить реле</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>    <span class="c1"># Синхронизировать светодиод с реле</span>
+
+    <span class="k">if</span> <span class="n">state</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Реле ВКЛЮЧЕНО&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Реле ВЫКЛЮЧЕНО&quot;</span><span class="p">)</span>
+
+<span class="c1"># Основной цикл программы</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Начало работы с реле...&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Нажмите Ctrl+C для завершения.&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-----------------------------&quot;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="c1"># Включаем реле</span>
+            <span class="n">toggle_relay</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="c1"># Ждем 2 секунды</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+            <span class="c1"># Выключаем реле</span>
+            <span class="n">toggle_relay</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="c1"># Ждем 2 секунды</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="c1"># При прерывании убедимся, что реле выключено</span>
+        <span class="n">toggle_relay</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Работа с реле завершена.&quot;</span><span class="p">)</span>
+
+<span class="c1"># Запускаем программу</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="../pot/pot.html" class="btn btn-neutral float-left" title="Управление потенциометром на Raspberry Pi Pico" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="../servo/servo.html" class="btn btn-neutral float-right" title="Управление сервоприводом с помощью Raspberry Pi Pico" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2025, Dias Kabdualiyev. </p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

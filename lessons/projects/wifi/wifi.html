@@ -1,0 +1,671 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Подключение к интернету с использованием Wi-Fi на Raspberry Pi Pico W &mdash; документация Raspberry Pi Pico W Kit 0.1</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d39ee99e" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=2b7aed8e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/translations.js?v=5b699b7f"></script>
+      <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../../search.html" />
+    <link rel="next" title="Hello World: веб-сайт на Pico W" href="../webhello/webhello.html" />
+    <link rel="prev" title="Проекты" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Raspberry Pi Pico W Kit
+              <img src="../../../_static/logo.png" class="logo" alt="Логотип"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/index.html">Учебный набор по MicroPython на базе Raspberry Pi Pico W</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id1">Вступление</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id2">Сильные стороны набора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id3">Для кого подходит этот набор</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id4">Компоненты набора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#raspberry-pi-pico-w-15">Итоговый учебный план на Raspberry Pi Pico W (15 уроков)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get-started/index.html">Знакомство с Raspberry Pi Pico W и MicroPython</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/picow.html">Знакомство с Pico W</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/micropython.html">Введение в MicroPython</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/micropython.html#id1">История начинается здесь</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/micropython.html#id2">Почему MicroPython?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/thonny.html">Установка Thonny IDE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/micropythoninstall.html">Установка MicroPython на ваш Pico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/uploadlibs.html">Загрузка библиотек на Pico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/thonnytutor.html">1.5 Краткое руководство по Thonny</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/thonnytutor.html#id1">Открытие и запуск кода напрямую</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Содержание курса по Raspberry Pi Pico W</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../sensors/index.html">Модуль датчиков и устройств</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/rgb/rgb.html">Управление RGB-светодиодом с общим катодом на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/ws2812/ws2812.html">Управление адресным светодиодным кольцом на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/light/light.html">Работа с датчиком освещенности на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/pir/pir.html">Обнаружение движения с помощью PIR датчика и Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/pot/pot.html">Управление потенциометром на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/relay/relay.html">Управление реле с помощью Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/servo/servo.html">Управление сервоприводом с помощью Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/bme280/bme280.html">Использование датчика BME280 с Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/mpu6050/mpu6050.html">Измерение ускорения и гироскопических данных с MPU6050 на Raspberry Pi Pico</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Проекты</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Подключение к интернету с использованием Wi-Fi на Raspberry Pi Pico W</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webhello/webhello.html">Hello World: веб-сайт на Pico W</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../light/light.html">Считывание данных с датчика освещённости и отображение на веб-интерфейсе</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wifiscan/wifiscan.html">Управление RGB-светодиодом через веб-интерфейс</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wifioled/wifioled.html">Отображение информации о Wi-Fi на OLED-дисплее SSD1306</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../openwaethermap/owm.html">OpenWeatherMap: вывод данных о погоде на OLED-дисплей</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../owmws2812/owmws2812.html">Визуализация температуры из OpenWeatherMap на адресной ленте WS2812</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ws2812pir/ws2812pir.html">PIR-датчик: уведомление о движении с помощью WS2812</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../echobot/echobot.html">Телеграм-бот: введение</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../servotelegram/servotelegram.html">Управление сервоприводом через Telegram-бот</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../telegrambme/telegrambme.html">Получение данных о температуре (BME280) через Telegram-бот</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pirtelegram/pirtelegram.html">PIR-датчик: уведомление о движении в Telegram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mputelegram/mputelegram.html">MPU6050: уведомление о вибрации/наклоне в Telegram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../googlesheets/googlesheets.html">Google Sheets: хранение данных о температуре</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq/index.html">FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../faq/index.html#micropython">MicroPython</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../feedback/index.html">Обратная связь</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../feedback/index.html#id2">Контакты</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Raspberry Pi Pico W Kit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Содержание курса по Raspberry Pi Pico W</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Проекты</a></li>
+      <li class="breadcrumb-item active">Подключение к интернету с использованием Wi-Fi на Raspberry Pi Pico W</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Навигация по соседним страницам">
+        <a href="../index.html" class="btn btn-neutral float-left" title="Проекты" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="../webhello/webhello.html" class="btn btn-neutral float-right" title="Hello World: веб-сайт на Pico W" accesskey="n">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="wi-fi-raspberry-pi-pico-w">
+<h1>Подключение к интернету с использованием Wi-Fi на Raspberry Pi Pico W<a class="headerlink" href="#wi-fi-raspberry-pi-pico-w" title="Ссылка на этот заголовок"></a></h1>
+<section id="id1">
+<h2>Введение<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h2>
+<p>В этом уроке мы научимся настраивать Wi-Fi соединение на Raspberry Pi Pico W и проверять подключение к интернету. Raspberry Pi Pico W, в отличие от обычной версии Pico, оснащен встроенным модулем беспроводной связи, который позволяет подключаться к Wi-Fi сетям. Это открывает возможности для создания устройств, требующих доступа к интернету: сетевых датчиков, устройств умного дома, веб-серверов и многого другого.</p>
+</section>
+<section id="id2">
+<h2>Необходимые компоненты<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
+<ul class="simple">
+<li><p>Raspberry Pi Pico W (версия с Wi-Fi модулем)</p></li>
+<li><p>Микро-USB кабель для питания и программирования</p></li>
+<li><p>Компьютер с установленной средой разработки (например, Thonny IDE)</p></li>
+<li><p>Доступная Wi-Fi сеть с подключением к интернету</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>Структура проекта<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h2>
+<p>Наш проект будет состоять из одного файла:</p>
+<ul class="simple">
+<li><p><strong>main.py</strong> - основной файл с кодом для подключения к Wi-Fi и проверки соединения</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>Пошаговые инструкции<a class="headerlink" href="#id4" title="Ссылка на этот заголовок"></a></h2>
+<section id="id5">
+<h3>Шаг 1: Настройка оборудования<a class="headerlink" href="#id5" title="Ссылка на этот заголовок"></a></h3>
+<ol class="arabic simple">
+<li><p>Установите MicroPython для Raspberry Pi Pico W, если это еще не сделано.</p></li>
+<li><p>Подключите Pico W к компьютеру через USB-кабель.</p></li>
+<li><p>Убедитесь, что Pico W определяется системой и виден в Thonny IDE.</p></li>
+</ol>
+</section>
+<section id="main-py">
+<h3>Шаг 2: Создание основного файла main.py<a class="headerlink" href="#main-py" title="Ссылка на этот заголовок"></a></h3>
+<p>Создайте файл main.py со следующим содержимым:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">network</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">socket</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">machine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pin</span>
+
+<span class="c1"># Настройка пина для встроенного светодиода</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="c1"># Параметры Wi-Fi сети</span>
+<span class="n">SSID</span> <span class="o">=</span> <span class="s2">&quot;YOUR_WIFI_SSID&quot;</span>        <span class="c1"># Замените на имя вашей Wi-Fi сети</span>
+<span class="n">PASSWORD</span> <span class="o">=</span> <span class="s2">&quot;YOUR_WIFI_PASSWORD&quot;</span> <span class="c1"># Замените на пароль вашей Wi-Fi сети</span>
+
+<span class="c1"># Функция для подключения к Wi-Fi</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">connect_to_wifi</span><span class="p">():</span>
+    <span class="c1"># Инициализация интерфейса WLAN в режиме станции (клиента)</span>
+    <span class="n">wlan</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">WLAN</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">STA_IF</span><span class="p">)</span>
+    <span class="n">wlan</span><span class="o">.</span><span class="n">active</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Проверка статуса подключения</span>
+    <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Уже подключено к Wi-Fi&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">wlan</span>
+
+    <span class="c1"># Начинаем подключение к Wi-Fi сети</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Подключение к Wi-Fi сети: </span><span class="si">{</span><span class="n">SSID</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+    <span class="n">wlan</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">SSID</span><span class="p">,</span> <span class="n">PASSWORD</span><span class="p">)</span>
+
+    <span class="c1"># Ожидание подключения с таймаутом</span>
+    <span class="n">max_wait</span> <span class="o">=</span> <span class="mi">20</span>  <span class="c1"># максимальное время ожидания в секундах</span>
+    <span class="n">timeout</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">while</span> <span class="n">max_wait</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+            <span class="k">break</span>
+        <span class="n">max_wait</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ожидание подключения...&quot;</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">toggle</span><span class="p">()</span>  <span class="c1"># Мигаем светодиодом во время подключения</span>
+
+    <span class="c1"># Проверка успешности подключения</span>
+    <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>  <span class="c1"># Включаем светодиод при успешном подключении</span>
+        <span class="n">ip_address</span> <span class="o">=</span> <span class="n">wlan</span><span class="o">.</span><span class="n">ifconfig</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Подключено к Wi-Fi! IP-адрес: </span><span class="si">{</span><span class="n">ip_address</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">wlan</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>  <span class="c1"># Выключаем светодиод при неудачном подключении</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Не удалось подключиться к Wi-Fi. Проверьте параметры сети.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<p>Разберем основные части кода:</p>
+<ol class="arabic simple">
+<li><p>Импортируем необходимые модули:
+* <code class="docutils literal notranslate"><span class="pre">network</span></code> - для работы с сетевыми интерфейсами
+* <code class="docutils literal notranslate"><span class="pre">time</span></code> - для создания задержек
+* <code class="docutils literal notranslate"><span class="pre">socket</span></code> - для сетевых соединений
+* <code class="docutils literal notranslate"><span class="pre">Pin</span></code> - для управления светодиодом</p></li>
+<li><p>Настраиваем встроенный светодиод для индикации статуса подключения.</p></li>
+<li><p>Определяем параметры Wi-Fi сети:
+* SSID - имя вашей Wi-Fi сети
+* PASSWORD - пароль для доступа к сети</p></li>
+<li><p>Создаем функцию <code class="docutils literal notranslate"><span class="pre">connect_to_wifi()</span></code>, которая:
+* Инициализирует Wi-Fi интерфейс в режиме станции (клиента)
+* Проверяет, не подключен ли уже Pico W к сети
+* Начинает процесс подключения к указанной сети
+* Ожидает подключения с ограничением по времени
+* Мигает светодиодом для индикации процесса подключения
+* Выводит информацию о результате подключения и IP-адресе
+* Возвращает объект WLAN при успешном подключении или None при неудаче</p></li>
+</ol>
+<p>Теперь добавим функции для проверки подключения к интернету:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Функция для проверки подключения к интернету (пинг)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">ping_google_dns</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Создаем сокет для подключения к Google DNS (8.8.8.8)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_DGRAM</span><span class="p">)</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">settimeout</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Пытаемся отправить сообщение на Google DNS</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">sendto</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;8.8.8.8&#39;</span><span class="p">,</span> <span class="mi">53</span><span class="p">))</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="c1"># Функция для проверки DNS-разрешения</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">check_dns_resolution</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="s2">&quot;google.com&quot;</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Попытка получить IP-адрес по доменному имени</span>
+        <span class="n">ip_address</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">getaddrinfo</span><span class="p">(</span><span class="n">hostname</span><span class="p">,</span> <span class="mi">80</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;DNS-разрешение для </span><span class="si">{</span><span class="n">hostname</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">ip_address</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка DNS-разрешения: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="c1"># Функция для проверки HTTP-запроса</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">check_http_request</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s2">&quot;http://www.google.com&quot;</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Разбираем URL</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;:&quot;</span> <span class="ow">in</span> <span class="n">host</span><span class="p">:</span>
+            <span class="n">host</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">host</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+            <span class="n">port</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">port</span> <span class="o">=</span> <span class="mi">80</span>
+
+        <span class="c1"># Создаем сокет и подключаемся к серверу</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">()</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">settimeout</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+
+        <span class="c1"># Формируем HTTP-запрос</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;GET /</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2"> HTTP/1.0</span><span class="se">\r\n</span><span class="s2">Host: </span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="se">\r\n\r\n</span><span class="s2">&quot;</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+
+        <span class="c1"># Получаем и выводим ответ</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">512</span><span class="p">)</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;HTTP-ответ получен:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># Выводим только статус</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка HTTP-запроса: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<p>Разберем эти функции:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ping_google_dns()</span></code>:
+* Создает UDP сокет
+* Пытается отправить пустое сообщение на сервер Google DNS (8.8.8.8)
+* Возвращает True при успехе или False при неудаче
+* Это простой способ проверить базовую связь с интернетом</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">check_dns_resolution(hostname)</span></code>:
+* Пытается получить IP-адрес для указанного доменного имени
+* Показывает, работает ли DNS-разрешение, что важно для обычной работы в интернете
+* Возвращает True при успехе или False при неудаче</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">check_http_request(url)</span></code>:
+* Выполняет HTTP GET-запрос к указанному URL
+* Разбирает URL на компоненты (хост, путь, порт)
+* Создает TCP сокет и подключается к серверу
+* Отправляет HTTP-запрос и получает ответ
+* Выводит статус ответа (первая строка)
+* Возвращает True при успехе или False при неудаче</p></li>
+</ol>
+<p>Теперь добавим основную функцию программы:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Основной цикл программы</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Проверка подключения к интернету на Raspberry Pi Pico W&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--------------------------------------------------&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Подключаемся к Wi-Fi</span>
+    <span class="n">wlan</span> <span class="o">=</span> <span class="n">connect_to_wifi</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">wlan</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Невозможно продолжить без подключения к Wi-Fi.&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Ждем стабилизации соединения</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># Проверяем подключение к интернету</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Проверка подключения к интернету...&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Проверка пинга</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">1. Проверка пинга до Google DNS (8.8.8.8):&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ping_google_dns</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Пинг успешен! Базовое подключение к интернету работает.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Пинг не удался. Возможно, проблемы с подключением.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Проверка DNS</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">2. Проверка DNS-разрешения:&quot;</span><span class="p">)</span>
+        <span class="n">check_dns_resolution</span><span class="p">()</span>
+
+        <span class="c1"># Проверка HTTP</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">3. Проверка HTTP-запроса:&quot;</span><span class="p">)</span>
+        <span class="n">check_http_request</span><span class="p">()</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Проверка подключения завершена.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Мигаем светодиодом, чтобы показать завершение всех проверок</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+            <span class="n">led</span><span class="o">.</span><span class="n">toggle</span><span class="p">()</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+
+        <span class="c1"># Оставляем светодиод включенным, если подключение работает</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="c1"># Выключаем светодиод при завершении</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Программа завершена пользователем.&quot;</span><span class="p">)</span>
+
+<span class="c1"># Запускаем программу</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Этот блок кода:</p>
+<ol class="arabic">
+<li><p>Создает функцию <code class="docutils literal notranslate"><span class="pre">main()</span></code>, которая:
+* Запускает подключение к Wi-Fi
+* Если подключение успешно, выполняет три проверки подключения к интернету:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Пинг до Google DNS (8.8.8.8)</p></li>
+<li><p>DNS-разрешение доменного имени</p></li>
+<li><p>HTTP-запрос к веб-сайту</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Использует светодиод для индикации статуса</p></li>
+</ul>
+</li>
+<li><p>Запускает функцию <code class="docutils literal notranslate"><span class="pre">main()</span></code> при непосредственном выполнении файла</p></li>
+</ol>
+</section>
+</section>
+<section id="id6">
+<h2>Инструкции по загрузке и запуску<a class="headerlink" href="#id6" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p>Перед загрузкой кода, замените значения <code class="docutils literal notranslate"><span class="pre">SSID</span></code> и <code class="docutils literal notranslate"><span class="pre">PASSWORD</span></code> на параметры вашей Wi-Fi сети.</p></li>
+<li><p>Подключите Raspberry Pi Pico W к компьютеру через USB-кабель.</p></li>
+<li><p>Скопируйте файл main.py на Pico W (можно использовать Thonny IDE или любой другой метод).</p></li>
+<li><p>После загрузки файла программа автоматически запустится.</p></li>
+<li><p>Откройте последовательный порт (в Thonny это происходит автоматически) для просмотра вывода.</p></li>
+<li><p>Наблюдайте за процессом подключения и результатами проверок.</p></li>
+<li><p>Встроенный светодиод будет мигать во время подключения и останется включенным при успешном соединении.</p></li>
+</ol>
+</section>
+<section id="id7">
+<h2>Возможные проблемы и их решения<a class="headerlink" href="#id7" title="Ссылка на этот заголовок"></a></h2>
+<section id="wi-fi">
+<h3>Не удается подключиться к Wi-Fi<a class="headerlink" href="#wi-fi" title="Ссылка на этот заголовок"></a></h3>
+<p>Если Pico W не может подключиться к Wi-Fi сети:</p>
+<ul class="simple">
+<li><p>Проверьте правильность указанных SSID и пароля.</p></li>
+<li><p>Убедитесь, что Wi-Fi сеть находится в зоне досягаемости.</p></li>
+<li><p>Проверьте, поддерживает ли ваша сеть диапазон 2.4 ГГц (Pico W не поддерживает 5 ГГц).</p></li>
+<li><p>Попробуйте уменьшить расстояние между Pico W и вашим роутером.</p></li>
+</ul>
+</section>
+<section id="id8">
+<h3>Успешное подключение к Wi-Fi, но интернет не работает<a class="headerlink" href="#id8" title="Ссылка на этот заголовок"></a></h3>
+<p>Если Pico W подключается к Wi-Fi, но не может получить доступ к интернету:</p>
+<ul class="simple">
+<li><p>Проверьте, работает ли интернет на других устройствах в вашей сети.</p></li>
+<li><p>Убедитесь, что ваш роутер правильно настроен и имеет доступ к интернету.</p></li>
+<li><p>Проверьте, не блокируются ли исходящие соединения вашим роутером или провайдером.</p></li>
+<li><p>Попробуйте перезагрузить ваш Wi-Fi роутер.</p></li>
+</ul>
+</section>
+<section id="dns">
+<h3>Ошибки DNS-разрешения<a class="headerlink" href="#dns" title="Ссылка на этот заголовок"></a></h3>
+<p>Если пинг работает, но DNS-разрешение не удается:</p>
+<ul class="simple">
+<li><p>Попробуйте использовать другой DNS-сервер:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Можно добавить в функцию connect_to_wifi() после успешного подключения</span>
+<span class="c1"># Установка Google DNS серверов</span>
+<span class="n">wlan</span><span class="o">.</span><span class="n">ifconfig</span><span class="p">((</span><span class="n">wlan</span><span class="o">.</span><span class="n">ifconfig</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span> <span class="n">wlan</span><span class="o">.</span><span class="n">ifconfig</span><span class="p">()[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;8.8.8.8&#39;</span><span class="p">,</span> <span class="s1">&#39;8.8.4.4&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Проверьте, не блокирует ли ваш провайдер определенные DNS-запросы.</p></li>
+</ul>
+</section>
+</section>
+<section id="id9">
+<h2>Заключение<a class="headerlink" href="#id9" title="Ссылка на этот заголовок"></a></h2>
+<p>В этом уроке мы научились:</p>
+<ul class="simple">
+<li><p>Подключать Raspberry Pi Pico W к Wi-Fi сети</p></li>
+<li><p>Проверять базовое подключение к интернету через пинг</p></li>
+<li><p>Тестировать DNS-разрешение доменных имен</p></li>
+<li><p>Выполнять HTTP-запросы к веб-сайтам</p></li>
+<li><p>Использовать светодиод для индикации статуса подключения</p></li>
+</ul>
+<p>Эти базовые навыки можно применить для создания различных устройств, требующих доступа к интернету:</p>
+<ul class="simple">
+<li><p>Метеостанций с загрузкой данных в облако</p></li>
+<li><p>Систем умного дома с удаленным управлением</p></li>
+<li><p>Устройств мониторинга с оповещениями по электронной почте или через мессенджеры</p></li>
+<li><p>Простых веб-серверов для управления устройствами через браузер</p></li>
+<li><p>IoT-устройств, взаимодействующих с онлайн-сервисами</p></li>
+</ul>
+</section>
+<section id="id10">
+<h2>Полный код программы<a class="headerlink" href="#id10" title="Ссылка на этот заголовок"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">network</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">socket</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">machine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pin</span>
+
+<span class="c1"># Настройка пина для встроенного светодиода</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="c1"># Параметры Wi-Fi сети</span>
+<span class="n">SSID</span> <span class="o">=</span> <span class="s2">&quot;YOUR_WIFI_SSID&quot;</span>        <span class="c1"># Замените на имя вашей Wi-Fi сети</span>
+<span class="n">PASSWORD</span> <span class="o">=</span> <span class="s2">&quot;YOUR_WIFI_PASSWORD&quot;</span> <span class="c1"># Замените на пароль вашей Wi-Fi сети</span>
+
+<span class="c1"># Функция для подключения к Wi-Fi</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">connect_to_wifi</span><span class="p">():</span>
+    <span class="c1"># Инициализация интерфейса WLAN в режиме станции (клиента)</span>
+    <span class="n">wlan</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">WLAN</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">STA_IF</span><span class="p">)</span>
+    <span class="n">wlan</span><span class="o">.</span><span class="n">active</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Проверка статуса подключения</span>
+    <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Уже подключено к Wi-Fi&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">wlan</span>
+
+    <span class="c1"># Начинаем подключение к Wi-Fi сети</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Подключение к Wi-Fi сети: </span><span class="si">{</span><span class="n">SSID</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+    <span class="n">wlan</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">SSID</span><span class="p">,</span> <span class="n">PASSWORD</span><span class="p">)</span>
+
+    <span class="c1"># Ожидание подключения с таймаутом</span>
+    <span class="n">max_wait</span> <span class="o">=</span> <span class="mi">20</span>  <span class="c1"># максимальное время ожидания в секундах</span>
+    <span class="n">timeout</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">while</span> <span class="n">max_wait</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+            <span class="k">break</span>
+        <span class="n">max_wait</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ожидание подключения...&quot;</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">toggle</span><span class="p">()</span>  <span class="c1"># Мигаем светодиодом во время подключения</span>
+
+    <span class="c1"># Проверка успешности подключения</span>
+    <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>  <span class="c1"># Включаем светодиод при успешном подключении</span>
+        <span class="n">ip_address</span> <span class="o">=</span> <span class="n">wlan</span><span class="o">.</span><span class="n">ifconfig</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Подключено к Wi-Fi! IP-адрес: </span><span class="si">{</span><span class="n">ip_address</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">wlan</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>  <span class="c1"># Выключаем светодиод при неудачном подключении</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Не удалось подключиться к Wi-Fi. Проверьте параметры сети.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+<span class="c1"># Функция для проверки подключения к интернету (пинг)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">ping_google_dns</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Создаем сокет для подключения к Google DNS (8.8.8.8)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_DGRAM</span><span class="p">)</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">settimeout</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Пытаемся отправить сообщение на Google DNS</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">sendto</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;8.8.8.8&#39;</span><span class="p">,</span> <span class="mi">53</span><span class="p">))</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="c1"># Функция для проверки DNS-разрешения</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">check_dns_resolution</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="s2">&quot;google.com&quot;</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Попытка получить IP-адрес по доменному имени</span>
+        <span class="n">ip_address</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">getaddrinfo</span><span class="p">(</span><span class="n">hostname</span><span class="p">,</span> <span class="mi">80</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;DNS-разрешение для </span><span class="si">{</span><span class="n">hostname</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">ip_address</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка DNS-разрешения: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="c1"># Функция для проверки HTTP-запроса</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">check_http_request</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s2">&quot;http://www.google.com&quot;</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Разбираем URL</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;:&quot;</span> <span class="ow">in</span> <span class="n">host</span><span class="p">:</span>
+            <span class="n">host</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">host</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+            <span class="n">port</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">port</span> <span class="o">=</span> <span class="mi">80</span>
+
+        <span class="c1"># Создаем сокет и подключаемся к серверу</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">()</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">settimeout</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+
+        <span class="c1"># Формируем HTTP-запрос</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;GET /</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2"> HTTP/1.0</span><span class="se">\r\n</span><span class="s2">Host: </span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="se">\r\n\r\n</span><span class="s2">&quot;</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+
+        <span class="c1"># Получаем и выводим ответ</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">512</span><span class="p">)</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;HTTP-ответ получен:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># Выводим только статус</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка HTTP-запроса: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="c1"># Основной цикл программы</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Проверка подключения к интернету на Raspberry Pi Pico W&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--------------------------------------------------&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Подключаемся к Wi-Fi</span>
+    <span class="n">wlan</span> <span class="o">=</span> <span class="n">connect_to_wifi</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">wlan</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Невозможно продолжить без подключения к Wi-Fi.&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Ждем стабилизации соединения</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># Проверяем подключение к интернету</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Проверка подключения к интернету...&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Проверка пинга</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">1. Проверка пинга до Google DNS (8.8.8.8):&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ping_google_dns</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Пинг успешен! Базовое подключение к интернету работает.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Пинг не удался. Возможно, проблемы с подключением.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Проверка DNS</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">2. Проверка DNS-разрешения:&quot;</span><span class="p">)</span>
+        <span class="n">check_dns_resolution</span><span class="p">()</span>
+
+        <span class="c1"># Проверка HTTP</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">3. Проверка HTTP-запроса:&quot;</span><span class="p">)</span>
+        <span class="n">check_http_request</span><span class="p">()</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Проверка подключения завершена.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Мигаем светодиодом, чтобы показать завершение всех проверок</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+            <span class="n">led</span><span class="o">.</span><span class="n">toggle</span><span class="p">()</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+
+        <span class="c1"># Оставляем светодиод включенным, если подключение работает</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="c1"># Выключаем светодиод при завершении</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Программа завершена пользователем.&quot;</span><span class="p">)</span>
+
+<span class="c1"># Запускаем программу</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="../index.html" class="btn btn-neutral float-left" title="Проекты" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="../webhello/webhello.html" class="btn btn-neutral float-right" title="Hello World: веб-сайт на Pico W" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2025, Dias Kabdualiyev. </p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

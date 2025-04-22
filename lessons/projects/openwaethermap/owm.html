@@ -1,0 +1,625 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenWeatherMap: вывод данных о погоде на OLED-дисплей &mdash; документация Raspberry Pi Pico W Kit 0.1</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d39ee99e" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=2b7aed8e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/translations.js?v=5b699b7f"></script>
+      <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../../search.html" />
+    <link rel="next" title="Визуализация температуры из OpenWeatherMap на адресной ленте WS2812" href="../owmws2812/owmws2812.html" />
+    <link rel="prev" title="Отображение информации о Wi-Fi на OLED-дисплее SSD1306" href="../wifioled/wifioled.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Raspberry Pi Pico W Kit
+              <img src="../../../_static/logo.png" class="logo" alt="Логотип"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/index.html">Учебный набор по MicroPython на базе Raspberry Pi Pico W</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id1">Вступление</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id2">Сильные стороны набора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id3">Для кого подходит этот набор</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id4">Компоненты набора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#raspberry-pi-pico-w-15">Итоговый учебный план на Raspberry Pi Pico W (15 уроков)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get-started/index.html">Знакомство с Raspberry Pi Pico W и MicroPython</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/picow.html">Знакомство с Pico W</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/micropython.html">Введение в MicroPython</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/micropython.html#id1">История начинается здесь</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/micropython.html#id2">Почему MicroPython?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/thonny.html">Установка Thonny IDE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/micropythoninstall.html">Установка MicroPython на ваш Pico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/uploadlibs.html">Загрузка библиотек на Pico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/thonnytutor.html">1.5 Краткое руководство по Thonny</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/thonnytutor.html#id1">Открытие и запуск кода напрямую</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Содержание курса по Raspberry Pi Pico W</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../sensors/index.html">Модуль датчиков и устройств</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/rgb/rgb.html">Управление RGB-светодиодом с общим катодом на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/ws2812/ws2812.html">Управление адресным светодиодным кольцом на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/light/light.html">Работа с датчиком освещенности на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/pir/pir.html">Обнаружение движения с помощью PIR датчика и Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/pot/pot.html">Управление потенциометром на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/relay/relay.html">Управление реле с помощью Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/servo/servo.html">Управление сервоприводом с помощью Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/bme280/bme280.html">Использование датчика BME280 с Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/mpu6050/mpu6050.html">Измерение ускорения и гироскопических данных с MPU6050 на Raspberry Pi Pico</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Проекты</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../wifi/wifi.html">Подключение к интернету с использованием Wi-Fi на Raspberry Pi Pico W</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webhello/webhello.html">Hello World: веб-сайт на Pico W</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../light/light.html">Считывание данных с датчика освещённости и отображение на веб-интерфейсе</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wifiscan/wifiscan.html">Управление RGB-светодиодом через веб-интерфейс</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wifioled/wifioled.html">Отображение информации о Wi-Fi на OLED-дисплее SSD1306</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">OpenWeatherMap: вывод данных о погоде на OLED-дисплей</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../owmws2812/owmws2812.html">Визуализация температуры из OpenWeatherMap на адресной ленте WS2812</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ws2812pir/ws2812pir.html">PIR-датчик: уведомление о движении с помощью WS2812</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../echobot/echobot.html">Телеграм-бот: введение</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../servotelegram/servotelegram.html">Управление сервоприводом через Telegram-бот</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../telegrambme/telegrambme.html">Получение данных о температуре (BME280) через Telegram-бот</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pirtelegram/pirtelegram.html">PIR-датчик: уведомление о движении в Telegram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mputelegram/mputelegram.html">MPU6050: уведомление о вибрации/наклоне в Telegram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../googlesheets/googlesheets.html">Google Sheets: хранение данных о температуре</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq/index.html">FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../faq/index.html#micropython">MicroPython</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../feedback/index.html">Обратная связь</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../feedback/index.html#id2">Контакты</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Raspberry Pi Pico W Kit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Содержание курса по Raspberry Pi Pico W</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Проекты</a></li>
+      <li class="breadcrumb-item active">OpenWeatherMap: вывод данных о погоде на OLED-дисплей</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Навигация по соседним страницам">
+        <a href="../wifioled/wifioled.html" class="btn btn-neutral float-left" title="Отображение информации о Wi-Fi на OLED-дисплее SSD1306" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="../owmws2812/owmws2812.html" class="btn btn-neutral float-right" title="Визуализация температуры из OpenWeatherMap на адресной ленте WS2812" accesskey="n">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="openweathermap-oled">
+<h1>OpenWeatherMap: вывод данных о погоде на OLED-дисплей<a class="headerlink" href="#openweathermap-oled" title="Ссылка на этот заголовок"></a></h1>
+<section id="id1">
+<h2>Введение<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h2>
+<p>В этом уроке мы научимся получать данные о погоде с сервиса OpenWeatherMap и отображать их на OLED-дисплее SSD1306 с помощью Raspberry Pi Pico W. Наше устройство будет подключаться к Wi-Fi, запрашивать текущие данные о погоде через API и отображать температуру, влажность, давление и краткое описание погодных условий на дисплее. Это отличный проект для создания персональной метеостанции или информационного дисплея.</p>
+</section>
+<section id="id2">
+<h2>Необходимые компоненты<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
+<ul class="simple">
+<li><p>Raspberry Pi Pico W</p></li>
+<li><p>OLED-дисплей SSD1306 с интерфейсом I2C (128x64 пикселей)</p></li>
+<li><p>Соединительные провода</p></li>
+<li><p>Макетная плата (опционально)</p></li>
+<li><p>Активный API-ключ от OpenWeatherMap (бесплатный)</p></li>
+</ul>
+</section>
+<section id="openweathermap">
+<h2>Подготовка к работе с OpenWeatherMap<a class="headerlink" href="#openweathermap" title="Ссылка на этот заголовок"></a></h2>
+<p>Перед началом работы необходимо получить API-ключ от сервиса OpenWeatherMap:</p>
+<ol class="arabic simple">
+<li><p>Зарегистрируйтесь на сайте [OpenWeatherMap](<a class="reference external" href="https://openweathermap.org/">https://openweathermap.org/</a>)</p></li>
+<li><p>После регистрации перейдите в свой профиль и найдите раздел «API keys»</p></li>
+<li><p>Создайте новый ключ или используйте ключ по умолчанию</p></li>
+<li><p>Запишите ваш API-ключ - он будет использоваться в нашей программе</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Примечание</p>
+<p>Бесплатный план OpenWeatherMap позволяет делать до 1000 запросов в день и до 60 запросов в минуту, чего более чем достаточно для нашего проекта.</p>
+</div>
+</section>
+<section id="id3">
+<h2>Схема подключения<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h2>
+<p>OLED-дисплей SSD1306 подключается к Raspberry Pi Pico W через интерфейс I2C:</p>
+<ul class="simple">
+<li><p>VCC дисплея к 3.3V (PIN 36) Pico W</p></li>
+<li><p>GND дисплея к GND (PIN 38) Pico W</p></li>
+<li><p>SCL дисплея к GP1 (PIN 2) Pico W - это I2C0 SCL</p></li>
+<li><p>SDA дисплея к GP0 (PIN 1) Pico W - это I2C0 SDA</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Примечание</p>
+<p>Убедитесь, что ваш OLED-дисплей рассчитан на напряжение 3.3В. Если ваш дисплей рассчитан на 5В, но работает и с 3.3В (многие современные дисплеи совместимы), то подключение безопасно.</p>
+</div>
+</section>
+<section id="id4">
+<h2>Структура проекта<a class="headerlink" href="#id4" title="Ссылка на этот заголовок"></a></h2>
+<p>Наш проект будет состоять из следующих файлов:
+- config.py - конфигурационный файл (логин/пароль Wi-Fi, API-ключ, город)
+- main.py - основной файл программы
+- ssd1306.py - библиотека для работы с OLED-дисплеем (уже включена в micropython-lib)</p>
+</section>
+<section id="id5">
+<h2>Код проекта<a class="headerlink" href="#id5" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p>Сначала создадим файл конфигурации (config.py):</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Конфигурационный файл для проекта OpenWeather OLED</span>
+
+<span class="c1"># Настройки Wi-Fi</span>
+<span class="n">WIFI_SSID</span> <span class="o">=</span> <span class="s2">&quot;Название_вашей_сети&quot;</span>
+<span class="n">WIFI_PASSWORD</span> <span class="o">=</span> <span class="s2">&quot;Пароль_вашей_сети&quot;</span>
+
+<span class="c1"># Настройки OpenWeatherMap</span>
+<span class="n">OWM_API_KEY</span> <span class="o">=</span> <span class="s2">&quot;ваш_api_ключ_openweathermap&quot;</span>
+<span class="n">CITY_NAME</span> <span class="o">=</span> <span class="s2">&quot;Moscow&quot;</span>  <span class="c1"># Название города на английском</span>
+
+<span class="c1"># Параметры обновления данных</span>
+<span class="n">UPDATE_INTERVAL</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="mi">60</span>  <span class="c1"># Интервал обновления данных в секундах (10 минут)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Создадим основной файл программы (main.py):</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">network</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">urequests</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">requests</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">machine</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">machine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pin</span><span class="p">,</span> <span class="n">I2C</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ssd1306</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">gc</span>
+
+<span class="c1"># Импортируем настройки из config.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">config</span><span class="w"> </span><span class="kn">import</span> <span class="n">WIFI_SSID</span><span class="p">,</span> <span class="n">WIFI_PASSWORD</span><span class="p">,</span> <span class="n">OWM_API_KEY</span><span class="p">,</span> <span class="n">CITY_NAME</span><span class="p">,</span> <span class="n">UPDATE_INTERVAL</span>
+
+<span class="c1"># Настройка пина для встроенного светодиода</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="c1"># Настройка I2C для OLED-дисплея</span>
+<span class="n">i2c</span> <span class="o">=</span> <span class="n">I2C</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">scl</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">sda</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">freq</span><span class="o">=</span><span class="mi">400000</span><span class="p">)</span>
+
+<span class="c1"># Размеры дисплея</span>
+<span class="n">DISPLAY_WIDTH</span> <span class="o">=</span> <span class="mi">128</span>
+<span class="n">DISPLAY_HEIGHT</span> <span class="o">=</span> <span class="mi">64</span>
+
+<span class="c1"># Инициализация дисплея</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">display</span> <span class="o">=</span> <span class="n">ssd1306</span><span class="o">.</span><span class="n">SSD1306_I2C</span><span class="p">(</span><span class="n">DISPLAY_WIDTH</span><span class="p">,</span> <span class="n">DISPLAY_HEIGHT</span><span class="p">,</span> <span class="n">i2c</span><span class="p">)</span>
+    <span class="n">display_available</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ошибка инициализации дисплея:&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+    <span class="n">display_available</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="c1"># Функция для мигания встроенным светодиодом</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">blink_led</span><span class="p">(</span><span class="n">times</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="mf">0.2</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">times</span><span class="p">):</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+
+<span class="c1"># Функция для отображения сообщения на дисплее</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">show_message</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">clear</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">display_available</span><span class="p">:</span>
+        <span class="k">return</span>
+
+    <span class="k">if</span> <span class="n">clear</span><span class="p">:</span>
+        <span class="n">display</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Очищаем дисплей</span>
+
+    <span class="c1"># Отображаем заголовок</span>
+    <span class="n">display</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">display</span><span class="o">.</span><span class="n">hline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">DISPLAY_WIDTH</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Горизонтальная линия под заголовком</span>
+
+    <span class="c1"># Отображаем строки текста</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">12</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="n">display</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">+=</span> <span class="mi">10</span>
+
+    <span class="c1"># Обновляем дисплей</span>
+    <span class="n">display</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Функция для подключения к Wi-Fi</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">connect_to_wifi</span><span class="p">():</span>
+    <span class="c1"># Показываем сообщение о загрузке</span>
+    <span class="n">show_message</span><span class="p">(</span><span class="s2">&quot;Weather Station&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Connecting to WiFi&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;SSID: </span><span class="si">{</span><span class="n">WIFI_SSID</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span>
+
+    <span class="c1"># Настраиваем Wi-Fi интерфейс</span>
+    <span class="n">wlan</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">WLAN</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">STA_IF</span><span class="p">)</span>
+    <span class="n">wlan</span><span class="o">.</span><span class="n">active</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Если уже подключены - отключаемся</span>
+    <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+        <span class="n">wlan</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Подключение к Wi-Fi сети </span><span class="si">{</span><span class="n">WIFI_SSID</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Пытаемся подключиться к Wi-Fi</span>
+    <span class="n">wlan</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">WIFI_SSID</span><span class="p">,</span> <span class="n">WIFI_PASSWORD</span><span class="p">)</span>
+
+    <span class="c1"># Ждем подключения с таймаутом</span>
+    <span class="n">max_wait</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="k">while</span> <span class="n">max_wait</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+            <span class="k">break</span>
+
+        <span class="c1"># Мигаем светодиодом в процессе подключения</span>
+        <span class="n">blink_led</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+
+        <span class="n">max_wait</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ожидание подключения...&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Обновляем сообщение на дисплее с точками</span>
+        <span class="n">dots</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span> <span class="o">*</span> <span class="p">((</span><span class="mi">20</span> <span class="o">-</span> <span class="n">max_wait</span><span class="p">)</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">show_message</span><span class="p">(</span><span class="s2">&quot;Weather Station&quot;</span><span class="p">,</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Connecting</span><span class="si">{</span><span class="n">dots</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;SSID: </span><span class="si">{</span><span class="n">WIFI_SSID</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span>
+
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Проверяем результат подключения</span>
+    <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+        <span class="n">ip_address</span> <span class="o">=</span> <span class="n">wlan</span><span class="o">.</span><span class="n">ifconfig</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Подключено к Wi-Fi! IP-адрес: </span><span class="si">{</span><span class="n">ip_address</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Отображаем информацию на дисплее</span>
+        <span class="n">show_message</span><span class="p">(</span><span class="s2">&quot;Weather Station&quot;</span><span class="p">,</span> <span class="p">[</span>
+            <span class="s2">&quot;WiFi Connected!&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;IP: </span><span class="si">{</span><span class="n">ip_address</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Getting weather...&quot;</span>
+        <span class="p">])</span>
+
+        <span class="c1"># Быстро мигаем светодиодом при успешном подключении</span>
+        <span class="n">blink_led</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Не удалось подключиться к Wi-Fi&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Отображаем сообщение об ошибке на дисплее</span>
+        <span class="n">show_message</span><span class="p">(</span><span class="s2">&quot;WiFi Error&quot;</span><span class="p">,</span> <span class="p">[</span>
+            <span class="s2">&quot;Failed to connect&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;to </span><span class="si">{</span><span class="n">WIFI_SSID</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Check credentials&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;or signal strength&quot;</span>
+        <span class="p">])</span>
+
+        <span class="c1"># Медленно мигаем светодиодом при ошибке</span>
+        <span class="n">blink_led</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="c1"># Функция для получения данных о погоде</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_weather_data</span><span class="p">():</span>
+    <span class="c1"># API URL для текущей погоды</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://api.openweathermap.org/data/2.5/weather?q=</span><span class="si">{</span><span class="n">CITY_NAME</span><span class="si">}</span><span class="s2">&amp;appid=</span><span class="si">{</span><span class="n">OWM_API_KEY</span><span class="si">}</span><span class="s2">&amp;units=metric&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Делаем запрос к API</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Запрос данных о погоде для города </span><span class="si">{</span><span class="n">CITY_NAME</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="c1"># Проверяем статус ответа</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="c1"># Парсим JSON-ответ</span>
+            <span class="n">weather_data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+            <span class="c1"># Выводим данные для отладки</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Получены данные о погоде:&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Температура: </span><span class="si">{</span><span class="n">weather_data</span><span class="p">[</span><span class="s1">&#39;main&#39;</span><span class="p">][</span><span class="s1">&#39;temp&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">°C&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Описание: </span><span class="si">{</span><span class="n">weather_data</span><span class="p">[</span><span class="s1">&#39;weather&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;description&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">weather_data</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка запроса: статус </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка при получении данных о погоде: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+<span class="c1"># Функция для обработки данных о погоде и формирования текста для отображения</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">process_weather_data</span><span class="p">(</span><span class="n">weather_data</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">weather_data</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;Error: No data&quot;</span><span class="p">,</span> <span class="s2">&quot;Check connection&quot;</span><span class="p">,</span> <span class="s2">&quot;or API key&quot;</span><span class="p">]</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Извлекаем нужные данные</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">weather_data</span><span class="p">[</span><span class="s1">&#39;main&#39;</span><span class="p">][</span><span class="s1">&#39;temp&#39;</span><span class="p">]</span>
+        <span class="n">humidity</span> <span class="o">=</span> <span class="n">weather_data</span><span class="p">[</span><span class="s1">&#39;main&#39;</span><span class="p">][</span><span class="s1">&#39;humidity&#39;</span><span class="p">]</span>
+        <span class="n">pressure</span> <span class="o">=</span> <span class="n">weather_data</span><span class="p">[</span><span class="s1">&#39;main&#39;</span><span class="p">][</span><span class="s1">&#39;pressure&#39;</span><span class="p">]</span>
+        <span class="n">description</span> <span class="o">=</span> <span class="n">weather_data</span><span class="p">[</span><span class="s1">&#39;weather&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;description&#39;</span><span class="p">]</span>
+        <span class="n">wind_speed</span> <span class="o">=</span> <span class="n">weather_data</span><span class="p">[</span><span class="s1">&#39;wind&#39;</span><span class="p">][</span><span class="s1">&#39;speed&#39;</span><span class="p">]</span>
+        <span class="n">city</span> <span class="o">=</span> <span class="n">weather_data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+
+        <span class="c1"># Переводим первую букву описания в верхний регистр</span>
+        <span class="n">description</span> <span class="o">=</span> <span class="n">description</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">+</span> <span class="n">description</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+        <span class="c1"># Форматируем данные для отображения</span>
+        <span class="n">temp_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Temp: </span><span class="si">{</span><span class="n">temp</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> C&quot;</span>
+        <span class="n">humid_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Humidity: </span><span class="si">{</span><span class="n">humidity</span><span class="si">}</span><span class="s2">%&quot;</span>
+        <span class="n">press_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Press: </span><span class="si">{</span><span class="n">pressure</span><span class="si">}</span><span class="s2"> hPa&quot;</span>
+        <span class="n">wind_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Wind: </span><span class="si">{</span><span class="n">wind_speed</span><span class="si">}</span><span class="s2"> m/s&quot;</span>
+
+        <span class="c1"># Возвращаем список строк для отображения</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">city</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">temp_text</span><span class="p">,</span>
+            <span class="n">description</span><span class="p">,</span>
+            <span class="n">humid_text</span><span class="p">,</span>
+            <span class="n">press_text</span><span class="p">,</span>
+            <span class="n">wind_text</span>
+        <span class="p">]</span>
+    <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка при обработке данных о погоде: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;Error: Invalid data&quot;</span><span class="p">,</span> <span class="s2">&quot;Check API response&quot;</span><span class="p">]</span>
+
+<span class="c1"># Функция для отображения данных о погоде на дисплее</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">display_weather</span><span class="p">(</span><span class="n">weather_data</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">display_available</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Дисплей недоступен&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="c1"># Обрабатываем данные о погоде</span>
+    <span class="n">weather_lines</span> <span class="o">=</span> <span class="n">process_weather_data</span><span class="p">(</span><span class="n">weather_data</span><span class="p">)</span>
+
+    <span class="c1"># Получаем текущее время для отображения</span>
+    <span class="n">rtc</span> <span class="o">=</span> <span class="n">machine</span><span class="o">.</span><span class="n">RTC</span><span class="p">()</span>
+    <span class="n">datetime</span> <span class="o">=</span> <span class="n">rtc</span><span class="o">.</span><span class="n">datetime</span><span class="p">()</span>
+    <span class="n">time_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">datetime</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">datetime</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="c1"># Отображаем данные на дисплее</span>
+    <span class="n">show_message</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Weather </span><span class="si">{</span><span class="n">time_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">weather_lines</span><span class="p">)</span>
+
+<span class="c1"># Главная функция программы</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">display_available</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ОШИБКА: OLED-дисплей не найден или неправильно подключен!&quot;</span><span class="p">)</span>
+        <span class="c1"># Мигаем светодиодом в режиме ошибки</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">blink_led</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Отображаем приветственное сообщение</span>
+    <span class="n">show_message</span><span class="p">(</span><span class="s2">&quot;Weather Station&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Starting...&quot;</span><span class="p">,</span> <span class="s2">&quot;Raspberry Pi Pico W&quot;</span><span class="p">])</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Подключаемся к Wi-Fi</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">connect_to_wifi</span><span class="p">():</span>
+        <span class="c1"># Если не удалось подключиться, перезагружаем устройство через 10 секунд</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">machine</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+    <span class="c1"># Основной цикл программы</span>
+    <span class="n">last_update_time</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">current_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+        <span class="c1"># Проверяем, нужно ли обновить данные о погоде</span>
+        <span class="k">if</span> <span class="n">current_time</span> <span class="o">-</span> <span class="n">last_update_time</span> <span class="o">&gt;=</span> <span class="n">UPDATE_INTERVAL</span><span class="p">:</span>
+            <span class="c1"># Включаем светодиод для индикации обновления</span>
+            <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+
+            <span class="c1"># Получаем данные о погоде</span>
+            <span class="n">weather_data</span> <span class="o">=</span> <span class="n">get_weather_data</span><span class="p">()</span>
+
+            <span class="c1"># Отображаем данные на дисплее</span>
+            <span class="k">if</span> <span class="n">weather_data</span><span class="p">:</span>
+                <span class="n">display_weather</span><span class="p">(</span><span class="n">weather_data</span><span class="p">)</span>
+                <span class="n">last_update_time</span> <span class="o">=</span> <span class="n">current_time</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">show_message</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="p">[</span>
+                    <span class="s2">&quot;Failed to get&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;weather data&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Retrying in 1 min&quot;</span>
+                <span class="p">])</span>
+                <span class="c1"># Если не удалось получить данные, пробуем через минуту</span>
+                <span class="n">last_update_time</span> <span class="o">=</span> <span class="n">current_time</span> <span class="o">-</span> <span class="n">UPDATE_INTERVAL</span> <span class="o">+</span> <span class="mi">60</span>
+
+            <span class="c1"># Выключаем светодиод</span>
+            <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+
+            <span class="c1"># Очищаем память</span>
+            <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+
+        <span class="c1"># Мигаем светодиодом для индикации работы</span>
+        <span class="n">blink_led</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+
+        <span class="c1"># Ждем перед следующей проверкой</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># Запускаем программу</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h2>Загрузка и запуск проекта<a class="headerlink" href="#id6" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p>Сначала вам нужно зарегистрироваться на OpenWeatherMap и получить API-ключ, как описано в разделе «Подготовка к работе с OpenWeatherMap».</p></li>
+<li><p>Убедитесь, что библиотека ssd1306.py установлена в вашей системе MicroPython. Если нет, вы можете загрузить её из официального репозитория micropython-lib.</p></li>
+<li><p>Подключите Raspberry Pi Pico W к компьютеру через USB.</p></li>
+<li><p>Установите Thonny IDE или другую среду разработки для MicroPython, если у вас её ещё нет.</p></li>
+<li><p>Создайте и загрузите на Pico W следующие файлы:
+- config.py (с вашими настройками Wi-Fi и API-ключом OpenWeatherMap)
+- main.py
+- ssd1306.py (если её нет в прошивке)</p></li>
+<li><p>Отредактируйте файл config.py, указав:
+- Имя и пароль вашей Wi-Fi сети
+- Ваш API-ключ OpenWeatherMap
+- Название вашего города на английском языке
+- При желании измените интервал обновления данных (по умолчанию 10 минут)</p></li>
+<li><p>Убедитесь, что OLED-дисплей правильно подключен к Pico W согласно схеме.</p></li>
+<li><p>Запустите программу, нажав кнопку Run в Thonny или перезагрузив Pico W.</p></li>
+<li><p>После успешного запуска вы увидите на OLED-дисплее информацию о подключении к Wi-Fi, а затем - текущие данные о погоде, которые будут обновляться с заданным интервалом.</p></li>
+</ol>
+</section>
+<section id="id7">
+<h2>Как это работает<a class="headerlink" href="#id7" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Подключение к Wi-Fi</strong>:
+- Программа инициализирует Wi-Fi модуль и подключается к заданной сети.
+- В процессе подключения на дисплее отображается статус соединения.</p></li>
+<li><p><strong>Получение данных о погоде</strong>:
+- После подключения к Wi-Fi, программа отправляет HTTP-запрос к API OpenWeatherMap.
+- В запросе указывается название города, единицы измерения (метрические) и API-ключ.
+- API возвращает данные в формате JSON, которые затем разбираются программой.</p></li>
+<li><p><strong>Обработка данных</strong>:
+- Из JSON-ответа извлекаются нужные нам данные: температура, влажность, давление, скорость ветра и описание погоды.
+- Данные форматируются для отображения на дисплее с ограниченной шириной.</p></li>
+<li><p><strong>Отображение на дисплее</strong>:
+- Обработанные данные о погоде выводятся на OLED-дисплей.
+- В заголовке отображается название «Weather» и текущее время.
+- В основной части экрана показываются название города, температура, описание погоды, влажность, давление и скорость ветра.</p></li>
+<li><p><strong>Периодическое обновление</strong>:
+- Программа работает в бесконечном цикле и обновляет данные о погоде с интервалом, указанным в config.py.
+- Во время обновления данных индикатором служит встроенный светодиод.</p></li>
+</ol>
+</section>
+<section id="id8">
+<h2>Возможные проблемы и их решения<a class="headerlink" href="#id8" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Ошибка «Дисплей не инициализирован»</strong>:
+- Проверьте правильность подключения проводов дисплея (SDA, SCL, VCC, GND).
+- Убедитесь, что ваш дисплей работает с напряжением 3.3В.
+- Попробуйте изменить адрес I2C в коде инициализации дисплея, если у вашего дисплея другой адрес.</p></li>
+<li><p><strong>Ошибка подключения к Wi-Fi</strong>:
+- Убедитесь, что вы указали правильный SSID и пароль в файле config.py.
+- Проверьте, что ваша Wi-Fi сеть работает в диапазоне 2.4 ГГц (Pico W не поддерживает 5 ГГц).
+- Перезагрузите Pico W и ваш Wi-Fi роутер.</p></li>
+<li><p><strong>Ошибка «Failed to get weather data»</strong>:
+- Проверьте, что ваш API-ключ OpenWeatherMap введен правильно.
+- Убедитесь, что название города указано корректно на английском языке.
+- Проверьте подключение к интернету.
+- Проверьте, не превышен ли лимит запросов к API (для бесплатного плана это 1000 запросов в день).</p></li>
+<li><p><strong>Ошибка «Invalid data»</strong>:
+- Возможно, формат ответа API изменился. Проверьте документацию OpenWeatherMap.
+- Добавьте дополнительную отладочную информацию в код, чтобы видеть полный ответ от API.</p></li>
+<li><p><strong>Проблемы с отображением текста</strong>:
+- Если текст слишком длинный и не помещается на экране, попробуйте сократить выводимую информацию или уменьшить размер шрифта.
+- Для дисплеев с разрешением 128x32 вместо 128x64 измените значение DISPLAY_HEIGHT и отображайте меньше строк информации.</p></li>
+</ol>
+</section>
+<section id="id9">
+<h2>Расширение проекта<a class="headerlink" href="#id9" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Добавление прогноза погоды</strong>:
+- Измените API-запрос для получения не только текущей погоды, но и прогноза на несколько дней.
+- Добавьте возможность переключения между текущей погодой и прогнозом на будущее.</p></li>
+<li><p><strong>Улучшение интерфейса</strong>:
+- Добавьте простые графические иконки для отображения погодных условий (солнце, облака, дождь).
+- Создайте анимации для некоторых погодных явлений (например, падающие капли дождя или снежинки).</p></li>
+<li><p><strong>Добавление датчиков</strong>:
+- Подключите локальные датчики температуры, влажности и давления (например, BME280).
+- Отображайте как данные с интернета, так и локальные измерения для сравнения.</p></li>
+<li><p><strong>Энергосбережение</strong>:
+- Добавьте режим глубокого сна для экономии энергии.
+- Настройте устройство на пробуждение только для обновления данных, а затем возвращение в режим сна.</p></li>
+<li><p><strong>Добавление кнопок управления</strong>:
+- Добавьте физические кнопки для переключения между различными экранами с информацией.
+- Реализуйте настройку города или других параметров без необходимости изменять код.</p></li>
+</ol>
+</section>
+<section id="id10">
+<h2>Заключение<a class="headerlink" href="#id10" title="Ссылка на этот заголовок"></a></h2>
+<p>В этом уроке мы научились получать данные о погоде с сервиса OpenWeatherMap и отображать их на OLED-дисплее с помощью Raspberry Pi Pico W. Проект демонстрирует, как можно создать простую метеостанцию, которая показывает актуальные данные о погоде без необходимости в дополнительных датчиках.</p>
+<p>Этот проект можно использовать как основу для создания более сложных информационных дисплеев или систем умного дома, интегрирующих данные из различных источников и отображающих их в удобном формате.</p>
+<div class="admonition note">
+<p class="admonition-title">Примечание</p>
+<p>Для экономии числа запросов к API и продления срока службы дисплея можно увеличить интервал обновления данных или настроить периодическое выключение дисплея. Помните, что бесплатный план OpenWeatherMap ограничен 1000 запросами в день - при обновлении каждые 10 минут это составляет 144 запроса в сутки, что вполне укладывается в лимит.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="../wifioled/wifioled.html" class="btn btn-neutral float-left" title="Отображение информации о Wi-Fi на OLED-дисплее SSD1306" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="../owmws2812/owmws2812.html" class="btn btn-neutral float-right" title="Визуализация температуры из OpenWeatherMap на адресной ленте WS2812" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2025, Dias Kabdualiyev. </p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

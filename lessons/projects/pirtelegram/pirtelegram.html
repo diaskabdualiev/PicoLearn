@@ -1,0 +1,751 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PIR-датчик: уведомление о движении в Telegram &mdash; документация Raspberry Pi Pico W Kit 0.1</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d39ee99e" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=2b7aed8e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/translations.js?v=5b699b7f"></script>
+      <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../../search.html" />
+    <link rel="next" title="MPU6050: уведомление о вибрации/наклоне в Telegram" href="../mputelegram/mputelegram.html" />
+    <link rel="prev" title="Получение данных о температуре (BME280) через Telegram-бот" href="../telegrambme/telegrambme.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Raspberry Pi Pico W Kit
+              <img src="../../../_static/logo.png" class="logo" alt="Логотип"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/index.html">Учебный набор по MicroPython на базе Raspberry Pi Pico W</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id1">Вступление</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id2">Сильные стороны набора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id3">Для кого подходит этот набор</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id4">Компоненты набора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#raspberry-pi-pico-w-15">Итоговый учебный план на Raspberry Pi Pico W (15 уроков)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get-started/index.html">Знакомство с Raspberry Pi Pico W и MicroPython</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/picow.html">Знакомство с Pico W</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/micropython.html">Введение в MicroPython</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/micropython.html#id1">История начинается здесь</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/micropython.html#id2">Почему MicroPython?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/thonny.html">Установка Thonny IDE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/micropythoninstall.html">Установка MicroPython на ваш Pico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/uploadlibs.html">Загрузка библиотек на Pico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/thonnytutor.html">1.5 Краткое руководство по Thonny</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/thonnytutor.html#id1">Открытие и запуск кода напрямую</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Содержание курса по Raspberry Pi Pico W</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../sensors/index.html">Модуль датчиков и устройств</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/rgb/rgb.html">Управление RGB-светодиодом с общим катодом на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/ws2812/ws2812.html">Управление адресным светодиодным кольцом на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/light/light.html">Работа с датчиком освещенности на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/pir/pir.html">Обнаружение движения с помощью PIR датчика и Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/pot/pot.html">Управление потенциометром на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/relay/relay.html">Управление реле с помощью Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/servo/servo.html">Управление сервоприводом с помощью Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/bme280/bme280.html">Использование датчика BME280 с Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/mpu6050/mpu6050.html">Измерение ускорения и гироскопических данных с MPU6050 на Raspberry Pi Pico</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Проекты</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../wifi/wifi.html">Подключение к интернету с использованием Wi-Fi на Raspberry Pi Pico W</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webhello/webhello.html">Hello World: веб-сайт на Pico W</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../light/light.html">Считывание данных с датчика освещённости и отображение на веб-интерфейсе</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wifiscan/wifiscan.html">Управление RGB-светодиодом через веб-интерфейс</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wifioled/wifioled.html">Отображение информации о Wi-Fi на OLED-дисплее SSD1306</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../openwaethermap/owm.html">OpenWeatherMap: вывод данных о погоде на OLED-дисплей</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../owmws2812/owmws2812.html">Визуализация температуры из OpenWeatherMap на адресной ленте WS2812</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ws2812pir/ws2812pir.html">PIR-датчик: уведомление о движении с помощью WS2812</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../echobot/echobot.html">Телеграм-бот: введение</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../servotelegram/servotelegram.html">Управление сервоприводом через Telegram-бот</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../telegrambme/telegrambme.html">Получение данных о температуре (BME280) через Telegram-бот</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">PIR-датчик: уведомление о движении в Telegram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mputelegram/mputelegram.html">MPU6050: уведомление о вибрации/наклоне в Telegram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../googlesheets/googlesheets.html">Google Sheets: хранение данных о температуре</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq/index.html">FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../faq/index.html#micropython">MicroPython</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../feedback/index.html">Обратная связь</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../feedback/index.html#id2">Контакты</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Raspberry Pi Pico W Kit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Содержание курса по Raspberry Pi Pico W</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Проекты</a></li>
+      <li class="breadcrumb-item active">PIR-датчик: уведомление о движении в Telegram</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Навигация по соседним страницам">
+        <a href="../telegrambme/telegrambme.html" class="btn btn-neutral float-left" title="Получение данных о температуре (BME280) через Telegram-бот" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="../mputelegram/mputelegram.html" class="btn btn-neutral float-right" title="MPU6050: уведомление о вибрации/наклоне в Telegram" accesskey="n">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pir-telegram">
+<h1>PIR-датчик: уведомление о движении в Telegram<a class="headerlink" href="#pir-telegram" title="Ссылка на этот заголовок"></a></h1>
+<section id="id1">
+<h2>Введение<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h2>
+<p>В этом уроке мы создадим систему обнаружения движения с помощью PIR-датчика, которая будет отправлять уведомления в Telegram при обнаружении активности. Такая система может использоваться для домашней безопасности, контроля помещений или просто для автоматизации «умного дома». Наш проект будет использовать Raspberry Pi Pico W для обработки сигналов с датчика и отправки уведомлений через интернет.</p>
+</section>
+<section id="id2">
+<h2>Необходимые компоненты<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
+<ul class="simple">
+<li><p>Raspberry Pi Pico W</p></li>
+<li><p>PIR-датчик движения (HC-SR501 или аналогичный)</p></li>
+<li><p>Соединительные провода</p></li>
+<li><p>Макетная плата (опционально)</p></li>
+<li><p>Доступ к Wi-Fi сети</p></li>
+<li><p>Аккаунт в Telegram</p></li>
+</ul>
+</section>
+<section id="pir">
+<h2>Теория работы PIR-датчика<a class="headerlink" href="#pir" title="Ссылка на этот заголовок"></a></h2>
+<p>PIR (Passive Infrared) датчик обнаруживает движение на основе изменений инфракрасного излучения. Все объекты с температурой выше абсолютного нуля излучают тепло в инфракрасном спектре. Когда человек или животное проходит перед датчиком, происходит изменение инфракрасного излучения в зоне обнаружения, что регистрируется датчиком.</p>
+<p>Стандартный PIR-датчик HC-SR501 имеет три вывода:
+- VCC - питание (обычно 5В или 3.3В, в зависимости от модели)
+- GND - земля (общий провод)
+- OUT - выходной сигнал (HIGH при обнаружении движения, LOW в состоянии покоя)</p>
+<p>Датчик также имеет два регулятора:
+- Регулятор чувствительности (sensitivity)
+- Регулятор времени задержки (delay time)</p>
+</section>
+<section id="id3">
+<h2>Схема подключения<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h2>
+<p>Подключение PIR-датчика к Raspberry Pi Pico W:</p>
+<ul class="simple">
+<li><p>VCC датчика к VBUS (5В) или 3V3 Pico W (зависит от модели датчика)</p></li>
+<li><p>GND датчика к GND Pico W</p></li>
+<li><p>OUT датчика к GP16 (PIN 21) Pico W</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Примечание</p>
+<p>PIR-датчики обычно имеют время инициализации около 1 минуты после подачи питания. В течение этого времени датчик может выдавать ложные срабатывания, пока не стабилизируется. Учитывайте это при тестировании.</p>
+</div>
+</section>
+<section id="id4">
+<h2>Структура проекта<a class="headerlink" href="#id4" title="Ссылка на этот заголовок"></a></h2>
+<p>Наш проект будет состоять из следующих файлов:
+- telegram.py - библиотека для работы с Telegram API
+- config.py - конфигурационный файл с настройками
+- main.py - основной файл программы</p>
+</section>
+<section id="id5">
+<h2>Код проекта<a class="headerlink" href="#id5" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p>Сначала создадим файл конфигурации (config.py):</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Конфигурационный файл для проекта PIR-датчика с уведомлениями в Telegram</span>
+
+<span class="c1"># Настройки Wi-Fi</span>
+<span class="n">WIFI_SSID</span> <span class="o">=</span> <span class="s2">&quot;Название_вашей_сети&quot;</span>
+<span class="n">WIFI_PASSWORD</span> <span class="o">=</span> <span class="s2">&quot;Пароль_вашей_сети&quot;</span>
+
+<span class="c1"># Токен Telegram бота (получен от BotFather)</span>
+<span class="n">BOT_TOKEN</span> <span class="o">=</span> <span class="s2">&quot;ваш_токен_от_botfather&quot;</span>
+
+<span class="c1"># ID чата для отправки уведомлений</span>
+<span class="c1"># Можно получить, отправив боту команду /start и посмотрев ID в логах</span>
+<span class="n">CHAT_ID</span> <span class="o">=</span> <span class="mi">123456789</span>  <span class="c1"># Замените на ваш ID</span>
+
+<span class="c1"># Настройки PIR-датчика</span>
+<span class="n">PIR_PIN</span> <span class="o">=</span> <span class="mi">16</span>  <span class="c1"># GPIO пин, к которому подключен PIR-датчик</span>
+
+<span class="c1"># Настройки уведомлений</span>
+<span class="n">COOLDOWN_PERIOD</span> <span class="o">=</span> <span class="mi">60</span>  <span class="c1"># Период &quot;охлаждения&quot; между уведомлениями (в секундах)</span>
+<span class="n">NOTIFICATION_HOURS</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">24</span><span class="p">))</span>  <span class="c1"># Часы, в которые отправлять уведомления (0-23)</span>
+<span class="c1"># Например, только днем: NOTIFICATION_HOURS = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]</span>
+
+<span class="c1"># Текст сообщений</span>
+<span class="n">MOTION_DETECTED_MESSAGE</span> <span class="o">=</span> <span class="s2">&quot;🚨 Обнаружено движение!&quot;</span>
+<span class="n">SYSTEM_STARTED_MESSAGE</span> <span class="o">=</span> <span class="s2">&quot;✅ Система обнаружения движения запущена и работает.&quot;</span>
+
+<span class="c1"># Расширенные настройки</span>
+<span class="n">DEBOUNCE_TIME</span> <span class="o">=</span> <span class="mf">0.2</span>  <span class="c1"># Время для устранения дребезга контактов (в секундах)</span>
+<span class="n">MONITORING_ENABLED</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># Включено ли отслеживание движения по умолчанию</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Затем создадим основной файл программы (main.py):</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">machine</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">uasyncio</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">machine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pin</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">gc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+<span class="c1"># Импортируем библиотеку для работы с Telegram</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">telegram</span><span class="w"> </span><span class="kn">import</span> <span class="n">TelegramBot</span>
+
+<span class="c1"># Импортируем настройки из config.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">config</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">WIFI_SSID</span><span class="p">,</span> <span class="n">WIFI_PASSWORD</span><span class="p">,</span> <span class="n">BOT_TOKEN</span><span class="p">,</span> <span class="n">CHAT_ID</span><span class="p">,</span> <span class="n">PIR_PIN</span><span class="p">,</span>
+                   <span class="n">COOLDOWN_PERIOD</span><span class="p">,</span> <span class="n">NOTIFICATION_HOURS</span><span class="p">,</span> <span class="n">MOTION_DETECTED_MESSAGE</span><span class="p">,</span>
+                   <span class="n">SYSTEM_STARTED_MESSAGE</span><span class="p">,</span> <span class="n">DEBOUNCE_TIME</span><span class="p">,</span> <span class="n">MONITORING_ENABLED</span><span class="p">)</span>
+
+<span class="c1"># Настройка пина для встроенного светодиода</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="c1"># Настройка PIR-датчика</span>
+<span class="n">pir</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="n">PIR_PIN</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">IN</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">PULL_DOWN</span><span class="p">)</span>
+
+<span class="c1"># Переменные для отслеживания состояния</span>
+<span class="n">last_motion_time</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">monitoring_active</span> <span class="o">=</span> <span class="n">MONITORING_ENABLED</span>
+<span class="n">motion_count</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">last_notification_time</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">bot</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Будет инициализирован позже</span>
+
+<span class="c1"># Статистика срабатываний</span>
+<span class="n">motion_stats</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;total_detections&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;notifications_sent&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;last_detection_time&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># Функция для мигания светодиодом</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">blink_led</span><span class="p">(</span><span class="n">times</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="mf">0.2</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">times</span><span class="p">):</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+
+<span class="c1"># Функция для проверки, нужно ли отправлять уведомление сейчас</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">should_notify</span><span class="p">():</span>
+    <span class="n">current_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+    <span class="c1"># Проверяем, прошло ли достаточно времени с момента последнего уведомления</span>
+    <span class="k">if</span> <span class="n">current_time</span> <span class="o">-</span> <span class="n">last_notification_time</span> <span class="o">&lt;</span> <span class="n">COOLDOWN_PERIOD</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="c1"># Проверяем, находимся ли мы в разрешенное время суток</span>
+    <span class="k">if</span> <span class="n">NOTIFICATION_HOURS</span><span class="p">:</span>
+        <span class="c1"># Получаем текущий час (0-23)</span>
+        <span class="n">current_hour</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">()[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">current_hour</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">NOTIFICATION_HOURS</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="c1"># Функция для сохранения статистики</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">save_stats</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;motion_stats.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">motion_stats</span><span class="p">))</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ошибка сохранения статистики&quot;</span><span class="p">)</span>
+
+<span class="c1"># Функция для загрузки статистики</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_stats</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">motion_stats</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;motion_stats.json&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">motion_stats</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Статистика не найдена или повреждена, используем значения по умолчанию&quot;</span><span class="p">)</span>
+
+<span class="c1"># Обработчик прерывания от PIR-датчика</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">handle_motion_detected</span><span class="p">(</span><span class="n">pin</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">last_motion_time</span><span class="p">,</span> <span class="n">motion_count</span>
+
+    <span class="n">current_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+    <span class="c1"># Проверяем, не слишком ли быстро произошло новое срабатывание (дребезг)</span>
+    <span class="k">if</span> <span class="n">current_time</span> <span class="o">-</span> <span class="n">last_motion_time</span> <span class="o">&lt;</span> <span class="n">DEBOUNCE_TIME</span><span class="p">:</span>
+        <span class="k">return</span>
+
+    <span class="c1"># Обновляем время последнего движения</span>
+    <span class="n">last_motion_time</span> <span class="o">=</span> <span class="n">current_time</span>
+
+    <span class="c1"># Увеличиваем счетчик движений</span>
+    <span class="n">motion_count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="c1"># Обновляем статистику</span>
+    <span class="n">motion_stats</span><span class="p">[</span><span class="s2">&quot;total_detections&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">motion_stats</span><span class="p">[</span><span class="s2">&quot;last_detection_time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_time</span>
+
+    <span class="c1"># Мигаем светодиодом для визуальной индикации</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+
+    <span class="c1"># Отправляем уведомление, если нужно и если мониторинг активен</span>
+    <span class="k">if</span> <span class="n">monitoring_active</span> <span class="ow">and</span> <span class="n">should_notify</span><span class="p">():</span>
+        <span class="n">send_motion_notification</span><span class="p">()</span>
+
+<span class="c1"># Функция для отправки уведомления о движении</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">send_motion_notification</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">last_notification_time</span>
+
+    <span class="k">if</span> <span class="n">bot</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Бот не инициализирован&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="n">current_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">local_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">current_time</span><span class="p">)</span>
+
+    <span class="c1"># Форматируем время</span>
+    <span class="n">time_str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:02d}</span><span class="s2">:</span><span class="si">{:02d}</span><span class="s2">:</span><span class="si">{:02d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">local_time</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">local_time</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">local_time</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+    <span class="n">date_str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:02d}</span><span class="s2">/</span><span class="si">{:02d}</span><span class="s2">/</span><span class="si">{:04d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">local_time</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">local_time</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">local_time</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="c1"># Создаем сообщение с информацией о времени</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">MOTION_DETECTED_MESSAGE</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;⏰ Время: </span><span class="si">{</span><span class="n">time_str</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;📅 Дата: </span><span class="si">{</span><span class="n">date_str</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;📊 Всего обнаружений сегодня: </span><span class="si">{</span><span class="n">motion_count</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="c1"># Отправляем сообщение в Telegram</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">CHAT_ID</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Отправлено уведомление о движении в </span><span class="si">{</span><span class="n">time_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Обновляем статистику</span>
+    <span class="n">motion_stats</span><span class="p">[</span><span class="s2">&quot;notifications_sent&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">last_notification_time</span> <span class="o">=</span> <span class="n">current_time</span>
+
+    <span class="c1"># Сохраняем статистику после отправки уведомления</span>
+    <span class="n">save_stats</span><span class="p">()</span>
+
+<span class="c1"># Обработчик сообщений для бота</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">message_handler</span><span class="p">(</span><span class="n">bot</span><span class="p">,</span> <span class="n">msg_type</span><span class="p">,</span> <span class="n">chat_name</span><span class="p">,</span> <span class="n">sender_name</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">monitoring_active</span><span class="p">,</span> <span class="n">motion_count</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Получено сообщение от </span><span class="si">{</span><span class="n">sender_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Обработка команды /start</span>
+    <span class="k">if</span> <span class="n">text</span> <span class="o">==</span> <span class="s2">&quot;/start&quot;</span><span class="p">:</span>
+        <span class="n">welcome_message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Привет, </span><span class="si">{</span><span class="n">sender_name</span><span class="si">}</span><span class="s2">! 👋</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">welcome_message</span> <span class="o">+=</span> <span class="s2">&quot;Я бот для уведомлений о движении с PIR-датчика.</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">welcome_message</span> <span class="o">+=</span> <span class="s2">&quot;Я буду отправлять вам уведомления при обнаружении движения.</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+        <span class="n">welcome_message</span> <span class="o">+=</span> <span class="s2">&quot;Доступные команды:</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">welcome_message</span> <span class="o">+=</span> <span class="s2">&quot;/start - Показать это сообщение</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">welcome_message</span> <span class="o">+=</span> <span class="s2">&quot;/status - Показать текущий статус системы</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">welcome_message</span> <span class="o">+=</span> <span class="s2">&quot;/enable - Включить отслеживание движения</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">welcome_message</span> <span class="o">+=</span> <span class="s2">&quot;/disable - Отключить отслеживание движения</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">welcome_message</span> <span class="o">+=</span> <span class="s2">&quot;/stats - Показать статистику обнаружений&quot;</span>
+
+        <span class="n">bot</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">chat_id</span><span class="p">,</span> <span class="n">welcome_message</span><span class="p">)</span>
+
+        <span class="c1"># Также сохраняем ID чата для отправки уведомлений</span>
+        <span class="k">if</span> <span class="n">chat_id</span> <span class="o">!=</span> <span class="n">CHAT_ID</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Получен новый chat_id: </span><span class="si">{</span><span class="n">chat_id</span><span class="si">}</span><span class="s2">. Обновите CHAT_ID в config.py для получения уведомлений.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Обработка команды /status</span>
+    <span class="k">elif</span> <span class="n">text</span> <span class="o">==</span> <span class="s2">&quot;/status&quot;</span><span class="p">:</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;включено ✅&quot;</span> <span class="k">if</span> <span class="n">monitoring_active</span> <span class="k">else</span> <span class="s2">&quot;отключено ❌&quot;</span>
+        <span class="n">cooldown_remaining</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">COOLDOWN_PERIOD</span> <span class="o">-</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">last_notification_time</span><span class="p">))</span>
+
+        <span class="n">status_message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;📊 Статус системы обнаружения движения:</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+        <span class="n">status_message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;🔍 Мониторинг: </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">status_message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;⏱️ Период охлаждения: </span><span class="si">{</span><span class="n">COOLDOWN_PERIOD</span><span class="si">}</span><span class="s2"> сек</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+        <span class="k">if</span> <span class="n">cooldown_remaining</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">status_message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;⏳ Осталось до следующего возможного уведомления: </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">cooldown_remaining</span><span class="p">)</span><span class="si">}</span><span class="s2"> сек</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">status_message</span> <span class="o">+=</span> <span class="s2">&quot;✅ Готов к отправке следующего уведомления</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+        <span class="n">status_message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;🔢 Обнаружено движений с момента запуска: </span><span class="si">{</span><span class="n">motion_count</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="n">bot</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">chat_id</span><span class="p">,</span> <span class="n">status_message</span><span class="p">)</span>
+
+    <span class="c1"># Обработка команды /enable</span>
+    <span class="k">elif</span> <span class="n">text</span> <span class="o">==</span> <span class="s2">&quot;/enable&quot;</span><span class="p">:</span>
+        <span class="n">monitoring_active</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">bot</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;✅ Мониторинг движения включен!&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Мониторинг движения включен пользователем&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Обработка команды /disable</span>
+    <span class="k">elif</span> <span class="n">text</span> <span class="o">==</span> <span class="s2">&quot;/disable&quot;</span><span class="p">:</span>
+        <span class="n">monitoring_active</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">bot</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;❌ Мониторинг движения отключен!&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Мониторинг движения отключен пользователем&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Обработка команды /stats</span>
+    <span class="k">elif</span> <span class="n">text</span> <span class="o">==</span> <span class="s2">&quot;/stats&quot;</span><span class="p">:</span>
+        <span class="c1"># Загружаем актуальную статистику</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">load_stats</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="n">last_time</span> <span class="o">=</span> <span class="s2">&quot;Нет данных&quot;</span>
+        <span class="k">if</span> <span class="n">motion_stats</span><span class="p">[</span><span class="s2">&quot;last_detection_time&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">lt</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">motion_stats</span><span class="p">[</span><span class="s2">&quot;last_detection_time&quot;</span><span class="p">])</span>
+            <span class="n">last_time</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:02d}</span><span class="s2">:</span><span class="si">{:02d}</span><span class="s2">:</span><span class="si">{:02d}</span><span class="s2"> </span><span class="si">{:02d}</span><span class="s2">/</span><span class="si">{:02d}</span><span class="s2">/</span><span class="si">{:04d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">lt</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">lt</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">lt</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">lt</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">lt</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lt</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="n">stats_message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;📊 Статистика обнаружения движения:</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+        <span class="n">stats_message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;🔢 Всего обнаружений: </span><span class="si">{</span><span class="n">motion_stats</span><span class="p">[</span><span class="s1">&#39;total_detections&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">stats_message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;📤 Отправлено уведомлений: </span><span class="si">{</span><span class="n">motion_stats</span><span class="p">[</span><span class="s1">&#39;notifications_sent&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">stats_message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;⏰ Последнее обнаружение: </span><span class="si">{</span><span class="n">last_time</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">stats_message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;📝 Текущий счетчик после перезагрузки: </span><span class="si">{</span><span class="n">motion_count</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="n">bot</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">chat_id</span><span class="p">,</span> <span class="n">stats_message</span><span class="p">)</span>
+
+    <span class="c1"># Обработка команды /reset</span>
+    <span class="k">elif</span> <span class="n">text</span> <span class="o">==</span> <span class="s2">&quot;/reset&quot;</span><span class="p">:</span>
+        <span class="n">motion_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">motion_stats</span><span class="p">[</span><span class="s2">&quot;total_detections&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">motion_stats</span><span class="p">[</span><span class="s2">&quot;notifications_sent&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">save_stats</span><span class="p">()</span>
+        <span class="n">bot</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;🔄 Статистика сброшена!&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Статистика сброшена пользователем&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Неизвестная команда</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">bot</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;❓ Неизвестная команда. Отправьте /start для просмотра доступных команд.&quot;</span><span class="p">)</span>
+
+<span class="c1"># Асинхронная функция для проверки времени суток и сброса счетчика в полночь</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">daily_reset</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">motion_count</span>
+    <span class="n">last_day</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">()[</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># Текущий день месяца</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">current_day</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">()[</span><span class="mi">2</span><span class="p">]</span>
+
+        <span class="c1"># Если день изменился (наступила полночь), сбрасываем счетчик</span>
+        <span class="k">if</span> <span class="n">current_day</span> <span class="o">!=</span> <span class="n">last_day</span><span class="p">:</span>
+            <span class="n">motion_count</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Полночь! Счетчик движений сброшен.&quot;</span><span class="p">)</span>
+            <span class="n">last_day</span> <span class="o">=</span> <span class="n">current_day</span>
+
+        <span class="c1"># Проверяем каждую минуту</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Асинхронная функция для запуска бота</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">run_bot</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">bot</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Запуск Telegram-бота...&quot;</span><span class="p">)</span>
+    <span class="n">bot</span> <span class="o">=</span> <span class="n">TelegramBot</span><span class="p">(</span><span class="n">BOT_TOKEN</span><span class="p">,</span> <span class="n">message_handler</span><span class="p">)</span>
+
+    <span class="c1"># Отправляем сообщение о запуске системы</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">CHAT_ID</span><span class="p">,</span> <span class="n">SYSTEM_STARTED_MESSAGE</span><span class="p">)</span>
+
+    <span class="c1"># Запускаем основной цикл бота</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Бот запущен! Ожидание команд...&quot;</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">bot</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка в работе бота: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># Мигаем светодиодом при ошибке</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+            <span class="n">blink_led</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># Главная функция программы</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># Импортируем gc для отслеживания памяти</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">gc</span>
+    <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Инициализация...&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Индикация запуска с помощью светодиода</span>
+    <span class="n">blink_led</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+
+    <span class="c1"># Загружаем статистику, если она существует</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">load_stats</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Статистика загружена&quot;</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Статистика не найдена, будет создана новая&quot;</span><span class="p">)</span>
+        <span class="n">save_stats</span><span class="p">()</span>
+
+    <span class="c1"># Подключаемся к Wi-Fi</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Подключение к Wi-Fi: </span><span class="si">{</span><span class="n">WIFI_SSID</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+
+    <span class="n">temp_bot</span> <span class="o">=</span> <span class="n">TelegramBot</span><span class="p">(</span><span class="n">BOT_TOKEN</span><span class="p">,</span> <span class="n">message_handler</span><span class="p">)</span>
+    <span class="n">temp_bot</span><span class="o">.</span><span class="n">connect_wifi</span><span class="p">(</span><span class="n">WIFI_SSID</span><span class="p">,</span> <span class="n">WIFI_PASSWORD</span><span class="p">)</span>
+
+    <span class="c1"># Мигаем светодиодом после успешного подключения</span>
+    <span class="n">blink_led</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Wi-Fi подключен!&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Настраиваем прерывание для PIR-датчика</span>
+    <span class="c1"># Используем IRQ_RISING для обнаружения перехода из LOW в HIGH (начало движения)</span>
+    <span class="n">pir</span><span class="o">.</span><span class="n">irq</span><span class="p">(</span><span class="n">trigger</span><span class="o">=</span><span class="n">Pin</span><span class="o">.</span><span class="n">IRQ_RISING</span><span class="p">,</span> <span class="n">handler</span><span class="o">=</span><span class="n">handle_motion_detected</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PIR-датчик настроен на пине GP</span><span class="si">{</span><span class="n">PIR_PIN</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Дайте датчику около 1 минуты для стабилизации...&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Ждем, пока датчик стабилизируется</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">):</span>  <span class="c1"># 30 секунд с индикацией</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">toggle</span><span class="p">()</span>  <span class="c1"># Переключаем светодиод</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>  <span class="c1"># Выключаем светодиод после стабилизации</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Датчик готов к работе!&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Запускаем бота в отдельной задаче</span>
+    <span class="n">bot_task</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">run_bot</span><span class="p">())</span>
+
+    <span class="c1"># Запускаем ежедневный сброс в отдельной задаче</span>
+    <span class="n">reset_task</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">daily_reset</span><span class="p">())</span>
+
+    <span class="c1"># Запускаем периодическую очистку памяти и индикацию работы</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+        <span class="c1"># Короткое мигание светодиодом раз в 10 секунд для индикации работы</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Запускаем программу с помощью асинхронного цикла событий</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Критическая ошибка: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">machine</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>  <span class="c1"># Перезагрузка при критической ошибке</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h2>Загрузка и запуск проекта<a class="headerlink" href="#id6" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p>Убедитесь, что на вашем Raspberry Pi Pico W установлен MicroPython с поддержкой Wi-Fi.</p></li>
+<li><p>Скопируйте файл telegram.py (библиотека для работы с Telegram API) на ваш Pico W.</p></li>
+<li><p>Создайте и загрузите на Pico W файлы:
+- config.py (с вашими настройками Wi-Fi, токеном бота и настройками уведомлений)
+- main.py (с кодом бота и обработкой сигналов от PIR-датчика)</p></li>
+<li><p>Отредактируйте файл config.py, указав:
+- Имя и пароль вашей Wi-Fi сети
+- Токен вашего Telegram-бота, полученный от BotFather
+- ID чата для отправки уведомлений (можно получить, отправив боту команду /start и посмотрев в логах)
+- Настройте период «охлаждения» между уведомлениями и часы, в которые разрешены уведомления</p></li>
+<li><p>Подключите PIR-датчик к Pico W согласно схеме:
+- VCC -&gt; VBUS (5В) или 3V3
+- GND -&gt; GND
+- OUT -&gt; GP16</p></li>
+<li><p>Запустите программу, нажав кнопку Run в Thonny или перезагрузив Pico W.</p></li>
+<li><p>После запуска система даст датчику время на стабилизацию (около 30 секунд), затем начнет работу и отправит сообщение о готовности в указанный чат.</p></li>
+<li><p>Теперь при обнаружении движения вы будете получать уведомления в Telegram с указанием времени и даты.</p></li>
+</ol>
+</section>
+<section id="id7">
+<h2>Как это работает<a class="headerlink" href="#id7" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic">
+<li><p><strong>Инициализация и подключение</strong>:
+- Система инициализирует PIR-датчик, подключается к Wi-Fi и запускает Telegram-бота.
+- Датчику дается время на стабилизацию, чтобы избежать ложных срабатываний при запуске.</p></li>
+<li><p><strong>Обнаружение движения</strong>:
+- PIR-датчик подключен к прерыванию, которое активируется при обнаружении движения.
+- Функция <cite>handle_motion_detected</cite> вызывается каждый раз, когда датчик обнаруживает движение.
+- Применяется алгоритм устранения дребезга, чтобы избежать множественных срабатываний.</p></li>
+<li><p><strong>Управление уведомлениями</strong>:
+- Функция <cite>should_notify</cite> проверяет, нужно ли отправлять уведомление, учитывая:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Период «охлаждения» между уведомлениями</p></li>
+<li><p>Разрешенные часы для отправки уведомлений</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Если все условия выполнены, отправляется уведомление в Telegram.</p></li>
+</ul>
+</li>
+<li><p><strong>Управление через Telegram</strong>:
+- Бот поддерживает несколько команд для управления системой:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>/start</cite> - Приветствие и список команд</p></li>
+<li><p><cite>/status</cite> - Текущее состояние системы</p></li>
+<li><p><cite>/enable</cite> и <cite>/disable</cite> - Включение/отключение мониторинга</p></li>
+<li><p><cite>/stats</cite> - Просмотр статистики обнаружений</p></li>
+<li><p><cite>/reset</cite> - Сброс счетчиков</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Ведение статистики</strong>:
+- Система сохраняет статистику обнаружений в файл.
+- Статистика включает общее количество обнаружений, отправленных уведомлений и время последнего обнаружения.
+- Счетчик текущего дня автоматически сбрасывается в полночь.</p></li>
+</ol>
+</section>
+<section id="id8">
+<h2>Настройка датчика PIR<a class="headerlink" href="#id8" title="Ссылка на этот заголовок"></a></h2>
+<p>PIR-датчик HC-SR501 имеет два регулировочных потенциометра, которые можно настроить для оптимальной работы:</p>
+<ol class="arabic">
+<li><p><strong>Регулировка чувствительности</strong>:
+- Обычно находится ближе к линзе датчика.
+- Поворот по часовой стрелке увеличивает чувствительность (реагирует на более мелкие движения).
+- Поворот против часовой стрелки уменьшает чувствительность (меньше ложных срабатываний).</p></li>
+<li><p><strong>Регулировка времени задержки</strong>:
+- Определяет, как долго выходной сигнал остается активным после обнаружения движения.
+- Поворот по часовой стрелке увеличивает время задержки.
+- Поворот против часовой стрелки уменьшает время задержки.</p></li>
+<li><p><strong>Перемычка режима</strong>:
+- Некоторые датчики имеют перемычку для выбора режима работы:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Режим «L» (Single Trigger): Датчик активирует выход на заданное время задержки и затем отключается.</p></li>
+<li><p>Режим «H» (Repeat Trigger): Датчик будет продолжать держать выход активным, пока обнаруживает движение.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Примечание</p>
+<p>Для оптимальной работы нашей системы лучше установить время задержки на минимум и использовать режим «L», так как обработку задержек мы делаем программно.</p>
+</div>
+</section>
+<section id="id9">
+<h2>Возможные проблемы и их решения<a class="headerlink" href="#id9" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Слишком частые уведомления</strong>:
+- Увеличьте значение COOLDOWN_PERIOD в config.py
+- Уменьшите чувствительность датчика, отрегулировав соответствующий потенциометр
+- Измените расположение датчика, чтобы он не реагировал на постоянное движение</p></li>
+<li><p><strong>Отсутствие уведомлений при движении</strong>:
+- Проверьте подключение датчика к правильному пину
+- Увеличьте чувствительность датчика
+- Проверьте, что мониторинг включен (команда <cite>/status</cite>)
+- Убедитесь, что текущее время входит в NOTIFICATION_HOURS</p></li>
+<li><p><strong>Ложные срабатывания</strong>:
+- Уменьшите чувствительность датчика
+- Расположите датчик вдали от источников тепла и движущихся объектов (вентиляторы, шторы)
+- Увеличьте значение DEBOUNCE_TIME в config.py</p></li>
+<li><p><strong>Проблемы с подключением к Wi-Fi</strong>:
+- Убедитесь, что SSID и пароль указаны правильно
+- Проверьте, что ваша Wi-Fi сеть работает в диапазоне 2.4 ГГц (Pico W не поддерживает 5 ГГц)
+- Расположите Pico W ближе к роутеру</p></li>
+<li><p><strong>Проблемы с Telegram-ботом</strong>:
+- Проверьте правильность токена бота
+- Убедитесь, что ID чата указан правильно
+- Проверьте подключение к интернету</p></li>
+</ol>
+</section>
+<section id="id10">
+<h2>Расширение проекта<a class="headerlink" href="#id10" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Добавление фотографий и видео</strong>:
+- Подключите камеру к Pico W
+- Добавьте функцию для съемки фото при обнаружении движения
+- Отправляйте фото вместе с уведомлением</p></li>
+<li><p><strong>Интеграция с другими датчиками</strong>:
+- Добавьте датчик звука для обнаружения шума
+- Подключите датчик открытия двери/окна
+- Создайте комплексную систему безопасности с несколькими типами датчиков</p></li>
+<li><p><strong>Расширенная настройка через Telegram</strong>:
+- Добавьте команды для изменения периода «охлаждения»
+- Реализуйте настройку часов работы через бот
+- Добавьте возможность включения/отключения системы по расписанию</p></li>
+<li><p><strong>Энергосбережение для автономной работы</strong>:
+- Реализуйте режимы глубокого сна для экономии энергии
+- Добавьте поддержку питания от батареи с контролем заряда
+- Оптимизируйте код для минимального энергопотребления</p></li>
+<li><p><strong>Удаленный мониторинг через веб-интерфейс</strong>:
+- Создайте простой веб-сервер на Pico W
+- Добавьте веб-страницу с графиком активности
+- Реализуйте управление через веб-интерфейс</p></li>
+</ol>
+</section>
+<section id="id11">
+<h2>Заключение<a class="headerlink" href="#id11" title="Ссылка на этот заголовок"></a></h2>
+<p>В этом уроке мы создали систему уведомлений о движении, которая отправляет сообщения в Telegram при срабатывании PIR-датчика. Мы реализовали механизмы для предотвращения «спама» уведомлений и добавили возможность управления системой через команды бота.</p>
+<p>Такая система может быть полезна для мониторинга помещений, охраны и автоматизации умного дома. Благодаря простоте настройки и низкому энергопотреблению, устройство может работать длительное время в автономном режиме, обеспечивая надежное обнаружение движения и мгновенные уведомления.</p>
+<p>Преимущество использования Telegram для уведомлений заключается в том, что вы получаете сообщения на любом устройстве с установленным мессенджером, вне зависимости от того, находитесь ли вы в той же сети или в другой части мира. Это делает решение гораздо более универсальным, чем локальные системы оповещения.</p>
+<p>Расширяя данный проект дополнительными функциями и датчиками, вы можете создать полноценную систему домашней безопасности с минимальными затратами.</p>
+<div class="admonition note">
+<p class="admonition-title">Примечание</p>
+<p>Для наиболее эффективной работы разместите PIR-датчик в месте, обеспечивающем хороший обзор помещения, на высоте 1.7-2 метра от пола и вдали от источников тепла, которые могут вызывать ложные срабатывания.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="../telegrambme/telegrambme.html" class="btn btn-neutral float-left" title="Получение данных о температуре (BME280) через Telegram-бот" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="../mputelegram/mputelegram.html" class="btn btn-neutral float-right" title="MPU6050: уведомление о вибрации/наклоне в Telegram" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2025, Dias Kabdualiyev. </p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

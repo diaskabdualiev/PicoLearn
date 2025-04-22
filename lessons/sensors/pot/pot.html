@@ -1,0 +1,574 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Управление потенциометром на Raspberry Pi Pico &mdash; документация Raspberry Pi Pico W Kit 0.1</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d39ee99e" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=2b7aed8e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/translations.js?v=5b699b7f"></script>
+      <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../../search.html" />
+    <link rel="next" title="Управление реле с помощью Raspberry Pi Pico" href="../relay/relay.html" />
+    <link rel="prev" title="Обнаружение движения с помощью PIR датчика и Raspberry Pi Pico" href="../pir/pir.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Raspberry Pi Pico W Kit
+              <img src="../../../_static/logo.png" class="logo" alt="Логотип"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/index.html">Учебный набор по MicroPython на базе Raspberry Pi Pico W</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id1">Вступление</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id2">Сильные стороны набора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id3">Для кого подходит этот набор</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id4">Компоненты набора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#raspberry-pi-pico-w-15">Итоговый учебный план на Raspberry Pi Pico W (15 уроков)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get-started/index.html">Знакомство с Raspberry Pi Pico W и MicroPython</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/picow.html">Знакомство с Pico W</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/micropython.html">Введение в MicroPython</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/micropython.html#id1">История начинается здесь</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/micropython.html#id2">Почему MicroPython?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/thonny.html">Установка Thonny IDE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/micropythoninstall.html">Установка MicroPython на ваш Pico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/uploadlibs.html">Загрузка библиотек на Pico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/thonnytutor.html">1.5 Краткое руководство по Thonny</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/thonnytutor.html#id1">Открытие и запуск кода напрямую</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Содержание курса по Raspberry Pi Pico W</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Модуль датчиков и устройств</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../rgb/rgb.html">Управление RGB-светодиодом с общим катодом на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ws2812/ws2812.html">Управление адресным светодиодным кольцом на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../light/light.html">Работа с датчиком освещенности на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pir/pir.html">Обнаружение движения с помощью PIR датчика и Raspberry Pi Pico</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Управление потенциометром на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../relay/relay.html">Управление реле с помощью Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../servo/servo.html">Управление сервоприводом с помощью Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bme280/bme280.html">Использование датчика BME280 с Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mpu6050/mpu6050.html">Измерение ускорения и гироскопических данных с MPU6050 на Raspberry Pi Pico</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../projects/index.html">Проекты</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/wifi/wifi.html">Подключение к интернету с использованием Wi-Fi на Raspberry Pi Pico W</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/webhello/webhello.html">Hello World: веб-сайт на Pico W</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/light/light.html">Считывание данных с датчика освещённости и отображение на веб-интерфейсе</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/wifiscan/wifiscan.html">Управление RGB-светодиодом через веб-интерфейс</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/wifioled/wifioled.html">Отображение информации о Wi-Fi на OLED-дисплее SSD1306</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/openwaethermap/owm.html">OpenWeatherMap: вывод данных о погоде на OLED-дисплей</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/owmws2812/owmws2812.html">Визуализация температуры из OpenWeatherMap на адресной ленте WS2812</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/ws2812pir/ws2812pir.html">PIR-датчик: уведомление о движении с помощью WS2812</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/echobot/echobot.html">Телеграм-бот: введение</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/servotelegram/servotelegram.html">Управление сервоприводом через Telegram-бот</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/telegrambme/telegrambme.html">Получение данных о температуре (BME280) через Telegram-бот</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/pirtelegram/pirtelegram.html">PIR-датчик: уведомление о движении в Telegram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/mputelegram/mputelegram.html">MPU6050: уведомление о вибрации/наклоне в Telegram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../projects/googlesheets/googlesheets.html">Google Sheets: хранение данных о температуре</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq/index.html">FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../faq/index.html#micropython">MicroPython</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../feedback/index.html">Обратная связь</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../feedback/index.html#id2">Контакты</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Raspberry Pi Pico W Kit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Содержание курса по Raspberry Pi Pico W</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Модуль датчиков и устройств</a></li>
+      <li class="breadcrumb-item active">Управление потенциометром на Raspberry Pi Pico</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Навигация по соседним страницам">
+        <a href="../pir/pir.html" class="btn btn-neutral float-left" title="Обнаружение движения с помощью PIR датчика и Raspberry Pi Pico" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="../relay/relay.html" class="btn btn-neutral float-right" title="Управление реле с помощью Raspberry Pi Pico" accesskey="n">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="raspberry-pi-pico">
+<h1>Управление потенциометром на Raspberry Pi Pico<a class="headerlink" href="#raspberry-pi-pico" title="Ссылка на этот заголовок"></a></h1>
+<section id="id1">
+<h2>Введение<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h2>
+<p>В этом уроке мы научимся подключать и использовать потенциометр с Raspberry Pi Pico. Потенциометр – это переменный резистор, который позволяет регулировать сопротивление вращением ручки. Мы будем считывать значения с потенциометра с помощью аналогово-цифрового преобразователя (АЦП) Raspberry Pi Pico и использовать их для управления яркостью светодиода.</p>
+</section>
+<section id="id2">
+<h2>Необходимые компоненты<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
+<ul class="simple">
+<li><p>Raspberry Pi Pico</p></li>
+<li><p>Потенциометр (10 кОм или другой)</p></li>
+<li><p>Светодиод</p></li>
+<li><p>Резистор 220 Ом (для светодиода)</p></li>
+<li><p>Провода для подключения</p></li>
+<li><p>USB-кабель для подключения Pico к компьютеру</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>Схема подключения<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h2>
+<p>Подключите компоненты к Raspberry Pi Pico следующим образом:</p>
+<p><strong>Потенциометр:</strong></p>
+<ul class="simple">
+<li><p>Крайний вывод 1 → 3.3V (питание)</p></li>
+<li><p>Крайний вывод 2 → GND (земля)</p></li>
+<li><p>Средний вывод (выход) → GP26 (ADC0)</p></li>
+</ul>
+<p><strong>Светодиод:</strong></p>
+<ul class="simple">
+<li><p>Анод (длинная ножка) → Резистор 220 Ом → GP15</p></li>
+<li><p>Катод (короткая ножка) → GND</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Примечание</p>
+<p>Raspberry Pi Pico имеет 3 входа АЦП (ADC0-ADC2), которые доступны на контактах GP26-GP28.
+В этом проекте мы используем GP26 (ADC0).</p>
+</div>
+</section>
+<section id="id4">
+<h2>Программа для считывания значений потенциометра<a class="headerlink" href="#id4" title="Ссылка на этот заголовок"></a></h2>
+<p>Рассмотрим код программы по частям:</p>
+<p>Импорт необходимых библиотек и настройка пинов:</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">main.py (импорты и настройка)</span><a class="headerlink" href="#id9" title="Ссылка на этот код"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">machine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pin</span><span class="p">,</span> <span class="n">ADC</span><span class="p">,</span> <span class="n">PWM</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="c1"># Настройка АЦП для потенциометра</span>
+<span class="n">potentiometer</span> <span class="o">=</span> <span class="n">ADC</span><span class="p">(</span><span class="mi">26</span><span class="p">)</span>  <span class="c1"># GP26 соответствует ADC0</span>
+
+<span class="c1"># Настройка ШИМ для светодиода</span>
+<span class="n">led_pin</span> <span class="o">=</span> <span class="n">PWM</span><span class="p">(</span><span class="n">Pin</span><span class="p">(</span><span class="mi">15</span><span class="p">))</span>
+<span class="n">led_pin</span><span class="o">.</span><span class="n">freq</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>  <span class="c1"># Частота ШИМ 1000 Гц</span>
+</pre></div>
+</div>
+</div>
+<p>В этой части кода:</p>
+<ul class="simple">
+<li><p>Импортируем необходимые классы: Pin для управления GPIO, ADC для аналогового ввода, PWM для управления яркостью светодиода</p></li>
+<li><p>Настраиваем ADC на пине 26 (GP26) для считывания значений с потенциометра</p></li>
+<li><p>Настраиваем PWM на пине 15 для управления яркостью светодиода с частотой 1000 Гц</p></li>
+</ul>
+<p>Функция для отображения значений в консоли:</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">main.py (функция для вывода в консоль)</span><a class="headerlink" href="#id10" title="Ссылка на этот код"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">print_values</span><span class="p">(</span><span class="n">adc_value</span><span class="p">,</span> <span class="n">percentage</span><span class="p">,</span> <span class="n">duty</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Выводит значения в консоль с форматированием</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ADC: </span><span class="si">{</span><span class="n">adc_value</span><span class="si">:</span><span class="s2">4d</span><span class="si">}</span><span class="s2"> | Процент: </span><span class="si">{</span><span class="n">percentage</span><span class="si">:</span><span class="s2">3d</span><span class="si">}</span><span class="s2">% | ШИМ: </span><span class="si">{</span><span class="n">duty</span><span class="si">:</span><span class="s2">5d</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Эта функция:</p>
+<ul class="simple">
+<li><p>Принимает значение АЦП, процентное соотношение и значение ШИМ</p></li>
+<li><p>Форматирует и выводит эти значения в консоль для наглядности</p></li>
+</ul>
+<p>Основной цикл программы:</p>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-text">main.py (основной цикл)</span><a class="headerlink" href="#id11" title="Ссылка на этот код"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Константы для преобразования</span>
+<span class="n">ADC_MAX</span> <span class="o">=</span> <span class="mi">65535</span>  <span class="c1"># Максимальное значение ADC (16-bit)</span>
+<span class="n">PWM_MAX</span> <span class="o">=</span> <span class="mi">65535</span>  <span class="c1"># Максимальное значение PWM (16-bit)</span>
+
+<span class="c1"># Основной цикл</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Начинаем считывание потенциометра...&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Поворачивайте ручку потенциометра для изменения яркости светодиода&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------------------------------------------------------------&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   ADC   | Процент | ШИМ    &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------------------------------------------------------------&quot;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="c1"># Чтение значения с потенциометра</span>
+        <span class="n">adc_value</span> <span class="o">=</span> <span class="n">potentiometer</span><span class="o">.</span><span class="n">read_u16</span><span class="p">()</span>
+
+        <span class="c1"># Преобразование в процент (0-100%)</span>
+        <span class="n">percentage</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">adc_value</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">/</span> <span class="n">ADC_MAX</span><span class="p">)</span>
+
+        <span class="c1"># Преобразование в значение ШИМ для светодиода</span>
+        <span class="n">duty</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">adc_value</span> <span class="o">*</span> <span class="n">PWM_MAX</span> <span class="o">/</span> <span class="n">ADC_MAX</span><span class="p">)</span>
+
+        <span class="c1"># Устанавливаем яркость светодиода</span>
+        <span class="n">led_pin</span><span class="o">.</span><span class="n">duty_u16</span><span class="p">(</span><span class="n">duty</span><span class="p">)</span>
+
+        <span class="c1"># Выводим значения в консоль</span>
+        <span class="n">print_values</span><span class="p">(</span><span class="n">adc_value</span><span class="p">,</span> <span class="n">percentage</span><span class="p">,</span> <span class="n">duty</span><span class="p">)</span>
+
+        <span class="c1"># Небольшая задержка для стабилизации вывода</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+    <span class="c1"># Выключаем светодиод при остановке программы</span>
+    <span class="n">led_pin</span><span class="o">.</span><span class="n">duty_u16</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Программа остановлена&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>В основном цикле:</p>
+<ul class="simple">
+<li><p>Определяем максимальные значения для АЦП и ШИМ (65535 для 16-битного преобразования)</p></li>
+<li><p>Выводим заголовки таблицы для отображения значений в консоли</p></li>
+<li><p>В бесконечном цикле:</p>
+<ul>
+<li><p>Считываем 16-битное значение с АЦП (0-65535)</p></li>
+<li><p>Преобразуем его в процентное соотношение (0-100%)</p></li>
+<li><p>Преобразуем его в значение для ШИМ, управляющего яркостью светодиода</p></li>
+<li><p>Устанавливаем новое значение ШИМ для светодиода</p></li>
+<li><p>Выводим все значения в консоль</p></li>
+<li><p>Ждем 0.1 секунды для стабилизации вывода</p></li>
+</ul>
+</li>
+<li><p>При нажатии Ctrl+C (KeyboardInterrupt) выключаем светодиод и завершаем программу</p></li>
+</ul>
+<p>Функция для визуализации значения потенциометра с помощью светодиода:</p>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-text">main.py (функция для мигания светодиода)</span><a class="headerlink" href="#id12" title="Ссылка на этот код"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">blink_led_by_value</span><span class="p">(</span><span class="n">adc_value</span><span class="p">,</span> <span class="n">max_delay</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">min_delay</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Мигает светодиодом с частотой, зависящей от значения потенциометра</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Преобразуем значение АЦП в интервал задержки</span>
+    <span class="n">delay</span> <span class="o">=</span> <span class="n">min_delay</span> <span class="o">+</span> <span class="p">(</span><span class="n">max_delay</span> <span class="o">-</span> <span class="n">min_delay</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">adc_value</span> <span class="o">/</span> <span class="n">ADC_MAX</span><span class="p">)</span>
+
+    <span class="c1"># Включаем светодиод</span>
+    <span class="n">led_pin</span><span class="o">.</span><span class="n">duty_u16</span><span class="p">(</span><span class="n">PWM_MAX</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+
+    <span class="c1"># Выключаем светодиод</span>
+    <span class="n">led_pin</span><span class="o">.</span><span class="n">duty_u16</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Эта функция:</p>
+<ul class="simple">
+<li><p>Принимает значение АЦП и пределы задержки</p></li>
+<li><p>Преобразует значение АЦП в интервал задержки между миганиями</p></li>
+<li><p>Включает и выключает светодиод с рассчитанной задержкой</p></li>
+<li><p>Чем больше значение потенциометра, тем быстрее мигает светодиод</p></li>
+</ul>
+<p>Дополнительная демонстрация:</p>
+<div class="literal-block-wrapper docutils container" id="id13">
+<div class="code-block-caption"><span class="caption-text">main.py (дополнительная демонстрация)</span><a class="headerlink" href="#id13" title="Ссылка на этот код"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">demo_blink_mode</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Демонстрирует режим мигания светодиода с частотой,</span>
+<span class="sd">    зависящей от значения потенциометра</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Режим мигания светодиода&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Вращайте потенциометр для изменения частоты мигания&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Нажмите Ctrl+C для выхода&quot;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="c1"># Чтение значения с потенциометра</span>
+            <span class="n">adc_value</span> <span class="o">=</span> <span class="n">potentiometer</span><span class="o">.</span><span class="n">read_u16</span><span class="p">()</span>
+
+            <span class="c1"># Преобразование в процент (0-100%)</span>
+            <span class="n">percentage</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">adc_value</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">/</span> <span class="n">ADC_MAX</span><span class="p">)</span>
+
+            <span class="c1"># Выводим значение в консоль</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Значение: </span><span class="si">{</span><span class="n">percentage</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\r</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Мигаем светодиодом с частотой, зависящей от значения потенциометра</span>
+            <span class="n">blink_led_by_value</span><span class="p">(</span><span class="n">adc_value</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="c1"># Выключаем светодиод при остановке программы</span>
+        <span class="n">led_pin</span><span class="o">.</span><span class="n">duty_u16</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Демонстрация завершена&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Эта функция:</p>
+<ul class="simple">
+<li><p>Выводит инструкции для пользователя</p></li>
+<li><p>В бесконечном цикле:</p>
+<ul>
+<li><p>Считывает значение с потенциометра</p></li>
+<li><p>Преобразует его в процентное соотношение</p></li>
+<li><p>Выводит значение в консоль (в той же строке с помощью <cite>r</cite>)</p></li>
+<li><p>Вызывает функцию blink_led_by_value для мигания светодиода</p></li>
+</ul>
+</li>
+<li><p>При нажатии Ctrl+C выключает светодиод и завершает демонстрацию</p></li>
+</ul>
+</section>
+<section id="id5">
+<h2>Полный код программы<a class="headerlink" href="#id5" title="Ссылка на этот заголовок"></a></h2>
+<p>Вот полный код программы для работы с потенциометром:</p>
+<div class="literal-block-wrapper docutils container" id="id14">
+<div class="code-block-caption"><span class="caption-text">main.py (полный код)</span><a class="headerlink" href="#id14" title="Ссылка на этот код"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">machine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pin</span><span class="p">,</span> <span class="n">ADC</span><span class="p">,</span> <span class="n">PWM</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="c1"># Настройка АЦП для потенциометра</span>
+<span class="n">potentiometer</span> <span class="o">=</span> <span class="n">ADC</span><span class="p">(</span><span class="mi">26</span><span class="p">)</span>  <span class="c1"># GP26 соответствует ADC0</span>
+
+<span class="c1"># Настройка ШИМ для светодиода</span>
+<span class="n">led_pin</span> <span class="o">=</span> <span class="n">PWM</span><span class="p">(</span><span class="n">Pin</span><span class="p">(</span><span class="mi">15</span><span class="p">))</span>
+<span class="n">led_pin</span><span class="o">.</span><span class="n">freq</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>  <span class="c1"># Частота ШИМ 1000 Гц</span>
+
+<span class="c1"># Константы для преобразования</span>
+<span class="n">ADC_MAX</span> <span class="o">=</span> <span class="mi">65535</span>  <span class="c1"># Максимальное значение ADC (16-bit)</span>
+<span class="n">PWM_MAX</span> <span class="o">=</span> <span class="mi">65535</span>  <span class="c1"># Максимальное значение PWM (16-bit)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">print_values</span><span class="p">(</span><span class="n">adc_value</span><span class="p">,</span> <span class="n">percentage</span><span class="p">,</span> <span class="n">duty</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Выводит значения в консоль с форматированием</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ADC: </span><span class="si">{</span><span class="n">adc_value</span><span class="si">:</span><span class="s2">4d</span><span class="si">}</span><span class="s2"> | Процент: </span><span class="si">{</span><span class="n">percentage</span><span class="si">:</span><span class="s2">3d</span><span class="si">}</span><span class="s2">% | ШИМ: </span><span class="si">{</span><span class="n">duty</span><span class="si">:</span><span class="s2">5d</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">blink_led_by_value</span><span class="p">(</span><span class="n">adc_value</span><span class="p">,</span> <span class="n">max_delay</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">min_delay</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Мигает светодиодом с частотой, зависящей от значения потенциометра</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Преобразуем значение АЦП в интервал задержки</span>
+    <span class="n">delay</span> <span class="o">=</span> <span class="n">min_delay</span> <span class="o">+</span> <span class="p">(</span><span class="n">max_delay</span> <span class="o">-</span> <span class="n">min_delay</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">adc_value</span> <span class="o">/</span> <span class="n">ADC_MAX</span><span class="p">)</span>
+
+    <span class="c1"># Включаем светодиод</span>
+    <span class="n">led_pin</span><span class="o">.</span><span class="n">duty_u16</span><span class="p">(</span><span class="n">PWM_MAX</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+
+    <span class="c1"># Выключаем светодиод</span>
+    <span class="n">led_pin</span><span class="o">.</span><span class="n">duty_u16</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">demo_brightness_mode</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Демонстрирует режим управления яркостью светодиода</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Начинаем считывание потенциометра...&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Поворачивайте ручку потенциометра для изменения яркости светодиода&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------------------------------------------------------------&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   ADC   | Процент | ШИМ    &quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------------------------------------------------------------&quot;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="c1"># Чтение значения с потенциометра</span>
+            <span class="n">adc_value</span> <span class="o">=</span> <span class="n">potentiometer</span><span class="o">.</span><span class="n">read_u16</span><span class="p">()</span>
+
+            <span class="c1"># Преобразование в процент (0-100%)</span>
+            <span class="n">percentage</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">adc_value</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">/</span> <span class="n">ADC_MAX</span><span class="p">)</span>
+
+            <span class="c1"># Преобразование в значение ШИМ для светодиода</span>
+            <span class="n">duty</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">adc_value</span> <span class="o">*</span> <span class="n">PWM_MAX</span> <span class="o">/</span> <span class="n">ADC_MAX</span><span class="p">)</span>
+
+            <span class="c1"># Устанавливаем яркость светодиода</span>
+            <span class="n">led_pin</span><span class="o">.</span><span class="n">duty_u16</span><span class="p">(</span><span class="n">duty</span><span class="p">)</span>
+
+            <span class="c1"># Выводим значения в консоль</span>
+            <span class="n">print_values</span><span class="p">(</span><span class="n">adc_value</span><span class="p">,</span> <span class="n">percentage</span><span class="p">,</span> <span class="n">duty</span><span class="p">)</span>
+
+            <span class="c1"># Небольшая задержка для стабилизации вывода</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="c1"># Выключаем светодиод при остановке программы</span>
+        <span class="n">led_pin</span><span class="o">.</span><span class="n">duty_u16</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Программа остановлена&quot;</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">demo_blink_mode</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Демонстрирует режим мигания светодиода с частотой,</span>
+<span class="sd">    зависящей от значения потенциометра</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Режим мигания светодиода&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Вращайте потенциометр для изменения частоты мигания&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Нажмите Ctrl+C для выхода&quot;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="c1"># Чтение значения с потенциометра</span>
+            <span class="n">adc_value</span> <span class="o">=</span> <span class="n">potentiometer</span><span class="o">.</span><span class="n">read_u16</span><span class="p">()</span>
+
+            <span class="c1"># Преобразование в процент (0-100%)</span>
+            <span class="n">percentage</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">adc_value</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">/</span> <span class="n">ADC_MAX</span><span class="p">)</span>
+
+            <span class="c1"># Выводим значение в консоль</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Значение: </span><span class="si">{</span><span class="n">percentage</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\r</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Мигаем светодиодом с частотой, зависящей от значения потенциометра</span>
+            <span class="n">blink_led_by_value</span><span class="p">(</span><span class="n">adc_value</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="c1"># Выключаем светодиод при остановке программы</span>
+        <span class="n">led_pin</span><span class="o">.</span><span class="n">duty_u16</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Демонстрация завершена&quot;</span><span class="p">)</span>
+
+<span class="c1"># Основная программа</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Демонстрация режима управления яркостью</span>
+        <span class="n">demo_brightness_mode</span><span class="p">()</span>
+
+        <span class="c1"># После прерывания первого режима, запускаем режим мигания</span>
+        <span class="n">demo_blink_mode</span><span class="p">()</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="c1"># Обработка всех исключений</span>
+        <span class="n">led_pin</span><span class="o">.</span><span class="n">duty_u16</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Ошибка: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="c1"># Выключаем светодиод и печатаем сообщение при любом выходе из программы</span>
+        <span class="n">led_pin</span><span class="o">.</span><span class="n">duty_u16</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Программа завершена&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="id6">
+<h2>Загрузка и запуск программы<a class="headerlink" href="#id6" title="Ссылка на этот заголовок"></a></h2>
+<p>Для запуска программы:</p>
+<ol class="arabic simple">
+<li><p>Подключите потенциометр и светодиод к Raspberry Pi Pico согласно схеме</p></li>
+<li><p>Подключите Raspberry Pi Pico к компьютеру через USB-кабель</p></li>
+<li><p>Скопируйте файл main.py на Pico</p></li>
+<li><p>Перезагрузите Pico (отключите и подключите заново или нажмите кнопку RESET)</p></li>
+</ol>
+<p>После запуска программы:</p>
+<ol class="arabic simple">
+<li><p>В первом режиме вращение потенциометра будет изменять яркость светодиода</p></li>
+<li><p>Значения АЦП, процентное соотношение и значение ШИМ будут отображаться в консоли</p></li>
+<li><p>Нажмите Ctrl+C для перехода ко второму режиму</p></li>
+<li><p>Во втором режиме вращение потенциометра будет изменять частоту мигания светодиода</p></li>
+<li><p>Нажмите Ctrl+C для завершения программы</p></li>
+</ol>
+</section>
+<section id="id7">
+<h2>Возможные проблемы и их решения<a class="headerlink" href="#id7" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Потенциометр не влияет на светодиод</strong></p>
+<ul class="simple">
+<li><p>Проверьте правильность подключения потенциометра (не перепутаны ли выводы)</p></li>
+<li><p>Убедитесь, что потенциометр подключен к правильному пину (GP26)</p></li>
+<li><p>Проверьте, что светодиод подключен через резистор к правильному пину (GP15)</p></li>
+</ul>
+</li>
+<li><p><strong>Значения АЦП не изменяются при вращении потенциометра</strong></p>
+<ul class="simple">
+<li><p>Проверьте подключение потенциометра к питанию и земле</p></li>
+<li><p>Убедитесь, что средний вывод потенциометра подключен к ADC0 (GP26)</p></li>
+<li><p>Попробуйте заменить потенциометр, если он неисправен</p></li>
+</ul>
+</li>
+<li><p><strong>Светодиод не светится или светится очень тускло</strong></p>
+<ul class="simple">
+<li><p>Проверьте полярность подключения светодиода (анод - длинная ножка)</p></li>
+<li><p>Убедитесь, что используете резистор подходящего номинала (220-330 Ом)</p></li>
+<li><p>Проверьте подключение светодиода к правильному пину (GP15)</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="id8">
+<h2>Заключение<a class="headerlink" href="#id8" title="Ссылка на этот заголовок"></a></h2>
+<p>В этом уроке мы научились:</p>
+<ul class="simple">
+<li><p>Подключать потенциометр к Raspberry Pi Pico</p></li>
+<li><p>Считывать аналоговые значения с помощью АЦП</p></li>
+<li><p>Преобразовывать аналоговые значения в различные форматы</p></li>
+<li><p>Управлять яркостью светодиода с помощью ШИМ</p></li>
+<li><p>Создавать разные режимы работы в зависимости от значения потенциометра</p></li>
+</ul>
+<p>Потенциометр — это универсальный компонент, который можно использовать в различных проектах, где требуется регулировка параметров вручную. Вы можете адаптировать код из этого урока для управления скоростью моторов, громкостью звука, интенсивностью света и многими другими параметрами.</p>
+<div class="admonition warning">
+<p class="admonition-title">Предупреждение</p>
+<p>Некоторые потенциометры могут иметь разные диапазоны сопротивления. Если вы используете потенциометр с сопротивлением отличным от 10 кОм, это не повлияет на функциональность, но может повлиять на энергопотребление.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="../pir/pir.html" class="btn btn-neutral float-left" title="Обнаружение движения с помощью PIR датчика и Raspberry Pi Pico" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="../relay/relay.html" class="btn btn-neutral float-right" title="Управление реле с помощью Raspberry Pi Pico" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2025, Dias Kabdualiyev. </p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

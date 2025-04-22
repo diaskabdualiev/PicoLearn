@@ -1,0 +1,815 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Считывание данных с датчика освещённости и отображение на веб-интерфейсе &mdash; документация Raspberry Pi Pico W Kit 0.1</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d39ee99e" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=2b7aed8e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/translations.js?v=5b699b7f"></script>
+      <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../../search.html" />
+    <link rel="next" title="Управление RGB-светодиодом через веб-интерфейс" href="../wifiscan/wifiscan.html" />
+    <link rel="prev" title="Hello World: веб-сайт на Pico W" href="../webhello/webhello.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Raspberry Pi Pico W Kit
+              <img src="../../../_static/logo.png" class="logo" alt="Логотип"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/index.html">Учебный набор по MicroPython на базе Raspberry Pi Pico W</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id1">Вступление</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id2">Сильные стороны набора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id3">Для кого подходит этот набор</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#id4">Компоненты набора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/index.html#raspberry-pi-pico-w-15">Итоговый учебный план на Raspberry Pi Pico W (15 уроков)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get-started/index.html">Знакомство с Raspberry Pi Pico W и MicroPython</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/picow.html">Знакомство с Pico W</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/micropython.html">Введение в MicroPython</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/micropython.html#id1">История начинается здесь</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/micropython.html#id2">Почему MicroPython?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/thonny.html">Установка Thonny IDE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/micropythoninstall.html">Установка MicroPython на ваш Pico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/uploadlibs.html">Загрузка библиотек на Pico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../get-started/thonnytutor.html">1.5 Краткое руководство по Thonny</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../get-started/thonnytutor.html#id1">Открытие и запуск кода напрямую</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Содержание курса по Raspberry Pi Pico W</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../sensors/index.html">Модуль датчиков и устройств</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/rgb/rgb.html">Управление RGB-светодиодом с общим катодом на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/ws2812/ws2812.html">Управление адресным светодиодным кольцом на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/light/light.html">Работа с датчиком освещенности на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/pir/pir.html">Обнаружение движения с помощью PIR датчика и Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/pot/pot.html">Управление потенциометром на Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/relay/relay.html">Управление реле с помощью Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/servo/servo.html">Управление сервоприводом с помощью Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/bme280/bme280.html">Использование датчика BME280 с Raspberry Pi Pico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sensors/mpu6050/mpu6050.html">Измерение ускорения и гироскопических данных с MPU6050 на Raspberry Pi Pico</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Проекты</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../wifi/wifi.html">Подключение к интернету с использованием Wi-Fi на Raspberry Pi Pico W</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webhello/webhello.html">Hello World: веб-сайт на Pico W</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Считывание данных с датчика освещённости и отображение на веб-интерфейсе</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wifiscan/wifiscan.html">Управление RGB-светодиодом через веб-интерфейс</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wifioled/wifioled.html">Отображение информации о Wi-Fi на OLED-дисплее SSD1306</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../openwaethermap/owm.html">OpenWeatherMap: вывод данных о погоде на OLED-дисплей</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../owmws2812/owmws2812.html">Визуализация температуры из OpenWeatherMap на адресной ленте WS2812</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ws2812pir/ws2812pir.html">PIR-датчик: уведомление о движении с помощью WS2812</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../echobot/echobot.html">Телеграм-бот: введение</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../servotelegram/servotelegram.html">Управление сервоприводом через Telegram-бот</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../telegrambme/telegrambme.html">Получение данных о температуре (BME280) через Telegram-бот</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pirtelegram/pirtelegram.html">PIR-датчик: уведомление о движении в Telegram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mputelegram/mputelegram.html">MPU6050: уведомление о вибрации/наклоне в Telegram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../googlesheets/googlesheets.html">Google Sheets: хранение данных о температуре</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq/index.html">FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../faq/index.html#micropython">MicroPython</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../feedback/index.html">Обратная связь</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../feedback/index.html#id2">Контакты</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Raspberry Pi Pico W Kit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Содержание курса по Raspberry Pi Pico W</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Проекты</a></li>
+      <li class="breadcrumb-item active">Считывание данных с датчика освещённости и отображение на веб-интерфейсе</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Навигация по соседним страницам">
+        <a href="../webhello/webhello.html" class="btn btn-neutral float-left" title="Hello World: веб-сайт на Pico W" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="../wifiscan/wifiscan.html" class="btn btn-neutral float-right" title="Управление RGB-светодиодом через веб-интерфейс" accesskey="n">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>Считывание данных с датчика освещённости и отображение на веб-интерфейсе<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h1>
+<section id="id2">
+<h2>Введение<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
+<p>В этом уроке мы научимся считывать данные с аналогового датчика освещённости (фоторезистора) и отображать их на веб-странице в режиме реального времени с использованием Raspberry Pi Pico W. Веб-интерфейс позволит вам удалённо мониторить уровень освещённости в помещении и использовать эти данные для различных проектов автоматизации — например, для создания умного освещения, которое адаптируется к уровню внешнего света.</p>
+<p>Мы разработаем полностью функциональный веб-сервер на MicroPython, который будет регулярно считывать данные с фоторезистора и передавать их через WebSocket на веб-страницу, где данные будут отображаться в виде числового значения и графика в режиме реального времени.</p>
+</section>
+<section id="id3">
+<h2>Необходимые компоненты<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h2>
+<ul class="simple">
+<li><p>Raspberry Pi Pico W</p></li>
+<li><p>Фоторезистор (датчик освещённости)</p></li>
+<li><p>Резистор 10 кОм</p></li>
+<li><p>Макетная плата</p></li>
+<li><p>Соединительные провода</p></li>
+<li><p>USB-кабель для питания и программирования Pico W</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>Схема подключения<a class="headerlink" href="#id4" title="Ссылка на этот заголовок"></a></h2>
+<p>Для этого проекта мы будем использовать следующую схему подключения:</p>
+<ol class="arabic simple">
+<li><p>Подключите один вывод фоторезистора к пину ADC (аналогово-цифровой преобразователь) на Pico W — мы будем использовать GPIO26 (ADC0)</p></li>
+<li><p>Подключите другой вывод фоторезистора к 3.3V (питанию)</p></li>
+<li><p>Подключите резистор 10 кОм между пином ADC и GND (земля)</p></li>
+</ol>
+<p>Эта схема создаёт делитель напряжения, где фоторезистор и резистор 10 кОм образуют цепь. Когда освещённость меняется, сопротивление фоторезистора также меняется, что приводит к изменению напряжения на пине ADC.</p>
+<div class="admonition note">
+<p class="admonition-title">Примечание</p>
+<p>Фоторезистор уменьшает своё сопротивление при увеличении освещённости и увеличивает при уменьшении. Это означает, что показания ADC будут выше при ярком свете и ниже при слабом.</p>
+</div>
+</section>
+<section id="id5">
+<h2>Структура проекта<a class="headerlink" href="#id5" title="Ссылка на этот заголовок"></a></h2>
+<p>Наш проект будет состоять из следующих файлов:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">config.py</span></code> — содержит настройки Wi-Fi и другие параметры конфигурации</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">index.html</span></code> — веб-страница с интерфейсом для отображения данных</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">main.py</span></code> — основной файл с кодом для чтения данных и управления веб-сервером</p></li>
+</ul>
+<p>Такая структура обеспечивает чёткое разделение кода и облегчает настройку и модификацию проекта.</p>
+</section>
+<section id="id6">
+<h2>Пошаговые инструкции<a class="headerlink" href="#id6" title="Ссылка на этот заголовок"></a></h2>
+<section id="micropython">
+<h3>Шаг 1: Настройка и установка MicroPython<a class="headerlink" href="#micropython" title="Ссылка на этот заголовок"></a></h3>
+<p>Прежде чем начать, убедитесь, что на вашем Raspberry Pi Pico W установлен MicroPython. Если нет, следуйте этим шагам:</p>
+<ol class="arabic simple">
+<li><p>Скачайте последнюю версию прошивки MicroPython для Raspberry Pi Pico W с официального сайта</p></li>
+<li><p>Удерживая кнопку BOOTSEL на Pico, подключите его к компьютеру через USB</p></li>
+<li><p>Скопируйте скачанный файл .uf2 на появившийся диск</p></li>
+<li><p>Pico автоматически перезагрузится и теперь будет использовать MicroPython</p></li>
+</ol>
+<p>Для загрузки кода на Pico W вы можете использовать Thonny IDE или другой инструмент для работы с MicroPython.</p>
+</section>
+<section id="id7">
+<h3>Шаг 2: Создание файла конфигурации<a class="headerlink" href="#id7" title="Ссылка на этот заголовок"></a></h3>
+<p>Создайте файл <code class="docutils literal notranslate"><span class="pre">config.py</span></code> со следующим содержимым:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Конфигурация Wi-Fi</span>
+<span class="n">WIFI_SSID</span> <span class="o">=</span> <span class="s2">&quot;YOUR_WIFI_SSID&quot;</span>  <span class="c1"># Имя вашей Wi-Fi сети</span>
+<span class="n">WIFI_PASSWORD</span> <span class="o">=</span> <span class="s2">&quot;YOUR_WIFI_PASSWORD&quot;</span>  <span class="c1"># Пароль от Wi-Fi</span>
+
+<span class="c1"># Настройки веб-сервера</span>
+<span class="n">WEB_SERVER_PORT</span> <span class="o">=</span> <span class="mi">80</span>  <span class="c1"># Порт для веб-сервера</span>
+
+<span class="c1"># Настройки для чтения данных с датчика</span>
+<span class="n">LIGHT_SENSOR_PIN</span> <span class="o">=</span> <span class="mi">26</span>  <span class="c1"># GPIO пин 26 соответствует ADC0</span>
+<span class="n">READING_INTERVAL</span> <span class="o">=</span> <span class="mi">1000</span>  <span class="c1"># Интервал считывания данных в миллисекундах</span>
+
+<span class="c1"># Настройки светодиода для индикации статуса</span>
+<span class="n">LED_PIN</span> <span class="o">=</span> <span class="s2">&quot;LED&quot;</span>  <span class="c1"># Встроенный светодиод</span>
+</pre></div>
+</div>
+<p>Замените <code class="docutils literal notranslate"><span class="pre">&quot;YOUR_WIFI_SSID&quot;</span></code> и <code class="docutils literal notranslate"><span class="pre">&quot;YOUR_WIFI_PASSWORD&quot;</span></code> на имя и пароль вашей Wi-Fi сети.</p>
+</section>
+<section id="html">
+<h3>Шаг 3: Создание HTML-файла<a class="headerlink" href="#html" title="Ссылка на этот заголовок"></a></h3>
+<p>Создайте файл <code class="docutils literal notranslate"><span class="pre">index.html</span></code> для нашего веб-интерфейса:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Датчик освещённости Raspberry Pi Pico W<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;width=device-width, initial-scale=1&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="w">        </span><span class="nt">body</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">font-family</span><span class="p">:</span><span class="w"> </span><span class="n">Arial</span><span class="p">,</span><span class="w"> </span><span class="kc">sans-serif</span><span class="p">;</span>
+<span class="w">            </span><span class="k">margin</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">            </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">            </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#f5f5f5</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">max-width</span><span class="p">:</span><span class="w"> </span><span class="mi">800</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">            </span><span class="k">margin</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="kc">auto</span><span class="p">;</span>
+<span class="w">            </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="kc">white</span><span class="p">;</span>
+<span class="w">            </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">            </span><span class="k">border-radius</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">            </span><span class="k">box-shadow</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">2</span><span class="kt">px</span><span class="w"> </span><span class="mi">4</span><span class="kt">px</span><span class="w"> </span><span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="nt">h1</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="mh">#333</span><span class="p">;</span>
+<span class="w">            </span><span class="k">text-align</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="p">.</span><span class="nc">sensor-value</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mi">48</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">            </span><span class="k">text-align</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+<span class="w">            </span><span class="k">margin</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">            </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="mh">#2c3e50</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="p">.</span><span class="nc">chart-container</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+<span class="w">            </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="mi">300</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">            </span><span class="k">margin-top</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">            </span><span class="k">position</span><span class="p">:</span><span class="w"> </span><span class="kc">relative</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="nt">canvas</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+<span class="w">            </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="p">.</span><span class="nc">status</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">text-align</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+<span class="w">            </span><span class="k">margin-top</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">            </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="mh">#7f8c8d</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="p">.</span><span class="nc">connection-status</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">inline-block</span><span class="p">;</span>
+<span class="w">            </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">            </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">            </span><span class="k">border-radius</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="kt">%</span><span class="p">;</span>
+<span class="w">            </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="kc">red</span><span class="p">;</span>
+<span class="w">            </span><span class="k">margin-right</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="p">.</span><span class="nc">connected</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="kc">green</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;container&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Мониторинг уровня освещённости<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;status&quot;</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;connection-status&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;connection-indicator&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;connection-text&quot;</span><span class="p">&gt;</span>Отключено<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;sensor-value&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;light-value&quot;</span><span class="p">&gt;</span>--<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;status&quot;</span><span class="p">&gt;</span>Текущий уровень освещённости (0-4095)<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;chart-container&quot;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">canvas</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;light-chart&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">canvas</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="w">        </span><span class="c1">// Конфигурация графика</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">ctx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;light-chart&#39;</span><span class="p">).</span><span class="nx">getContext</span><span class="p">(</span><span class="s1">&#39;2d&#39;</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">lightChart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Chart</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;line&#39;</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">labels</span><span class="o">:</span><span class="w"> </span><span class="nb">Array</span><span class="p">(</span><span class="mf">50</span><span class="p">).</span><span class="nx">fill</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">),</span>
+<span class="w">                </span><span class="nx">datasets</span><span class="o">:</span><span class="w"> </span><span class="p">[{</span>
+<span class="w">                    </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Уровень освещённости&#39;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="nb">Array</span><span class="p">(</span><span class="mf">50</span><span class="p">).</span><span class="nx">fill</span><span class="p">(</span><span class="mf">0</span><span class="p">),</span>
+<span class="w">                    </span><span class="nx">borderColor</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;rgb(75, 192, 192)&#39;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nx">tension</span><span class="o">:</span><span class="w"> </span><span class="mf">0.3</span><span class="p">,</span>
+<span class="w">                    </span><span class="nx">pointRadius</span><span class="o">:</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
+<span class="w">                    </span><span class="nx">borderWidth</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span>
+<span class="w">                    </span><span class="nx">fill</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                    </span><span class="nx">backgroundColor</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;rgba(75, 192, 192, 0.2)&#39;</span>
+<span class="w">                </span><span class="p">}]</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nx">options</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">responsive</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">maintainAspectRatio</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">scales</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nx">y</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nx">beginAtZero</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                        </span><span class="nx">max</span><span class="o">:</span><span class="w"> </span><span class="mf">4095</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="nx">animation</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nx">duration</span><span class="o">:</span><span class="w"> </span><span class="mf">300</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="nx">interaction</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nx">intersect</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">                    </span><span class="nx">mode</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;index&#39;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">});</span>
+
+<span class="w">        </span><span class="c1">// Инициализация WebSocket-соединения</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">socket</span><span class="p">;</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">isConnected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">connectionIndicator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;connection-indicator&#39;</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">connectionText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;connection-text&#39;</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">lightValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;light-value&#39;</span><span class="p">);</span>
+
+<span class="w">        </span><span class="kd">function</span><span class="w"> </span><span class="nx">connectWebSocket</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Получаем текущий хост и создаем URL для WebSocket</span>
+<span class="w">            </span><span class="kd">const</span><span class="w"> </span><span class="nx">protocol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">protocol</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;https:&#39;</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s1">&#39;wss:&#39;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;ws:&#39;</span><span class="p">;</span>
+<span class="w">            </span><span class="kd">const</span><span class="w"> </span><span class="nx">wsUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span><span class="si">${</span><span class="nx">protocol</span><span class="si">}</span><span class="sb">//</span><span class="si">${</span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">host</span><span class="si">}</span><span class="sb">/ws`</span><span class="p">;</span>
+
+<span class="w">            </span><span class="c1">// Создаем новое соединение</span>
+<span class="w">            </span><span class="nx">socket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">WebSocket</span><span class="p">(</span><span class="nx">wsUrl</span><span class="p">);</span>
+
+<span class="w">            </span><span class="c1">// Обработчик успешного соединения</span>
+<span class="w">            </span><span class="nx">socket</span><span class="p">.</span><span class="nx">onopen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">isConnected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="w">                </span><span class="nx">connectionIndicator</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">&#39;connected&#39;</span><span class="p">);</span>
+<span class="w">                </span><span class="nx">connectionText</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Подключено&#39;</span><span class="p">;</span>
+<span class="w">                </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;WebSocket соединение установлено&#39;</span><span class="p">);</span>
+<span class="w">            </span><span class="p">};</span>
+
+<span class="w">            </span><span class="c1">// Обработчик полученных сообщений</span>
+<span class="w">            </span><span class="nx">socket</span><span class="p">.</span><span class="nx">onmessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="s1">&#39;light&#39;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="c1">// Обновляем отображаемое значение</span>
+<span class="w">                        </span><span class="nx">lightValue</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">data</span><span class="p">.</span><span class="nx">light</span><span class="p">;</span>
+
+<span class="w">                        </span><span class="c1">// Обновляем график</span>
+<span class="w">                        </span><span class="nx">lightChart</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">datasets</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">data</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">light</span><span class="p">);</span>
+<span class="w">                        </span><span class="nx">lightChart</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">datasets</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">data</span><span class="p">.</span><span class="nx">shift</span><span class="p">();</span>
+<span class="w">                        </span><span class="nx">lightChart</span><span class="p">.</span><span class="nx">update</span><span class="p">();</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Ошибка при обработке данных:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">e</span><span class="p">);</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">};</span>
+
+<span class="w">            </span><span class="c1">// Обработчик ошибок</span>
+<span class="w">            </span><span class="nx">socket</span><span class="p">.</span><span class="nx">onerror</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;WebSocket ошибка:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
+<span class="w">            </span><span class="p">};</span>
+
+<span class="w">            </span><span class="c1">// Обработчик закрытия соединения</span>
+<span class="w">            </span><span class="nx">socket</span><span class="p">.</span><span class="nx">onclose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">isConnected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">                </span><span class="nx">connectionIndicator</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s1">&#39;connected&#39;</span><span class="p">);</span>
+<span class="w">                </span><span class="nx">connectionText</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Отключено&#39;</span><span class="p">;</span>
+<span class="w">                </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;WebSocket соединение закрыто&#39;</span><span class="p">);</span>
+
+<span class="w">                </span><span class="c1">// Пытаемся переподключиться через 5 секунд</span>
+<span class="w">                </span><span class="nx">setTimeout</span><span class="p">(</span><span class="nx">connectWebSocket</span><span class="p">,</span><span class="w"> </span><span class="mf">5000</span><span class="p">);</span>
+<span class="w">            </span><span class="p">};</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Начинаем соединение с сервером</span>
+<span class="w">        </span><span class="nx">connectWebSocket</span><span class="p">();</span>
+<span class="w">    </span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>Этот HTML-файл содержит веб-интерфейс с графиком и числовым показателем для отображения уровня освещённости. Он также использует WebSocket для получения данных в режиме реального времени.</p>
+</section>
+<section id="id8">
+<h3>Шаг 4: Создание основного файла с кодом<a class="headerlink" href="#id8" title="Ссылка на этот заголовок"></a></h3>
+<p>Наконец, создайте файл <code class="docutils literal notranslate"><span class="pre">main.py</span></code> с основной логикой нашего проекта:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">network</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">socket</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">machine</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">gc</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">machine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pin</span><span class="p">,</span> <span class="n">ADC</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">config</span>
+
+<span class="c1"># Инициализация пинов</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">LED_PIN</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+<span class="n">light_sensor</span> <span class="o">=</span> <span class="n">ADC</span><span class="p">(</span><span class="n">Pin</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">LIGHT_SENSOR_PIN</span><span class="p">))</span>
+
+<span class="c1"># Инициализируем список для хранения активных WebSocket соединений</span>
+<span class="n">active_websockets</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">connect_wifi</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Подключение к Wi-Fi сети&quot;&quot;&quot;</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Выключаем светодиод (индикация отключения)</span>
+
+    <span class="n">wlan</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">WLAN</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">STA_IF</span><span class="p">)</span>
+    <span class="n">wlan</span><span class="o">.</span><span class="n">active</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Подключение к Wi-Fi: </span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">WIFI_SSID</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+        <span class="n">wlan</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">WIFI_SSID</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">WIFI_PASSWORD</span><span class="p">)</span>
+
+        <span class="c1"># Ждем подключения с таймаутом 10 секунд</span>
+        <span class="n">max_wait</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="k">while</span> <span class="n">max_wait</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+                <span class="k">break</span>
+            <span class="n">max_wait</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ожидание подключения...&quot;</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">led</span><span class="o">.</span><span class="n">toggle</span><span class="p">()</span>  <span class="c1"># Моргаем светодиодом во время подключения</span>
+
+    <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Включаем светодиод (индикация успешного подключения)</span>
+        <span class="n">ip</span> <span class="o">=</span> <span class="n">wlan</span><span class="o">.</span><span class="n">ifconfig</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Подключено к Wi-Fi. IP-адрес: </span><span class="si">{</span><span class="n">ip</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ip</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Выключаем светодиод (индикация ошибки)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Не удалось подключиться к Wi-Fi&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_http_request</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Разбор HTTP-запроса для определения пути и заголовков&quot;&quot;&quot;</span>
+    <span class="n">request_lines</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">request_lines</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="p">{}</span>
+
+    <span class="c1"># Разбор первой строки (метод, путь, версия)</span>
+    <span class="n">first_line_parts</span> <span class="o">=</span> <span class="n">request_lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">first_line_parts</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="p">{}</span>
+
+    <span class="n">method</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">first_line_parts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">first_line_parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># Разбор заголовков</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">request_lines</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="k">if</span> <span class="sa">b</span><span class="s1">&#39;: &#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+            <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;: &#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">headers</span><span class="p">[</span><span class="n">key</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">path</span><span class="o">.</span><span class="n">decode</span><span class="p">(),</span> <span class="n">headers</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">handle_websocket_handshake</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">headers</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Обработка рукопожатия WebSocket&quot;&quot;&quot;</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">ubinascii</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">uhashlib</span>
+
+    <span class="c1"># Проверяем заголовки WebSocket</span>
+    <span class="k">if</span> <span class="s1">&#39;sec-websocket-key&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">headers</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="n">websocket_key</span> <span class="o">=</span> <span class="n">headers</span><span class="p">[</span><span class="s1">&#39;sec-websocket-key&#39;</span><span class="p">]</span>
+    <span class="n">response_key</span> <span class="o">=</span> <span class="n">websocket_key</span> <span class="o">+</span> <span class="s1">&#39;258EAFA5-E914-47DA-95CA-C5AB0DC85B11&#39;</span>
+
+    <span class="n">response_key_hashed</span> <span class="o">=</span> <span class="n">uhashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">(</span><span class="n">response_key</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
+    <span class="n">response_key_b64</span> <span class="o">=</span> <span class="n">ubinascii</span><span class="o">.</span><span class="n">b2a_base64</span><span class="p">(</span><span class="n">response_key_hashed</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;HTTP/1.1 101 Switching Protocols</span><span class="se">\r\n</span><span class="s2">&quot;</span>
+    <span class="n">response</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;Upgrade: websocket</span><span class="se">\r\n</span><span class="s2">&quot;</span>
+    <span class="n">response</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;Connection: Upgrade</span><span class="se">\r\n</span><span class="s2">&quot;</span>
+    <span class="n">response</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;Sec-WebSocket-Accept: &quot;</span> <span class="o">+</span> <span class="n">response_key_b64</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span>
+    <span class="n">response</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span>
+
+    <span class="n">client</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">read_light_sensor</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Чтение данных с датчика освещённости&quot;&quot;&quot;</span>
+    <span class="n">raw_value</span> <span class="o">=</span> <span class="n">light_sensor</span><span class="o">.</span><span class="n">read_u16</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span>  <span class="c1"># Приводим значение к диапазону 0-4095</span>
+    <span class="k">return</span> <span class="n">raw_value</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">send_websocket_message</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Отправка сообщения через WebSocket&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Упаковываем сообщение по протоколу WebSocket</span>
+        <span class="n">fin</span> <span class="o">=</span> <span class="mh">0x80</span>  <span class="c1"># Final frame</span>
+        <span class="n">opcode</span> <span class="o">=</span> <span class="mh">0x01</span>  <span class="c1"># Text frame</span>
+        <span class="n">payload_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+        <span class="c1"># Формируем заголовок</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">([</span><span class="n">fin</span> <span class="o">|</span> <span class="n">opcode</span><span class="p">])</span>
+
+        <span class="c1"># Длина полезной нагрузки</span>
+        <span class="k">if</span> <span class="n">payload_len</span> <span class="o">&lt;</span> <span class="mi">126</span><span class="p">:</span>
+            <span class="n">header</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">payload_len</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">payload_len</span> <span class="o">&lt;</span> <span class="mi">65536</span><span class="p">:</span>
+            <span class="n">header</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">126</span><span class="p">)</span>
+            <span class="n">header</span><span class="o">.</span><span class="n">extend</span><span class="p">([(</span><span class="n">payload_len</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">,</span> <span class="n">payload_len</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Для больших сообщений (что маловероятно в нашем случае)</span>
+            <span class="n">header</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">127</span><span class="p">)</span>
+            <span class="n">header</span><span class="o">.</span><span class="n">extend</span><span class="p">([(</span><span class="n">payload_len</span> <span class="o">&gt;&gt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">56</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">)])</span>
+
+        <span class="c1"># Отправляем заголовок и данные</span>
+        <span class="n">websocket</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">header</span> <span class="o">+</span> <span class="n">message</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка при отправке WebSocket сообщения: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">serve</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Запуск веб-сервера&quot;&quot;&quot;</span>
+    <span class="n">ip</span> <span class="o">=</span> <span class="n">connect_wifi</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ip</span><span class="p">:</span>
+        <span class="k">return</span>
+
+    <span class="c1"># Открываем HTML файл</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;index.html&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">html</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">html</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        &lt;!DOCTYPE html&gt;</span>
+<span class="s2">        &lt;html&gt;</span>
+<span class="s2">        &lt;head&gt;</span>
+<span class="s2">            &lt;title&gt;Ошибка&lt;/title&gt;</span>
+<span class="s2">        &lt;/head&gt;</span>
+<span class="s2">        &lt;body&gt;</span>
+<span class="s2">            &lt;h1&gt;Ошибка: файл index.html не найден&lt;/h1&gt;</span>
+<span class="s2">        &lt;/body&gt;</span>
+<span class="s2">        &lt;/html&gt;</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+
+    <span class="c1"># Создаем сокет</span>
+    <span class="n">addr</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">getaddrinfo</span><span class="p">(</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">WEB_SERVER_PORT</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">()</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">SOL_SOCKET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SO_REUSEADDR</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">setblocking</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Сервер запущен на http://</span><span class="si">{</span><span class="n">ip</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">WEB_SERVER_PORT</span><span class="si">}</span><span class="s2">/&quot;</span><span class="p">)</span>
+
+    <span class="n">last_reading_time</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Проверяем, есть ли новое соединение</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">client</span><span class="p">,</span> <span class="n">addr</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+                <span class="n">client</span><span class="o">.</span><span class="n">setblocking</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Новое соединение от </span><span class="si">{</span><span class="n">addr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                <span class="c1"># Буфер для получения запроса</span>
+                <span class="n">request_buffer</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
+
+                <span class="c1"># Получаем запрос с таймаутом</span>
+                <span class="n">request_timeout</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># 1 секунда таймаут</span>
+                <span class="k">while</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">request_timeout</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
+                            <span class="n">request_buffer</span> <span class="o">+=</span> <span class="n">data</span>
+                            <span class="k">if</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\r\n\r\n</span><span class="s2">&quot;</span> <span class="ow">in</span> <span class="n">request_buffer</span><span class="p">:</span>  <span class="c1"># Конец HTTP-запроса</span>
+                                <span class="k">break</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="k">break</span>  <span class="c1"># Нет данных, завершаем чтение</span>
+                    <span class="k">except</span><span class="p">:</span>
+                        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+                        <span class="k">continue</span>
+
+                <span class="c1"># Обрабатываем запрос</span>
+                <span class="k">if</span> <span class="n">request_buffer</span><span class="p">:</span>
+                    <span class="n">path</span><span class="p">,</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">parse_http_request</span><span class="p">(</span><span class="n">request_buffer</span><span class="p">)</span>
+
+                    <span class="c1"># Проверяем WebSocket запрос</span>
+                    <span class="k">if</span> <span class="n">path</span> <span class="o">==</span> <span class="s1">&#39;/ws&#39;</span> <span class="ow">and</span> <span class="s1">&#39;upgrade&#39;</span> <span class="ow">in</span> <span class="n">headers</span> <span class="ow">and</span> <span class="n">headers</span><span class="p">[</span><span class="s1">&#39;upgrade&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;websocket&#39;</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">handle_websocket_handshake</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">headers</span><span class="p">):</span>
+                            <span class="c1"># Добавляем клиента в список активных WebSocket соединений</span>
+                            <span class="n">active_websockets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
+                            <span class="k">continue</span>  <span class="c1"># Продолжаем цикл, оставляя соединение открытым</span>
+
+                    <span class="c1"># Обычный HTTP запрос</span>
+                    <span class="k">elif</span> <span class="n">path</span> <span class="o">==</span> <span class="s1">&#39;/&#39;</span> <span class="ow">or</span> <span class="n">path</span> <span class="o">==</span> <span class="s1">&#39;/index.html&#39;</span><span class="p">:</span>
+                        <span class="n">client</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;HTTP/1.1 200 OK</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                        <span class="n">client</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;Content-Type: text/html</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                        <span class="n">client</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;Connection: close</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                        <span class="n">client</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                        <span class="n">client</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c1"># Путь не найден</span>
+                        <span class="n">client</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;HTTP/1.1 404 Not Found</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                        <span class="n">client</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;Content-Type: text/html</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                        <span class="n">client</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;Connection: close</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                        <span class="n">client</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                        <span class="n">client</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;&lt;html&gt;&lt;body&gt;&lt;h1&gt;404 Not Found&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&#39;</span><span class="p">)</span>
+
+                <span class="n">client</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+            <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="c1"># Нет новых соединений</span>
+                <span class="k">pass</span>
+
+            <span class="c1"># Проверяем, нужно ли отправить новые данные по WebSocket</span>
+            <span class="n">current_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">ticks_ms</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">ticks_diff</span><span class="p">(</span><span class="n">current_time</span><span class="p">,</span> <span class="n">last_reading_time</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">config</span><span class="o">.</span><span class="n">READING_INTERVAL</span><span class="p">:</span>
+                <span class="n">last_reading_time</span> <span class="o">=</span> <span class="n">current_time</span>
+
+                <span class="c1"># Читаем данные с датчика</span>
+                <span class="n">light_value</span> <span class="o">=</span> <span class="n">read_light_sensor</span><span class="p">()</span>
+
+                <span class="c1"># Формируем JSON с данными</span>
+                <span class="n">data_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&quot;light&quot;</span><span class="p">:</span> <span class="n">light_value</span><span class="p">})</span>
+
+                <span class="c1"># Отправляем данные по всем активным WebSocket соединениям</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ws</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">active_websockets</span><span class="p">[:]):</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">send_websocket_message</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">data_json</span><span class="p">):</span>
+                            <span class="c1"># Если отправка не удалась, закрываем соединение и удаляем из списка</span>
+                            <span class="n">ws</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                            <span class="n">active_websockets</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                    <span class="k">except</span><span class="p">:</span>
+                        <span class="c1"># В случае ошибки удаляем соединение из списка</span>
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">ws</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                        <span class="k">except</span><span class="p">:</span>
+                            <span class="k">pass</span>
+                        <span class="n">active_websockets</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+                <span class="c1"># Моргаем светодиодом для индикации активности</span>
+                <span class="n">led</span><span class="o">.</span><span class="n">toggle</span><span class="p">()</span>
+
+            <span class="c1"># Даем другим задачам возможность выполниться</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+
+            <span class="c1"># Сборка мусора для освобождения памяти</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">active_websockets</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка в основном цикле: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">serve</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Этот код настраивает Wi-Fi соединение, создает веб-сервер, обрабатывает WebSocket соединения и периодически считывает данные с датчика освещённости.</p>
+</section>
+<section id="raspberry-pi-pico-w">
+<h3>Шаг 5: Загрузка кода на Raspberry Pi Pico W<a class="headerlink" href="#raspberry-pi-pico-w" title="Ссылка на этот заголовок"></a></h3>
+<ol class="arabic simple">
+<li><p>Подключите Raspberry Pi Pico W к компьютеру</p></li>
+<li><p>Откройте Thonny IDE</p></li>
+<li><p>Создайте три файла (<code class="docutils literal notranslate"><span class="pre">config.py</span></code>, <code class="docutils literal notranslate"><span class="pre">index.html</span></code> и <code class="docutils literal notranslate"><span class="pre">main.py</span></code>) с кодом, который мы написали выше</p></li>
+<li><p>Сохраните все файлы на Pico W</p></li>
+<li><p>Запустите файл <code class="docutils literal notranslate"><span class="pre">main.py</span></code> для начала работы программы</p></li>
+</ol>
+</section>
+<section id="id9">
+<h3>Шаг 6: Подключение и тестирование<a class="headerlink" href="#id9" title="Ссылка на этот заголовок"></a></h3>
+<ol class="arabic simple">
+<li><p>После успешного запуска кода встроенный светодиод должен загореться, указывая на успешное подключение к Wi-Fi</p></li>
+<li><p>В терминале будет отображен IP-адрес вашего Pico W</p></li>
+<li><p>Откройте веб-браузер и введите этот IP-адрес (например, <code class="docutils literal notranslate"><span class="pre">http://192.168.1.100</span></code>)</p></li>
+<li><p>Вы должны увидеть веб-интерфейс с отображением уровня освещённости</p></li>
+<li><p>Попробуйте изменить освещение фоторезистора (закройте его рукой или посветите фонариком) и наблюдайте за изменениями на графике</p></li>
+</ol>
+</section>
+</section>
+<section id="id10">
+<h2>Объяснение кода<a class="headerlink" href="#id10" title="Ссылка на этот заголовок"></a></h2>
+<section id="config-py">
+<h3>Конфигурационный файл (config.py)<a class="headerlink" href="#config-py" title="Ссылка на этот заголовок"></a></h3>
+<p>Файл <code class="docutils literal notranslate"><span class="pre">config.py</span></code> содержит все настройки проекта в одном месте. Это облегчает изменение параметров без необходимости искать их в основном коде:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">WIFI_SSID</span></code> и <code class="docutils literal notranslate"><span class="pre">WIFI_PASSWORD</span></code> — данные для подключения к Wi-Fi</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">WEB_SERVER_PORT</span></code> — порт для веб-сервера (по умолчанию 80)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LIGHT_SENSOR_PIN</span></code> — пин, к которому подключен датчик освещённости (GPIO26/ADC0)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">READING_INTERVAL</span></code> — интервал между считыванием данных (в миллисекундах)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LED_PIN</span></code> — пин для встроенного светодиода (для индикации статуса)</p></li>
+</ul>
+</section>
+<section id="html-javascript-index-html">
+<h3>HTML и JavaScript (index.html)<a class="headerlink" href="#html-javascript-index-html" title="Ссылка на этот заголовок"></a></h3>
+<p>HTML-файл содержит веб-интерфейс для отображения данных:</p>
+<ul class="simple">
+<li><p>Базовая структура HTML с CSS для стилизации элементов</p></li>
+<li><p>Отображение числового значения уровня освещённости</p></li>
+<li><p>График для визуализации изменений уровня освещённости со временем</p></li>
+<li><p>JavaScript-код для работы с WebSocket:
+* Установка соединения с сервером
+* Обработка входящих данных
+* Обновление интерфейса при получении новых данных
+* Автоматическое переподключение при потере соединения</p></li>
+</ul>
+</section>
+<section id="main-py">
+<h3>Основной код (main.py)<a class="headerlink" href="#main-py" title="Ссылка на этот заголовок"></a></h3>
+<p>Файл <code class="docutils literal notranslate"><span class="pre">main.py</span></code> содержит основную логику:</p>
+<ol class="arabic simple">
+<li><p>Подключение к Wi-Fi:
+* Функция <code class="docutils literal notranslate"><span class="pre">connect_wifi()</span></code> устанавливает соединение с Wi-Fi сетью
+* Использует встроенный светодиод для индикации статуса подключения</p></li>
+<li><p>Обработка HTTP-запросов:
+* Функция <code class="docutils literal notranslate"><span class="pre">parse_http_request()</span></code> разбирает HTTP-запросы
+* Возвращает путь и заголовки для дальнейшей обработки</p></li>
+<li><p>Обработка WebSocket:
+* Функция <code class="docutils literal notranslate"><span class="pre">handle_websocket_handshake()</span></code> выполняет рукопожатие WebSocket
+* Функция <code class="docutils literal notranslate"><span class="pre">send_websocket_message()</span></code> отправляет сообщения через WebSocket</p></li>
+<li><p>Работа с датчиком:
+* Функция <code class="docutils literal notranslate"><span class="pre">read_light_sensor()</span></code> считывает значение с аналогового пина
+* Преобразует 16-битное значение в диапазон 0-4095 для удобства отображения</p></li>
+<li><p>Веб-сервер:
+* Функция <code class="docutils literal notranslate"><span class="pre">serve()</span></code> запускает веб-сервер и основной цикл программы
+* Обрабатывает HTTP-запросы и WebSocket-соединения
+* Периодически считывает данные и отправляет их по активным WebSocket-соединениям</p></li>
+</ol>
+</section>
+</section>
+<section id="id11">
+<h2>Возможные проблемы и их решения<a class="headerlink" href="#id11" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Не удается подключиться к Wi-Fi</strong>
+* Проверьте правильность SSID и пароля в <code class="docutils literal notranslate"><span class="pre">config.py</span></code>
+* Убедитесь, что сеть работает на частоте 2.4 ГГц (Pico W не поддерживает 5 ГГц)
+* Проверьте, что роутер находится в зоне досягаемости</p></li>
+<li><p><strong>Веб-страница не загружается</strong>
+* Проверьте IP-адрес в консоли и убедитесь, что вы используете правильный адрес
+* Убедитесь, что все файлы были корректно загружены на Pico W
+* Проверьте, что ваш компьютер находится в той же сети, что и Pico W</p></li>
+<li><p><strong>Данные не обновляются на веб-странице</strong>
+* Проверьте подключение фоторезистора согласно схеме
+* Проверьте в консоли наличие ошибок при отправке WebSocket сообщений
+* Обновите страницу и проверьте, что WebSocket соединение установлено (индикатор должен стать зеленым)</p></li>
+<li><p><strong>Пико перезагружается или зависает</strong>
+* Это может быть вызвано нехваткой памяти — попробуйте уменьшить количество хранимых данных для графика
+* Проверьте источник питания — USB-подключение должно обеспечивать стабильное питание</p></li>
+<li><p><strong>Неточные показания датчика</strong>
+* Проверьте сопротивление резистора — возможно, нужно использовать другое значение для лучшего диапазона измерений
+* Откалибруйте показания, изменив коэффициент в функции <code class="docutils literal notranslate"><span class="pre">read_light_sensor()</span></code></p></li>
+</ol>
+</section>
+<section id="id12">
+<h2>Расширения проекта<a class="headerlink" href="#id12" title="Ссылка на этот заголовок"></a></h2>
+<p>Вот несколько идей для расширения этого проекта:</p>
+<ol class="arabic simple">
+<li><p><strong>Добавление порогов и уведомлений</strong>
+* Настройте уведомления при достижении определенного уровня освещённости
+* Добавьте звуковую или визуальную сигнализацию при низкой освещённости</p></li>
+<li><p><strong>Автоматическое управление освещением</strong>
+* Подключите реле для управления лампой на основе показаний датчика
+* Создайте автоматическую систему включения света</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="../webhello/webhello.html" class="btn btn-neutral float-left" title="Hello World: веб-сайт на Pico W" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="../wifiscan/wifiscan.html" class="btn btn-neutral float-right" title="Управление RGB-светодиодом через веб-интерфейс" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2025, Dias Kabdualiyev. </p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
