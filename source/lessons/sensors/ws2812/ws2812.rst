@@ -1,0 +1,512 @@
+Я подготовлю урок по управлению адресным светодиодным кольцом на 12 светодиодов с помощью библиотеки NeoPixel для Raspberry Pi Pico.
+
+Управление адресным светодиодным кольцом на Raspberry Pi Pico
+===============================================================================
+
+Введение
+-------------------------------------------------------------------------------
+
+В этом уроке мы научимся управлять адресным светодиодным кольцом на 12 светодиодов с помощью Raspberry Pi Pico и библиотеки NeoPixel. Адресные светодиоды позволяют индивидуально управлять цветом и яркостью каждого светодиода, что открывает возможности для создания красивых световых эффектов. Мы рассмотрим несколько примеров эффектов для кольца, включая радугу, бегущие огни и другие.
+
+Необходимые компоненты
+-------------------------------------------------------------------------------
+
+* Raspberry Pi Pico
+* Адресное светодиодное кольцо на 12 светодиодов (WS2812B)
+* Провода для подключения
+* USB-кабель для подключения Pico к компьютеру
+* Источник питания 5В (опционально, для более яркого свечения)
+
+Схема подключения
+-------------------------------------------------------------------------------
+
+Адресное светодиодное кольцо обычно имеет три контакта:
+
+* VCC (питание, 5В)
+* GND (земля)
+* DIN (вход данных)
+
+Подключите кольцо к Raspberry Pi Pico следующим образом:
+
+* VCC кольца → VBUS (5В) или 3V3 Pico (для менее яркого свечения)
+* GND кольца → GND Pico
+* DIN кольца → GPIO pin 28 Pico (можно использовать другой пин, изменив код)
+
+.. note::
+   При использовании всех 12 светодиодов на максимальной яркости рекомендуется подключать внешний источник питания 5В. Для тестирования можно использовать питание от 3.3В Pico, но с пониженной яркостью.
+
+Программа для управления адресным кольцом
+-------------------------------------------------------------------------------
+
+Рассмотрим код программы по частям:
+
+Импорт необходимых библиотек и настройка пинов:
+
+.. code-block:: python
+   :caption: main.py (импорты и настройка)
+
+   import time
+   import math
+   from machine import Pin
+   from neopixel import NeoPixel
+
+   # Конфигурация кольца
+   PIN_NUM = 28          # Пин, к которому подключено кольцо
+   NUM_LEDS = 12         # Количество светодиодов в кольце
+   BRIGHTNESS = 0.3      # Яркость (0.0 - 1.0)
+
+   # Инициализация NeoPixel
+   pin = Pin(PIN_NUM, Pin.OUT)
+   ring = NeoPixel(pin, NUM_LEDS)
+
+В этой части кода:
+
+* Импортируем необходимые библиотеки: time для задержек, math для математических функций, Pin для управления GPIO, NeoPixel для работы с адресными светодиодами
+* Задаем конфигурацию кольца: пин подключения, количество светодиодов и яркость
+* Инициализируем объект NeoPixel для управления кольцом
+
+Функции для работы с цветами:
+
+.. code-block:: python
+   :caption: main.py (функции для работы с цветами)
+
+   def scale_color(color, brightness=1.0):
+       """
+       Масштабирует цвет RGB в соответствии с заданной яркостью
+       """
+       r, g, b = color
+       return (
+           int(r * brightness),
+           int(g * brightness),
+           int(b * brightness)
+       )
+
+   def wheel(pos):
+       """
+       Входное значение от 0 до 255 преобразуется в цвет радуги
+       """
+       pos = pos % 255
+       if pos < 85:
+           return (255 - pos * 3, pos * 3, 0)
+       elif pos < 170:
+           pos -= 85
+           return (0, 255 - pos * 3, pos * 3)
+       else:
+           pos -= 170
+           return (pos * 3, 0, 255 - pos * 3)
+
+Функции для работы с цветами:
+
+* scale_color - масштабирует цвет RGB в соответствии с заданной яркостью
+* wheel - преобразует значение от 0 до 255 в цвет радуги, что позволяет плавно переходить между цветами
+
+Функции для создания различных эффектов:
+
+.. code-block:: python
+   :caption: main.py (функция заливки цветом)
+
+   def fill_color(color, wait_ms=50):
+       """
+       Заполняет кольцо одним цветом
+       """
+       scaled_color = scale_color(color, BRIGHTNESS)
+       for i in range(NUM_LEDS):
+           ring[i] = scaled_color
+           ring.write()
+           time.sleep_ms(wait_ms)
+
+   def clear_ring():
+       """
+       Выключает все светодиоды
+       """
+       for i in range(NUM_LEDS):
+           ring[i] = (0, 0, 0)
+       ring.write()
+
+Эти функции:
+
+* fill_color - заполняет кольцо одним цветом с задержкой между светодиодами
+* clear_ring - выключает все светодиоды
+
+Эффект радуги:
+
+.. code-block:: python
+   :caption: main.py (эффект радуги)
+
+   def rainbow_cycle(wait_ms=20, cycles=5):
+       """
+       Создает эффект движущейся радуги
+       """
+       for j in range(256 * cycles):
+           for i in range(NUM_LEDS):
+               color_index = (i * 256 // NUM_LEDS + j) % 256
+               ring[i] = scale_color(wheel(color_index), BRIGHTNESS)
+           ring.write()
+           time.sleep_ms(wait_ms)
+
+Функция rainbow_cycle:
+
+* Создает эффект движущейся радуги, где каждый светодиод имеет свой цвет
+* Параметр cycles определяет, сколько полных циклов радуги будет показано
+* Параметр wait_ms задает скорость движения радуги
+
+Эффект бегущих огней:
+
+.. code-block:: python
+   :caption: main.py (эффект бегущих огней)
+
+   def running_lights(color, wait_ms=50, cycles=5):
+       """
+       Создает эффект бегущих огней
+       """
+       scaled_color = scale_color(color, BRIGHTNESS)
+       
+       for cycle in range(cycles):
+           for position in range(NUM_LEDS * 2):
+               for i in range(NUM_LEDS):
+                   # Синусоидальная функция для плавного затухания
+                   level = math.sin(i + position) * 127 + 128
+                   r = (scaled_color[0] * level) // 255
+                   g = (scaled_color[1] * level) // 255
+                   b = (scaled_color[2] * level) // 255
+                   ring[i] = (r, g, b)
+               ring.write()
+               time.sleep_ms(wait_ms)
+
+Функция running_lights:
+
+* Создает эффект бегущих огней с плавным затуханием
+* Использует синусоидальную функцию для создания эффекта плавного изменения яркости
+* Эффект движется по кольцу, создавая иллюзию бегущего света
+
+Эффект театральной погони:
+
+.. code-block:: python
+   :caption: main.py (эффект театральной погони)
+
+   def theater_chase(color, wait_ms=50, cycles=10):
+       """
+       Создает эффект театральной погони
+       """
+       scaled_color = scale_color(color, BRIGHTNESS)
+       
+       for cycle in range(cycles):
+           for offset in range(3):
+               clear_ring()
+               for i in range(0, NUM_LEDS, 3):
+                   ring[(i + offset) % NUM_LEDS] = scaled_color
+               ring.write()
+               time.sleep_ms(wait_ms)
+
+Функция theater_chase:
+
+* Создает эффект театральной погони, где каждый третий светодиод зажигается
+* Огни перемещаются по кольцу, создавая эффект погони
+* Параметр cycles определяет, сколько циклов погони будет выполнено
+
+Эффект вспышки и затухания:
+
+.. code-block:: python
+   :caption: main.py (эффект вспышки и затухания)
+
+   def pulse(color, wait_ms=5, cycles=2):
+       """
+       Создает эффект пульсации (вспышка и затухание)
+       """
+       for cycle in range(cycles):
+           # Нарастание яркости
+           for brightness in range(0, 100, 2):
+               for i in range(NUM_LEDS):
+                   ring[i] = scale_color(color, brightness / 100.0 * BRIGHTNESS)
+               ring.write()
+               time.sleep_ms(wait_ms)
+           
+           # Затухание
+           for brightness in range(100, 0, -2):
+               for i in range(NUM_LEDS):
+                   ring[i] = scale_color(color, brightness / 100.0 * BRIGHTNESS)
+               ring.write()
+               time.sleep_ms(wait_ms)
+
+Функция pulse:
+
+* Создает эффект пульсации цвета, где все кольцо плавно загорается и затухает
+* Параметр cycles определяет, сколько пульсаций будет выполнено
+* Параметр wait_ms задает скорость изменения яркости
+
+Основная программа:
+
+.. code-block:: python
+   :caption: main.py (основной цикл)
+
+   def demo():
+       """
+       Демонстрация различных эффектов
+       """
+       print("Заполнение красным цветом")
+       fill_color((255, 0, 0))
+       time.sleep(1)
+       
+       print("Заполнение зеленым цветом")
+       fill_color((0, 255, 0))
+       time.sleep(1)
+       
+       print("Заполнение синим цветом")
+       fill_color((0, 0, 255))
+       time.sleep(1)
+       
+       print("Эффект радуги")
+       rainbow_cycle()
+       
+       print("Эффект бегущих огней (красный)")
+       running_lights((255, 0, 0))
+       
+       print("Эффект бегущих огней (зеленый)")
+       running_lights((0, 255, 0))
+       
+       print("Эффект бегущих огней (синий)")
+       running_lights((0, 0, 255))
+       
+       print("Театральная погоня (белый)")
+       theater_chase((255, 255, 255))
+       
+       print("Пульсация (фиолетовый)")
+       pulse((127, 0, 127))
+       
+       clear_ring()
+
+   # Запускаем демонстрацию
+   try:
+       while True:
+           demo()
+           time.sleep(1)
+   except KeyboardInterrupt:
+       clear_ring()
+
+Основная часть программы:
+
+* Функция demo демонстрирует различные эффекты один за другим
+* Основной цикл выполняет функцию demo в бесконечном цикле с паузой в 1 секунду между демонстрациями
+* При нажатии Ctrl+C (KeyboardInterrupt) программа корректно завершается, выключая все светодиоды
+
+Полный код программы
+-------------------------------------------------------------------------------
+
+Вот полный код программы для управления адресным светодиодным кольцом:
+
+.. code-block:: python
+   :caption: main.py (полный код)
+
+   import time
+   import math
+   from machine import Pin
+   from neopixel import NeoPixel
+
+   # Конфигурация кольца
+   PIN_NUM = 28          # Пин, к которому подключено кольцо
+   NUM_LEDS = 12         # Количество светодиодов в кольце
+   BRIGHTNESS = 0.3      # Яркость (0.0 - 1.0)
+
+   # Инициализация NeoPixel
+   pin = Pin(PIN_NUM, Pin.OUT)
+   ring = NeoPixel(pin, NUM_LEDS)
+
+   def scale_color(color, brightness=1.0):
+       """
+       Масштабирует цвет RGB в соответствии с заданной яркостью
+       """
+       r, g, b = color
+       return (
+           int(r * brightness),
+           int(g * brightness),
+           int(b * brightness)
+       )
+
+   def wheel(pos):
+       """
+       Входное значение от 0 до 255 преобразуется в цвет радуги
+       """
+       pos = pos % 255
+       if pos < 85:
+           return (255 - pos * 3, pos * 3, 0)
+       elif pos < 170:
+           pos -= 85
+           return (0, 255 - pos * 3, pos * 3)
+       else:
+           pos -= 170
+           return (pos * 3, 0, 255 - pos * 3)
+
+   def fill_color(color, wait_ms=50):
+       """
+       Заполняет кольцо одним цветом
+       """
+       scaled_color = scale_color(color, BRIGHTNESS)
+       for i in range(NUM_LEDS):
+           ring[i] = scaled_color
+           ring.write()
+           time.sleep_ms(wait_ms)
+
+   def clear_ring():
+       """
+       Выключает все светодиоды
+       """
+       for i in range(NUM_LEDS):
+           ring[i] = (0, 0, 0)
+       ring.write()
+
+   def rainbow_cycle(wait_ms=20, cycles=5):
+       """
+       Создает эффект движущейся радуги
+       """
+       for j in range(256 * cycles):
+           for i in range(NUM_LEDS):
+               color_index = (i * 256 // NUM_LEDS + j) % 256
+               ring[i] = scale_color(wheel(color_index), BRIGHTNESS)
+           ring.write()
+           time.sleep_ms(wait_ms)
+
+   def running_lights(color, wait_ms=50, cycles=5):
+       """
+       Создает эффект бегущих огней
+       """
+       scaled_color = scale_color(color, BRIGHTNESS)
+       
+       for cycle in range(cycles):
+           for position in range(NUM_LEDS * 2):
+               for i in range(NUM_LEDS):
+                   # Синусоидальная функция для плавного затухания
+                   level = math.sin(i + position) * 127 + 128
+                   r = (scaled_color[0] * level) // 255
+                   g = (scaled_color[1] * level) // 255
+                   b = (scaled_color[2] * level) // 255
+                   ring[i] = (r, g, b)
+               ring.write()
+               time.sleep_ms(wait_ms)
+
+   def theater_chase(color, wait_ms=50, cycles=10):
+       """
+       Создает эффект театральной погони
+       """
+       scaled_color = scale_color(color, BRIGHTNESS)
+       
+       for cycle in range(cycles):
+           for offset in range(3):
+               clear_ring()
+               for i in range(0, NUM_LEDS, 3):
+                   ring[(i + offset) % NUM_LEDS] = scaled_color
+               ring.write()
+               time.sleep_ms(wait_ms)
+
+   def pulse(color, wait_ms=5, cycles=2):
+       """
+       Создает эффект пульсации (вспышка и затухание)
+       """
+       for cycle in range(cycles):
+           # Нарастание яркости
+           for brightness in range(0, 100, 2):
+               for i in range(NUM_LEDS):
+                   ring[i] = scale_color(color, brightness / 100.0 * BRIGHTNESS)
+               ring.write()
+               time.sleep_ms(wait_ms)
+           
+           # Затухание
+           for brightness in range(100, 0, -2):
+               for i in range(NUM_LEDS):
+                   ring[i] = scale_color(color, brightness / 100.0 * BRIGHTNESS)
+               ring.write()
+               time.sleep_ms(wait_ms)
+
+   def demo():
+       """
+       Демонстрация различных эффектов
+       """
+       print("Заполнение красным цветом")
+       fill_color((255, 0, 0))
+       time.sleep(1)
+       
+       print("Заполнение зеленым цветом")
+       fill_color((0, 255, 0))
+       time.sleep(1)
+       
+       print("Заполнение синим цветом")
+       fill_color((0, 0, 255))
+       time.sleep(1)
+       
+       print("Эффект радуги")
+       rainbow_cycle()
+       
+       print("Эффект бегущих огней (красный)")
+       running_lights((255, 0, 0))
+       
+       print("Эффект бегущих огней (зеленый)")
+       running_lights((0, 255, 0))
+       
+       print("Эффект бегущих огней (синий)")
+       running_lights((0, 0, 255))
+       
+       print("Театральная погоня (белый)")
+       theater_chase((255, 255, 255))
+       
+       print("Пульсация (фиолетовый)")
+       pulse((127, 0, 127))
+       
+       clear_ring()
+
+   # Запускаем демонстрацию
+   try:
+       while True:
+           demo()
+           time.sleep(1)
+   except KeyboardInterrupt:
+       clear_ring()
+
+Загрузка и запуск программы
+-------------------------------------------------------------------------------
+
+Для запуска программы:
+
+1. Подключите адресное светодиодное кольцо к Raspberry Pi Pico согласно схеме
+2. Подключите Raspberry Pi Pico к компьютеру через USB-кабель
+3. Скопируйте файл main.py на Pico
+4. Перезагрузите Pico (отключите и подключите заново или нажмите кнопку RESET)
+
+После перезагрузки Pico, программа автоматически запустится и начнет демонстрацию различных световых эффектов.
+
+Возможные проблемы и их решения
+-------------------------------------------------------------------------------
+
+1. **Светодиоды не включаются**
+   
+   * Проверьте правильность подключения проводов (VCC, GND, DIN)
+   * Убедитесь, что указан правильный пин в коде (переменная PIN_NUM)
+   * Проверьте питание (может потребоваться внешний источник питания 5В)
+
+2. **Светодиоды включаются, но отображают неправильные цвета**
+   
+   * Проверьте, что используете правильный тип адресных светодиодов (WS2812B)
+   * Некоторые кольца могут иметь другой порядок цветов (RGB вместо GRB или наоборот)
+   * Отрегулируйте яркость в коде (переменная BRIGHTNESS)
+
+3. **Программа вызывает ошибку при запуске**
+   
+   * Убедитесь, что библиотека neopixel установлена на Pico
+   * Проверьте, что количество светодиодов в коде соответствует фактическому количеству на кольце (переменная NUM_LEDS)
+
+Заключение
+-------------------------------------------------------------------------------
+
+В этом уроке мы научились управлять адресным светодиодным кольцом на 12 светодиодов с помощью Raspberry Pi Pico и библиотеки NeoPixel. Мы рассмотрели различные световые эффекты, которые можно создать, включая:
+
+* Заполнение одним цветом
+* Радугу
+* Бегущие огни
+* Театральную погоню
+* Пульсацию
+
+Вы можете модифицировать код, добавляя новые эффекты или комбинируя существующие. Адресные светодиоды предоставляют огромные возможности для творчества, и можно создавать самые разнообразные световые шоу.
+
+.. warning::
+   Помните о потреблении тока светодиодами. При использовании большого количества светодиодов на полной яркости, желательно подключать внешний источник питания 5В.
+
+
+Этот урок включает полный код для управления адресным светодиодным кольцом на 12 светодиодов с использованием библиотеки NeoPixel на Raspberry Pi Pico. В нем представлены различные световые эффекты, которые вы можете применить к светодиодному кольцу, с подробным объяснением работы каждой части кода.
