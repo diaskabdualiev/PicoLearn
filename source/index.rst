@@ -1,6 +1,8 @@
 Alashed Raspberry Pi Pico W Kit
 ======================================================================================================
 
+.. image:: _static/nabor.png
+
 Набор **Raspberry Pi Pico W Kit** — это универсальный комплект для разработчиков,
 основанный на микроконтроллере *Raspberry Pi Pico W*.  
 Он отлично подходит как для начинающих, так и для опытных пользователей,
@@ -25,7 +27,7 @@ MicroPython Projects
 
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Содержание:
 
    about/index
@@ -37,7 +39,7 @@ MicroPython Projects
    lessons/index
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    faq/index
    feedback/index
